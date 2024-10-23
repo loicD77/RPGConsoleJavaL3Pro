@@ -128,6 +128,7 @@ public class Player {
         System.out.println("======================");
     }
 
+
     private void displayEquipment() {
         if (equippedWeapon != null) {
             System.out.println("Arme équipée : " + equippedWeapon.getName());
