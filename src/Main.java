@@ -10,7 +10,39 @@ public class Main {
         // Demander le nom du personnage
         System.out.print("Entrez le nom de votre personnage : ");
         String playerName = scanner.nextLine();
-        Player player = new Player(playerName); // Créez le joueur avec le nom saisi
+
+        // Afficher les visages ASCII disponibles
+        displayAsciiFaces();
+
+        // Demander au joueur de choisir un visage ASCII
+        System.out.print("Entrez le numéro de votre choix : ");
+        int faceChoice = Integer.parseInt(scanner.nextLine());
+
+        // Assigner le visage ASCII en fonction du choix
+        String playerAsciiFace;
+        switch (faceChoice) {
+            case 1:
+                playerAsciiFace = "^_^";
+                break;
+            case 2:
+                playerAsciiFace = "O_O";
+                break;
+            case 3:
+                playerAsciiFace = "T_T";
+                break;
+            case 4:
+                playerAsciiFace = ">_<";
+                break;
+            case 5:
+                playerAsciiFace = "U_U";
+                break;
+            default:
+                playerAsciiFace = "^_^"; // Valeur par défaut si choix invalide
+                System.out.println("Choix invalide, visage par défaut utilisé.");
+        }
+
+        // Créer le joueur avec le nom et le visage ASCII saisis
+        Player player = new Player(playerName, playerAsciiFace);
 
         // Afficher l'ASCII art du personnage
         System.out.println(player.asciiArt());
@@ -47,10 +79,31 @@ public class Main {
         }
     }
 
+    private static void displayAsciiFaces() {
+        System.out.println("Choisissez un visage ASCII pour votre personnage :");
+        System.out.println("1.  ^_^  ");
+        System.out.println("2.  O_O  ");
+        System.out.println("3.  T_T  ");
+        System.out.println("4.  >_<  ");
+        System.out.println("5.  U_U   ");
+    }
+
+    private static void showMenu() {
+        System.out.println("Que voulez-vous faire ?");
+        System.out.println("1. Explorer le donjon");
+        System.out.println("2. Visiter le magasin d'armes");
+        System.out.println("3. Quitter le jeu");
+    }
+
+    private static int getUserInput(Scanner scanner) {
+        System.out.print("Entrez votre choix : ");
+        return Integer.parseInt(scanner.nextLine());
+    }
+
     private static void enterDungeon(Player player, List<DungeonPiece> dungeonPieces, Scanner scanner) {
         System.out.println("Choisissez une pièce à explorer :");
         for (int i = 0; i < dungeonPieces.size(); i++) {
-            System.out.println((i + 1) + ". " + dungeonPieces.get(i).description());
+            System.out.println((i + 1) + ". " + dungeonPieces.get(i).getDescription());
         }
         System.out.print("Entrez le numéro de la pièce : ");
         int pieceChoice = getUserInput(scanner) - 1;
@@ -60,92 +113,66 @@ public class Main {
             System.out.println(chosenPiece.asciiArt());
             // Ici, tu peux ajouter une logique pour gérer ce qui se passe dans chaque pièce.
             if (chosenPiece instanceof MonsterRoom) {
-                exploreMonsterRoom(player, scanner); // Passer scanner ici
+                exploreMonsterRoom(player, scanner);
             } else if (chosenPiece instanceof TreasureRoom) {
                 enterTreasureRoom(player);
             }
-            // Ajouter d'autres conditions pour d'autres pièces
         } else {
             System.out.println("Choix de pièce invalide.");
         }
     }
 
     private static void exploreMonsterRoom(Player player, Scanner scanner) {
+        System.out.println("Vous êtes dans une salle remplie de monstres !");
         MonsterGenerator monsterGenerator = new MonsterGenerator();
         Monster monster = monsterGenerator.generateMonster(player.getLevel());
-        System.out.println("Vous tombez sur un monstre : ");
-        System.out.println(monster.asciiArt());
+        System.out.println("Un " + monster.getName() + " apparaît !");
 
-        // Boucle de combat
-        combat(player, monster, scanner); // Passer scanner ici
+        // Logique de combat ici
+        while (player.isAlive() && monster.isAlive()) {
+            System.out.print("Que voulez-vous faire ? (1: Attaquer, 2: Fuir) : ");
+            int action = getUserInput(scanner);
+            if (action == 1) {
+                int damage = player.attack();
+                monster.takeDamage(damage); // Infliger des dégâts au monstre
+                if (monster.isAlive()) {
+                    int monsterDamage = monster.attack();
+                    player.takeDamage(monsterDamage); // Infliger des dégâts au joueur
+                }
+            } else if (action == 2) {
+                System.out.println("Vous avez fui le combat !");
+                break;
+            } else {
+                System.out.println("Choix invalide. Vous perdez votre tour.");
+            }
+        }
+
+        if (!player.isAlive()) {
+            System.out.println("Vous êtes mort. Game Over !");
+        } else if (!monster.isAlive()) {
+            System.out.println("Vous avez vaincu le " + monster.getName() + " !");
+            player.gainExperience(50); // Gagner de l'expérience après la victoire
+
+            // Gagner de l'argent après avoir tué le monstre
+            int goldGained = monster.getGold();
+            player.addGold(goldGained); // Ajoute de l'or au joueur
+
+            // Message pour indiquer combien d'argent a été gagné
+            System.out.println("Vous avez gagné " + goldGained + " pièces d'or en tuant le " + monster.getName() + " !");
+        }
     }
 
     private static void enterTreasureRoom(Player player) {
-        System.out.println("Vous entrez dans une pièce au trésor ! Vous trouvez de l'or et des objets !");
-        // Ajouter la logique pour le trésor ici (ex. : augmenter l'or, objets, etc.)
-    }
-
-    private static void combat(Player player, Monster monster, Scanner scanner) {
-        while (monster.isAlive() && player.isAlive()) {
-            System.out.println("Monstre : " + monster.getName() + " (PV : " + monster.getHealth() + ")");
-            System.out.println("Que souhaitez-vous faire ?");
-            System.out.println("1. Attaquer");
-            System.out.println("2. Défendre");
-            System.out.print("Choisissez une action : ");
-            int combatAction = getUserInput(scanner);
-
-            switch (combatAction) {
-                case 1:
-                    // Attaque
-                    int damageDealt = player.attack();
-                    monster.takeDamage(damageDealt);
-                    System.out.println("Vous infligez " + damageDealt + " dégâts au " + monster.getName() + "!");
-                    break;
-                case 2:
-                    // Défense (optionnel)
-                    System.out.println("Vous vous défendez ! Réduction des dégâts à venir.");
-                    break;
-                default:
-                    System.out.println("Action invalide.");
-            }
-
-            // Si le monstre est toujours vivant, il attaque
-            if (monster.isAlive()) {
-                int damageTaken = monster.attack();
-                player.takeDamage(damageTaken);
-                System.out.println(monster.getName() + " vous inflige " + damageTaken + " dégâts !");
-            }
-        }
-
-        // Vérifier si le joueur ou le monstre est vaincu
-        if (!player.isAlive()) {
-            System.out.println("Vous êtes vaincu... Game Over !");
-            scanner.close();
-        } else {
-            System.out.println("Vous avez vaincu " + monster.getName() + " !");
-        }
-    }
-
-    private static void showMenu() {
-        System.out.println("Que souhaitez-vous faire ?");
-        System.out.println("1. Explorer le donjon");
-        System.out.println("2. Aller au magasin d'armes");
-        System.out.println("3. Quitter le jeu");
-        System.out.print("Choisissez une action : ");
-    }
-
-    private static int getUserInput(Scanner scanner) {
-        while (true) {
-            try {
-                return Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.print("Veuillez entrer un nombre valide : ");
-            }
-        }
+        System.out.println("Vous êtes entré dans une salle au trésor !");
+        // Logique pour récupérer le trésor ici
+        Item treasure = new Item("Potion de soin", "Restaure 20 PV");
+        player.addItemToInventory(treasure);
+        System.out.println("Vous avez trouvé " + treasure.getName() + " !");
     }
 
     private static void visitWeaponStore(Player player, Scanner scanner) {
-        WeaponStore weaponStore = new WeaponStore();
-        weaponStore.visit(player);
+        WeaponStore store = new WeaponStore(); // Création d'une instance de WeaponStore
+        store.visit(player); // Appel de la méthode visit pour que le joueur entre dans le magasin
     }
+
 }

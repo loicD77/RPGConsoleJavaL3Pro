@@ -25,7 +25,7 @@ public class Dungeon {
         while (true) {
             DungeonPiece piece = pieces.get(currentPiece);
             System.out.println(piece.asciiArt());
-            System.out.println(piece.description());
+            System.out.println(piece.getDescription()); // Utiliser getDescription() au lieu de description()
             player.displayStatus();
             System.out.println("Où voulez-vous aller ? (saisissez 'sortie' pour quitter)");
 
@@ -63,4 +63,5 @@ public class Dungeon {
             }
         }
     }
+
 }

@@ -1,4 +1,14 @@
 public class MonsterRoom extends DungeonPiece {
+    public MonsterRoom() {
+        super("Salle des Monstres", "Cette salle est remplie de cris de monstres affamés. L'odeur de la chair pourrie est omniprésente.", 2); // Exemple avec un niveau requis de 2
+    }
+
+    @Override
+    public void enter(Player player) {
+        System.out.println("Vous êtes entré dans la salle des monstres !");
+        // Logique pour la salle des monstres, par exemple combattre des monstres
+    }
+
     @Override
     public String asciiArt() {
         return "     |-------------------|\n"
@@ -13,10 +23,5 @@ public class MonsterRoom extends DungeonPiece {
                 + "     |    |_________|     |\n"
                 + "     |                   |\n"
                 + "     |___________________|\n";
-    }
-
-    @Override
-    public String description() {
-        return "Cette salle est remplie de cris de monstres affamés. L'odeur de la chair pourrie est omniprésente.";
     }
 }
