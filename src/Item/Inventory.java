@@ -1,7 +1,10 @@
 package Item;
 
+import Player.Player; // Importez la classe Player du package approprié
 import WeaponOriginal.Weapon;
-
+import ProtectiveClothing.ProtectionItem; // Utilisez uniquement ProtectionItem du package ProtectiveClothing
+import ProtectiveClothing.Armor; // Importez la classe Armor du package ProtectiveClothing
+import PotionGroup.Potion;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +20,6 @@ public class Inventory {
     public List<Item> getItems() {
         return items; // Renvoie la liste des objets
     }
-
 
     // Méthode pour obtenir un objet par son nom
     public Item getItem(String name) {
@@ -61,10 +63,9 @@ public class Inventory {
             Item item = items.get(index);
             if (item instanceof Weapon) {
                 System.out.println("Vous utilisez l'arme : " + item.getName());
-                // Logique pour équiper l'arme (à implémenter dans la classe Player)
+                player.equipWeapon(item.getName());
             } else if (item instanceof Potion) {
                 System.out.println("Vous utilisez la potion : " + item.getName());
-                // Appelle use() sur la potion avec le joueur comme argument
                 ((Potion) item).use(player); // Envoie l'objet Player à la méthode use
             }
             items.remove(index); // Enlève l'objet utilisé de l'inventaire
@@ -78,7 +79,7 @@ public class Inventory {
         if (index >= 0 && index < items.size()) {
             Item item = items.remove(index);
             System.out.println("Vous avez vendu : " + item.getName());
-            player.addMoney(item.getPrice()); // Exemple d'ajout d'argent (à adapter selon ta classe Player)
+            player.addGold(item.getPrice()); // Utilisation de la méthode addGold dans Player
         } else {
             System.out.println("Objet non valide !");
         }
@@ -113,14 +114,13 @@ public class Inventory {
     }
 
     public boolean contains(Armor armor) {
-        for (Item item : items) { // Supposons que 'items' soit la liste d'objets de l'inventaire
+        for (Item item : items) {
             if (item instanceof Armor && item.equals(armor)) {
                 return true;
             }
         }
         return false;
     }
-
 
     // Méthode pour vérifier si l'inventaire est plein
     public boolean isFull() {
@@ -132,15 +132,15 @@ public class Inventory {
         return items.size(); // Renvoie le nombre d'objets dans l'inventaire
     }
 
-    public int  maxInventorySize(){
+    public int maxInventorySize() {
         return MAX_ITEMS;
     }
 
     public int size() {
         return items.size();
     }
+
     public void add(Item item) {
         items.add(item);
     }
-
 }

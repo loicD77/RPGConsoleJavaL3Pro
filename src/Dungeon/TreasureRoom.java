@@ -92,18 +92,21 @@ public class TreasureRoom extends DungeonPiece {
 
     @Override
     public String asciiArt(Player player) {
-        return "     |-------------------|\n"
-                + "     |                   |\n"
-                + "     |   SALLE AU TRÉSOR |\n"
-                + "     |                   |\n"
-                + "     |       _.-=-._     |\n"
-                + "     |     .'       '.   |\n"
-                + "     |    /           \\  |\n"
-                + "     |   |  *  *  *   |  |\n"
-                + "     |    \\         /   |\n"
-                + "     |     '._._._.'    |\n"
-                + "     |                   |\n"
-                + "     |___________________|\n"
-                + "Personnage : " + player.getAsciiFace() + "\n";
+        return "     _______________________ "
+                + "    |                     |\n"
+                + "    |   SALLE AU TRÉSOR   |\n"
+                + "    |                     |\n"
+                + "    |      _.-=-._        |\n"
+                + "    |    .'       '.      |\n"
+                + "    |   /           \\     |\n"
+                + "    |  |  *  *  *   |     |\n"
+                + "    |   \\         /      |\n"
+                + "    |    '._._._.'       |\n"
+                + "    |                   |\n"
+                + "    |  Personnage :     |\n"
+                + "    |     " + player.getAsciiFace() + "       |\n"
+                + "    |     /|\\           |\n"
+                + "    |     / \\           |\n"
+                + "    |___________________|\n";
     }
 }

@@ -1,26 +1,22 @@
+package ProtectiveClothing;
+
+import ProtectiveOriginal.ProtectionItem; // Assurez-vous d'utiliser le bon package ici
+import Player.Player;
+
 public class Pants extends ProtectionItem {
-    private int defense; // Défense fournie par le pantalon
-
     public Pants(String name, String description, int defense, int price) {
-        super(name, description, defense, price); // Appel du constructeur de ProtectionItem
-        this.defense = defense;
-    }
-
-    public int getDefense() {
-        return defense; // Renvoie la défense du pantalon
-    }
-
-    @Override
-    public String asciiArt() {
-        return "   [|||]   \n" +
-                "  [     ]  \n" +
-                "   [|||]   \n";
+        super(name, description, defense, price);
     }
 
     @Override
     public void use(Player player) {
-        // Logique pour l'utilisation du pantalon, par exemple augmenter la défense du joueur
-        System.out.println("Vous portez le pantalon et augmentez votre défense de " + defense + " points.");
-        player.increaseDefense(defense); // Assurez-vous que Player a une méthode increaseDefense(int)
+        System.out.println("Vous portez " + getName() + ", augmentant votre défense de " + getDefense() + " points.");
+        player.increaseDefense(getDefense());
+    }
+
+    @Override
+    public String asciiArt() {
+        return "  |PANTS|  \n" +
+                "  /    \\  \n";
     }
 }

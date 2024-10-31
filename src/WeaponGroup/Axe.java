@@ -1,3 +1,8 @@
+package WeaponGroup;
+
+import Player.Player;
+
+
 import WeaponOriginal.Weapon;
 
 public class Axe extends Weapon {

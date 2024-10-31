@@ -1,20 +1,26 @@
-public class Sword extends Weapon {
-    public Sword(String name, int damage, int price) {
-        super(name, "Une épée tranchante", damage, price); // Assure-toi d'ajouter le quatrième paramètre attendu
-    }
+package WeaponGroup;
 
-    @Override
-    public void use(Player player) {
-        System.out.println("Vous utilisez l'épée " + getName() + " pour attaquer avec " + getDamage() + " points de dégâts !");
+import WeaponOriginal.Weapon;
+import Player.Player;
+
+public class Sword extends Weapon {
+    public Sword() {
+        super("Épée", "Une épée tranchante", 15, 10); // Ajoutez la description, les dégâts, et le prix
     }
 
     @Override
     public String asciiArt() {
-        return "  /\\ \n" +
-                " /  \\ \n" +
-                "/____\\ \n" +
-                "   || \n" +
-                "   || \n" +
-                "   || \n";
+        return
+                "  /\\  \n" +
+                        " /  \\ \n" +
+                        "|    |\n" +
+                        " \\  / \n" +
+                        "  \\/  \n";
+    }
+
+    @Override
+    public void use(Player player) {
+        System.out.println("Vous utilisez l'épée pour attaquer !");
+        // Ajouter toute logique d'utilisation qui affecte le joueur ou autres actions
     }
 }

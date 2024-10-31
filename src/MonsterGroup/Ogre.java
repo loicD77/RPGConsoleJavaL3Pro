@@ -1,3 +1,5 @@
+package MonsterGroup;
+import MonsterOriginal.Monster;
 public class Ogre extends Monster {
 
     // Variable pour stocker l'état de rage de l'Ogre

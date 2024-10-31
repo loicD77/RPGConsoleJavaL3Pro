@@ -1,5 +1,11 @@
 package MonsterOriginal;
 
+import MonsterGroup.Skeleton;
+import MonsterGroup.Goblin;
+import MonsterGroup.Ogre;
+import MonsterGroup.Dragon;
+import MonsterGroup.Zombie;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

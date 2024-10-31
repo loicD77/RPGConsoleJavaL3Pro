@@ -1,49 +1,67 @@
 package WeaponOriginal;
 
+import Dungeon.DungeonPiece; // Assurez-vous que l'emplacement de DungeonPiece est correct.
+import Player.Player; // Assurez-vous d'importer Player.
 import MonsterOriginal.Monster;
-import MonsterOriginal.MonsterGenerator;
+import MonsterGroup.StrongMonster;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StrongMonsterRoom extends DungeonPiece {
-    public StrongMonsterRoom() {
-        super("Salle des Monstres Forts", "Une pièce avec des monstres puissants.", 5); // Exemple avec un niveau requis de 5
+
+    private List<Monster> monsters;
+
+    public StrongMonsterRoom(String name, String description, int requiredLevel) {
+        super(name, description, requiredLevel);
+        this.monsters = new ArrayList<>();
+        // Ajouter des monstres forts spécifiques à cette pièce
+        monsters.add(new StrongMonster("Cyclope", "Un monstre gigantesque avec un seul œil", 100, 25, 5, 20, 50, 20));
+        monsters.add(new StrongMonster("Dragon", "Un dragon imposant qui crache du feu", 200, 40, 10, 30, 100, 50));
     }
 
     @Override
     public void enter(Player player) {
-        System.out.println("Vous êtes entré dans une salle avec des monstres puissants !");
-        MonsterGenerator generator = new MonsterGenerator();
-        Monster strongMonster = generator.generateMonster(player.getLevel()); // Génère un monstre basé sur le niveau du joueur
-
-        // Logique de combat avec le monstre
-        while (strongMonster.isAlive() && player.isAlive()) {
-            // Calcul des dégâts du joueur
-            int damageDealt = player.calculateDamage(1); // Ajoute un argument ici
-            strongMonster.takeDamage(damageDealt);
-            System.out.println("Vous infligez " + damageDealt + " points de dégâts à " + strongMonster.getName());
-
-            // Vérifie si le monstre est mort
-            if (!strongMonster.isAlive()) {
-                System.out.println("Vous avez vaincu " + strongMonster.getName() + " !");
-                player.gainExperience(strongMonster.getExperiencePoints());
-                return;
-            }
-
-            // Le monstre attaque
-            int monsterDamage = strongMonster.attack();
-            player.takeDamage(monsterDamage);
-            System.out.println(strongMonster.getName() + " vous attaque et inflige " + monsterDamage + " points de dégâts !");
+        System.out.println("Vous êtes entré dans la Salle des Monstres Puissants !");
+        for (Monster monster : monsters) {
+            System.out.println("Un " + monster.getName() + " apparaît !");
+            handleMonster(player, monster);
         }
+    }
 
-        if (!player.isAlive()) {
-            System.out.println("Vous êtes tombé au combat !");
+    private void handleMonster(Player player, Monster monster) {
+        // Logique de combat contre le monstre
+        System.out.println("Le combat commence avec " + monster.getName() + " !");
+        while (player.isAlive() && monster.isAlive()) {
+            // Logique de combat ici (comme attaque du joueur, attaque du monstre, etc.)
+            System.out.println(player.getName() + " attaque le " + monster.getName());
+            player.attack(monster, 1); // Appeler une attaque simple
+            if (!monster.isAlive()) {
+                System.out.println("Vous avez vaincu " + monster.getName() + " !");
+                player.gainExperience(monster.getExperiencePoints());
+                break;
+            }
+            monster.attack(player);
+            if (!player.isAlive()) {
+                System.out.println("Vous avez été vaincu par " + monster.getName() + "...");
+                break;
+            }
         }
     }
 
     @Override
     public String asciiArt(Player player) {
-        return "   M   \n" +
-                "  /|\\  \n" +
-                "  / \\\\  \n" +
-                "Personnage : " + player.getAsciiFace() + "\n";
+        return "   ______    \n" +
+                "  |      |   \n" +
+                "  | STRONG |  \n" +
+                "  | MONSTER |\n" +
+                "  | ROOM   | \n" +
+                "  |        | \n" +
+                "  \\________/ \n" +
+                "Personnage : " + player.getAsciiFace() + "\n" +
+                "Nom : " + player.getName() + "\n" +
+                "Niveau : " + player.getLevel() + "\n" +
+                "PV : " + player.getHealth() + "/" + player.getMaxHealth() + "\n" +
+                "Or : " + player.getGold() + "\n";
     }
 }

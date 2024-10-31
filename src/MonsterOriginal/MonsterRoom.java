@@ -1,7 +1,13 @@
 package MonsterOriginal;
 
-import MonsterGroup.Cyclops;
+import Obstacle.StoneObstacle; // Import de StoneObstacle depuis le package Obstacle
+import Obstacle.WoodenBarrier; // Import de WoodenBarrier depuis le package Obstacle
+import MonsterGroup.Zombie; // Import de Zombie depuis le package MonsterGroup
+import MonsterGroup.Cyclops; // Import de Cyclops
+import Entity.GameEntity; // Import de GameEntity
+import Player.Player; // Import de Player
 import MonsterOriginal.Monster;
+import Dungeon.DungeonPiece;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,8 +129,6 @@ public class MonsterRoom extends DungeonPiece {
             }
         }
     }
-
-
 
     private void shuffleEntities() {
         // Mélanger les entités pour un ordre aléatoire

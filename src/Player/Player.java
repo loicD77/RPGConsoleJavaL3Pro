@@ -1,25 +1,26 @@
-package Player; // Déclaration correcte du package
+package Player;
 
-// Imports Java standard
 import java.util.ArrayList;
 import java.util.List;
 
 // Imports des autres packages du projet
-import WeaponOriginal.Weapon; // Arme importée depuis le package WeaponOriginal
-import ProtectiveClothing.Armor; // Armure importée depuis le package ProtectiveClothing
-import ProtectiveClothing.Helmet; // Casque importé depuis le package ProtectiveClothing
-import PotionGroup.Shield; // Bouclier importé depuis le package PotionGroup
-import ProtectiveClothing.Boots; // Bottes importées depuis le package ProtectiveClothing
-import ProtectiveClothing.Pants; // Pantalon importé depuis le package ProtectiveClothing
-import ProtectiveClothing.Gloves; // Gants importés depuis le package ProtectiveClothing
-import Item.Inventory; // Inventaire importé depuis le package Item
-import MonsterOriginal.Monster; // Monstre importé depuis le package MonsterOriginal
-import Dungeon.DungeonPiece; // Pièce du donjon depuis le package Dungeon
-import PotionGroup.Potion; // Potion importée depuis le package PotionGroup
-import PotionGroup.StatusEffect; // Effet de statut importé depuis le package PotionGroup
-import MonsterOriginal.Obstacle; // Obstacle importé depuis le package MonsterOriginal
-import MonsterGroup.Boss; // Boss importé depuis le package MonsterGroup
-
+import WeaponOriginal.Weapon;
+import ProtectiveClothing.ProtectionItem;
+import ProtectiveClothing.Armor;
+import ProtectiveClothing.Helmet;
+import ProtectiveClothing.Shield;
+import ProtectiveClothing.Boots;
+import ProtectiveClothing.Pants;
+import ProtectiveClothing.Gloves;
+import Item.Inventory;
+import Item.Item;
+import MonsterOriginal.Monster;
+import Dungeon.DungeonPiece;
+import PotionGroup.Potion;
+import PotionGroup.StatusEffect;
+import MonsterOriginal.Obstacle;
+import MonsterGroup.Boss;
+import Interface.Attackable; // Importez l'interface Attackable pour pouvoir l'utiliser
 
 public class Player {
     private String name;
@@ -101,7 +102,6 @@ public class Player {
         System.out.println("Gants équipés : " + (equippedGloves != null ? equippedGloves.getName() : "Aucun gant équipé."));
         showInventory();
         System.out.println("========================");
-        // Afficher l'ASCII art du personnage avec le visage choisi
         System.out.println("Apparence du Personnage :");
         System.out.println("    " + asciiFace);
         System.out.println("    /|\\ ");
@@ -109,7 +109,6 @@ public class Player {
         System.out.println("    / \\ ");
         System.out.println("========================");
     }
-
 
     public void equipWeapon(String weaponName) {
         for (Item item : inventory.getItems()) {
@@ -121,7 +120,6 @@ public class Player {
         }
         System.out.println("L'arme " + weaponName + " n'est pas dans votre inventaire.");
     }
-
 
     public void equipArmor(Armor armor) {
         if (armor != null && inventory.contains(armor)) {
@@ -135,41 +133,26 @@ public class Player {
 
     // Méthode pour équiper un objet de protection
     public void equipProtectionItem(ProtectionItem item) {
-        if (item == null) {
-            System.out.println("Objet non reconnaissable !");
-            return;
+        if (item instanceof Armor) {
+            // Equipe une armure
+            Armor armor = (Armor) item;
+            System.out.println("Vous équipez l'armure : " + armor.getName());
+            increaseDefense(armor.getDefense());
+        } else if (item instanceof Shield) {
+            // Equipe un bouclier
+            Shield shield = (Shield) item;
+            System.out.println("Vous équipez le bouclier : " + shield.getName());
+            increaseDefense(shield.getDefense());
+        } else {
+            System.out.println("Cet objet ne peut pas être équipé.");
         }
+    }
 
-        switch (item.getClass().getSimpleName()) {
-            case "Helmet":
-                equippedHelmet = (Helmet) item;
-                equippedItems.addItem(item); // Ajoute le casque à l'inventaire équipé
-                break;
-            case "Shield":
-                equippedShield = (Shield) item;
-                equippedItems.addItem(item); // Ajoute le bouclier à l'inventaire équipé
-                break;
-            case "Armor":
-                equippedArmor = (Armor) item;
-                equippedItems.addItem(item); // Ajoute l'armure à l'inventaire équipé
-                break;
-            case "Boots":
-                equippedBoots = (Boots) item;
-                equippedItems.addItem(item); // Ajoute les bottes à l'inventaire équipé
-                break;
-            case "Pants":
-                equippedPants = (Pants) item;
-                equippedItems.addItem(item); // Ajoute le pantalon à l'inventaire équipé
-                break;
-            case "Gloves":
-                equippedGloves = (Gloves) item;
-                equippedItems.addItem(item); // Ajoute les gants à l'inventaire équipé
-                break;
-            default:
-                System.out.println("Objet non reconnaissable !");
-                return;
+    public void increaseDefense(int amount) {
+        if (amount > 0) {
+            defense += amount;
+            System.out.println("Défense augmentée de " + amount + ". Défense actuelle : " + defense);
         }
-        System.out.println("Vous avez équipé " + item.getName() + ".");
     }
 
     public void addItemToInventory(Item item) {
@@ -182,7 +165,60 @@ public class Player {
     }
 
     public int getMaxHealth() {
-        return this.maxHealth; // Assurez-vous que la variable `maxHealth` existe dans la classe Player
+        return this.maxHealth;
+    }
+
+    public int getLevel() {
+        return this.level;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public boolean spendGold(int amount) {
+        if (amount > 0 && amount <= gold) {
+            gold -= amount;
+            System.out.println(amount + " pièces d'or dépensées.");
+            return true;
+        } else {
+            System.out.println("Vous n'avez pas assez d'or pour cette action.");
+            return false;
+        }
+    }
+
+    private void levelUp() {
+        level++;
+        experience = 0; // Remet l'expérience à zéro après le niveau supérieur
+        experienceToNextLevel += 50; // Augmente les points nécessaires pour le prochain niveau (par exemple)
+        maxHealth += 20; // Augmente la santé maximale
+        health = maxHealth; // Restaure la santé maximale
+        strength += 5; // Améliore les statistiques
+        agility += 5;
+        intelligence += 5;
+        defense += 5;
+        System.out.println("Vous avez atteint le niveau " + level + "! Toutes vos statistiques ont été améliorées.");
+    }
+    public String getAsciiFace() {
+        return asciiFace;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
+    public void gainExperience(int points) {
+        if (points > 0) {
+            experience += points;
+            System.out.println("Vous avez gagné " + points + " points d'expérience.");
+
+            // Vérifie si le joueur a assez de points pour monter de niveau
+            if (experience >= experienceToNextLevel) {
+                levelUp();
+            }
+        } else {
+            System.out.println("Points d'expérience invalides.");
+        }
     }
 
     public void showInventory() {
@@ -232,11 +268,61 @@ public class Player {
         System.out.println(name + " a subi " + totalDamage + " points de dégâts. Santé actuelle : " + health);
     }
 
-
     public String getName() {
         return name;
     }
 
+    public void restoreHealth(int amount) {
+        if (amount > 0) {
+            health += amount;
+            if (health > maxHealth) {
+                health = maxHealth; // Empêche la santé d'excéder le maximum
+            }
+            System.out.println("Vous avez regagné " + amount + " points de vie. Santé actuelle : " + health + "/" + maxHealth);
+        } else {
+            System.out.println("Montant de soin invalide. La restauration de santé ne peut pas être négative.");
+        }
+    }
+
+    public boolean isAlive() {
+        return health > 0; // Vérifie si le joueur a encore des points de vie
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void attack(Attackable target, int attackType) {
+        int damage = calculateDamage(attackType); // Calcul des dégâts en fonction du type d'attaque
+        target.takeDamage(damage);
+        System.out.println(name + " a attaqué " + target.getName() + " et a infligé " + damage + " points de dégâts.");
+    }
+
+
+    // Exemple de méthode pour calculer les dégâts en fonction du type d'attaque
+    private int calculateDamage(int attackType) {
+        switch (attackType) {
+            case 1: // Coup de poing
+                return 10;
+            case 2: // Attaque puissante
+                return 20;
+            case 3: // Attaque rapide
+                return 15;
+            case 4: // Attaque spéciale
+                return 25;
+            default:
+                System.out.println("Type d'attaque non reconnu. Aucun dégât infligé.");
+                return 0;
+        }
+    }
+
+    public void heal(int healingAmount) {
+        health += healingAmount;
+        if (health > maxHealth) {
+            health = maxHealth; // Assurez-vous de ne pas dépasser les PV max
+        }
+        System.out.println("Vous avez regagné " + healingAmount + " points de vie.");
+    }
 
     public void addGold(int amount) {
         if (amount > 0) {
@@ -245,251 +331,4 @@ public class Player {
             System.out.println("Montant invalide. L'or ne peut pas être négatif.");
         }
     }
-
-    public boolean spendGold(int amount) {
-        if (amount > 0 && amount <= gold) {
-            gold -= amount;
-            System.out.println(amount + " pièces d'or dépensées.");
-            return true;
-        } else {
-            System.out.println("Montant invalide ou pas assez d'or.");
-            return false;
-        }
-    }
-
-    public void restoreHealth(int amount) {
-        if (amount > 0) {
-            health += amount;
-            if (health > maxHealth) {
-                health = maxHealth;
-            }
-            System.out.println("Vous avez restauré " + amount + " PV. Santé actuelle : " + health + "/" + maxHealth);
-        } else {
-            System.out.println("Montant invalide. La restauration de santé ne peut pas être négative.");
-        }
-    }
-
-    public void heal(int amount) {
-        if (amount > 0) {
-            health += amount;
-            System.out.println("Vous avez guéri " + amount + " PV.");
-        }
-    }
-
-    public void levelUp() {
-        level++;
-        experience = 0; // Réinitialiser l'expérience à 0 après un level up
-        maxHealth += 20;
-        health = maxHealth; // Restaure la santé maximale
-        strength += 5;
-        agility += 5;
-        intelligence += 5;
-        defense += 5;
-        System.out.println("Vous avez atteint le niveau " + level + "! Santé maximale : " + maxHealth);
-    }
-
-    public void attack(Obstacle obstacle, int damage) {
-        // Logique d'attaque ici
-        System.out.println(name + " attaque " + obstacle.getName() + " pour " + damage + " points de dégâts.");
-        // Suppose que l'obstacle a une méthode pour prendre des dégâts
-        obstacle.takeDamage(damage);
-    }
-
-    public int attack(Boss monster, int attackType) {
-        // Logique d'attaque
-        int damage = calculateDamage(attackType);
-        monster.takeDamage(damage);
-        return damage; // Assurez-vous que cela retourne le montant des dégâts infligés
-    }
-
-    public int calculateDamage(int attackType) {
-        int baseDamage = 0;
-
-        // Définissez les dégâts de base pour chaque type d'attaque
-        switch (attackType) {
-            case 1: // Attaque de base
-                baseDamage = 10; // Dégâts pour une attaque de type 1
-                break;
-            case 2: // Attaque puissante
-                baseDamage = 20; // Dégâts pour une attaque de type 2
-                break;
-            case 3: // Attaque magique
-                baseDamage = 15; // Dégâts pour une attaque de type 3
-                break;
-            default: // Type d'attaque non reconnu
-                System.out.println("Type d'attaque non reconnu. Dégâts par défaut de 5.");
-                baseDamage = 5; // Dégâts par défaut
-                break;
-        }
-
-        // Vous pouvez également ajouter des modifications basées sur le niveau du joueur, les armes équipées, etc.
-        // Par exemple, ajoutez un bonus de dégâts basé sur le niveau
-        int damageBonus = getLevel() / 2; // Bonus de dégâts basé sur le niveau (exemple)
-        return baseDamage + damageBonus; // Retournez les dégâts totaux
-    }
-
-
-    public int attack(Monster monster, int attackType) {
-        int damage = 0;
-        // Logique d'attaque en fonction du type
-        // Par exemple :
-        switch (attackType) {
-            case 1:
-                damage = 10; // Attaque normale
-                break;
-            case 2:
-                damage = 15; // Attaque spéciale
-                break;
-            case 3:
-                damage = 5; // Attaque rapide
-                break;
-            case 4:
-                damage = 20; // Attaque puissante
-                break;
-            default:
-                System.out.println("Type d'attaque non reconnu.");
-                break;
-        }
-        monster.takeDamage(damage); // Assurez-vous que le monstre a cette méthode
-        return damage; // Retourner les dégâts infligés
-    }
-
-
-    // Méthode pour définir l'inventaire
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory; // Définit l'inventaire
-    }
-
-
-
-    public void addExperience(int amount) {
-        if (amount > 0) {
-            experience += amount;
-            System.out.println("Vous avez gagné " + amount + " points d'expérience.");
-            if (experience >= level * 100) { // Condition de montée de niveau
-                levelUp();
-            }
-        } else {
-            System.out.println("Montant invalide. L'expérience ne peut pas être négative.");
-        }
-    }
-
-    public void addActiveEffect(StatusEffect effect) {
-        activeEffects.add(effect);
-        System.out.println("Effet actif ajouté : " + effect.getDescription());
-    }
-
-    public void addMoney(int amount) {
-        if (amount > 0) {
-            gold += amount;
-            System.out.println("Vous avez ajouté " + amount + " pièces. Total actuel : " + gold);
-        } else {
-            System.out.println("Montant invalide. L'ajout d'argent ne peut pas être négatif.");
-        }
-    }
-
-    public int getLevel() {
-        return level;
-    }
-    // Méthode pour obtenir l'or du joueur
-    public int getGold() {
-        return gold;
-    }
-
-    // Méthode pour obtenir la santé actuelle
-    public int getHealth() {
-        return health; // Retourne la santé actuelle
-    }
-
-
-    public void gainExperience(int points) {
-        experiencePoints += points; // Ajoute les points d'expérience
-        System.out.println("Vous gagnez " + points + " points d'expérience !");
-
-        // Vérifiez si le joueur peut monter de niveau
-        while (experiencePoints >= experienceToNextLevel) {
-            experiencePoints -= experienceToNextLevel; // Réduit l'expérience par rapport à ce qui est nécessaire pour le niveau suivant
-            level++; // Augmente le niveau
-            experienceToNextLevel += 50; // Augmente la quantité d'expérience nécessaire pour le niveau suivant
-            System.out.println("Vous êtes maintenant au niveau " + level + " !");
-        }
-    }
-
-    public void increaseDefense(int amount) {
-        if (amount > 0) {
-            defense += amount;
-            System.out.println("Défense augmentée de " + amount + ". Défense actuelle : " + defense);
-        } else {
-            System.out.println("Montant invalide. L'augmentation de la défense ne peut pas être négative.");
-        }
-    }
-
-
-    public boolean isAlive() {
-        return health > 0; // ou toute autre logique pour vérifier si le joueur est vivant
-    }
-    public void removeActiveEffect(StatusEffect effect) {
-        activeEffects.remove(effect);
-        System.out.println("Effet actif supprimé : " + effect.getDescription());
-    }
-
-    // Méthode pour afficher l'ASCII art du personnage
-    public String asciiArt() {
-        return
-                "    "+ asciiFace + "     \n" +  // Utiliser le visage ASCII choisi
-                        "    /|\\    \n" +  // Bras
-                        "     |     \n" +  // Corps
-                        "    / \\    \n" +  // Jambes
-                        "Nom : " + name + "\n" +
-                        "Niveau : " + level + "\n" +
-                        "PV : " + health + "\n" +
-                        "Or : " + gold;
-    }
-    public String getAsciiFace() {
-        return asciiFace; // Assurez-vous que 'asciiFace' est un champ de la classe Player
-    }
-
-
-    // Méthode pour une attaque légère
-    public int lightAttack(Monster monster) {
-        int damage = 10;
-        System.out.println("Vous effectuez une attaque légère !");
-        monster.takeDamage(damage);
-        System.out.println("Vous avez infligé " + damage + " dégâts au monstre !");
-        return damage;
-    }
-
-    // Méthode pour une attaque puissante
-    public int heavyAttack(Monster monster) {
-        int damage = 20;
-        System.out.println("Vous effectuez une attaque puissante !");
-        monster.takeDamage(damage);
-        System.out.println("Vous avez infligé " + damage + " dégâts au monstre !");
-        return damage;
-    }
-
-    // Méthode pour une attaque magique
-    public int magicAttack(Monster monster) {
-        int damage = 15;
-        System.out.println("Vous lancez une attaque magique !");
-        monster.takeDamage(damage);
-        System.out.println("Vous avez infligé " + damage + " dégâts au monstre !");
-        return damage;
-    }
-
-    // Méthode pour une attaque rapide
-    public int quickAttack(Monster monster) {
-        int damage = 5;
-        System.out.println("Vous effectuez une attaque rapide !");
-        monster.takeDamage(damage);
-        System.out.println("Vous avez infligé " + damage + " dégâts au monstre !");
-        return damage;
-    }
-
-    public void clearActiveEffects() {
-        activeEffects.clear();
-        System.out.println("Tous les effets actifs ont été supprimés.");
-    }
-
-
 }

@@ -1,3 +1,7 @@
+package MonsterGroup;
+import MonsterOriginal.Monster;
+
+
 public class Skeleton extends Monster {
     public Skeleton(int level) {
         // Ajoutez une valeur pour specialAttackChance et experiencePoints

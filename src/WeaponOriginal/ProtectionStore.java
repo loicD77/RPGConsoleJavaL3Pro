@@ -1,5 +1,12 @@
 package WeaponOriginal;
 
+import Dungeon.DungeonPiece;
+import Player.Player;
+import ProtectiveClothing.ProtectionItem;
+import ProtectiveClothing.Armor;
+import ProtectiveClothing.Shield;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -26,43 +33,34 @@ public class ProtectionStore extends DungeonPiece {
         boolean inStore = true;
 
         while (inStore) {
-            // Afficher l'art ASCII du magasin de protection avec le visage du joueur
             System.out.println(asciiArt(player));
-
             showProtectionItems();
 
             System.out.print("Choisissez une option (numéro) : ");
-            int choice;
-            try {
-                choice = scanner.nextInt();
-                scanner.nextLine(); // Pour éviter les problèmes d'entrée
-                if (choice < 1 || choice > protectionItems.size() + 1) {
-                    System.out.println("Choix invalide.");
-                    continue;
-                }
-            } catch (Exception e) {
-                System.out.println("Entrée invalide. Veuillez entrer un nombre.");
-                scanner.nextLine(); // Pour vider le buffer du scanner
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            if (choice < 1 || choice > protectionItems.size() + 1) {
+                System.out.println("Choix invalide.");
                 continue;
             }
 
-            if (choice == protectionItems.size() + 1) {  // Quitter le magasin
+            if (choice == protectionItems.size() + 1) {
                 System.out.println("Vous quittez le magasin de protection.");
                 inStore = false;
                 continue;
             }
 
             ProtectionItem selectedItem = protectionItems.get(choice - 1);
-            int price = selectedItem.getPrice(); // Remplace getCost() par getPrice()
+            int price = selectedItem.getPrice();
 
-            // Vérifier si le joueur a assez d'or pour acheter l'objet
             if (player.getGold() >= price) {
                 player.spendGold(price);
                 if (player.getInventory().addItem(selectedItem)) {
                     System.out.println("Vous avez acheté et ajouté " + selectedItem.getName() + " à votre inventaire !");
                 } else {
                     System.out.println("Votre inventaire est plein, vous ne pouvez pas acheter cet objet de protection !");
-                    manageFullInventory(player, scanner);  // Gérer la vente ou l'abandon d'objet
+                    manageFullInventory(player, scanner);
                 }
             } else {
                 System.out.println("Vous n'avez pas assez d'or pour acheter cet objet de protection !");
@@ -70,16 +68,13 @@ public class ProtectionStore extends DungeonPiece {
 
             player.displayStatus();
         }
-
-        // Retour à la carte après avoir quitté le magasin
-        System.out.println("Vous êtes de retour sur la carte.");
     }
 
     public void showProtectionItems() {
         System.out.println("Bienvenue au magasin de protection !");
         int i = 1;
         for (ProtectionItem item : protectionItems) {
-            System.out.println(i + ". " + item.getDescription() + " - Coût : " + item.getPrice() + " pièces d'or"); // Remplace getCost() par getPrice()
+            System.out.println(i + ". " + item.getDescription() + " - Coût : " + item.getPrice() + " pièces d'or");
             i++;
         }
         System.out.println(i + ". Quitter le magasin");
@@ -91,45 +86,33 @@ public class ProtectionStore extends DungeonPiece {
         System.out.println("2. Abandonner un objet");
         System.out.println("3. Quitter le magasin");
 
-        int action;
-        try {
-            action = scanner.nextInt();
-            scanner.nextLine(); // Pour éviter les problèmes d'entrée
-            switch (action) {
-                case 1:
-                    // Appel de la méthode pour vendre un objet
-                    sellItem(player, scanner);
-                    break;
-                case 2:
-                    // Appel de la méthode pour abandonner un objet
-                    dropItem(player, scanner);
-                    break;
-                case 3:
-                    System.out.println("Vous quittez le magasin de protection.");
-                    return; // Quitter la méthode
-                default:
-                    System.out.println("Action invalide.");
-            }
-        } catch (Exception e) {
-            System.out.println("Entrée invalide. Veuillez entrer un nombre.");
-            scanner.nextLine(); // Pour vider le buffer du scanner
+        int action = scanner.nextInt();
+        scanner.nextLine();
+        switch (action) {
+            case 1:
+                sellItem(player, scanner);
+                break;
+            case 2:
+                dropItem(player, scanner);
+                break;
+            case 3:
+                System.out.println("Vous quittez le magasin de protection.");
+                return;
+            default:
+                System.out.println("Action invalide.");
         }
     }
 
     private void sellItem(Player player, Scanner scanner) {
-        // Implémenter la logique pour vendre un objet ici
-        // Afficher les objets dans l'inventaire et permettre au joueur de choisir un objet à vendre
+        // Implémentez la logique de vente ici
     }
 
     private void dropItem(Player player, Scanner scanner) {
-        // Implémenter la logique pour abandonner un objet ici
-        // Afficher les objets dans l'inventaire et permettre au joueur de choisir un objet à abandonner
+        // Implémentez la logique pour abandonner un objet ici
     }
 
-    // Implémentation de la méthode asciiArt() de DungeonPiece
     @Override
     public String asciiArt(Player player) {
-        String asciiFace = player.getAsciiFace();
         return "      _______________________      \n" +
                 "     |                       |     \n" +
                 "     |   Magasin de Protection |   \n" +
@@ -144,10 +127,9 @@ public class ProtectionStore extends DungeonPiece {
                 "     |      [========]       |     \n" +
                 "     |                       |     \n" +
                 "     |    Personnage :       |     \n" +
-                "     |         " + asciiFace + "           |     \n" +
+                "     |         " + player.getAsciiFace() + "           |     \n" +
                 "     |         /|\\           |     \n" +
                 "     |         / \\           |     \n" +
                 "     |_______________________|     \n";
     }
-
 }

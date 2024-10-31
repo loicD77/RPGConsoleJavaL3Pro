@@ -1,5 +1,8 @@
 package ProtectiveClothing;
 
+import ProtectiveOriginal.ProtectionItem; // Import de ProtectionItem depuis le bon package
+import Player.Player;
+
 public class Boots extends ProtectionItem {
     public Boots(String name, String description, int defense, int price) {
         super(name, description, defense, price);

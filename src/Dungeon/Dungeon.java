@@ -2,7 +2,7 @@ package Dungeon;
 
 import WeaponOriginal.ProtectionStore;
 import WeaponOriginal.WeaponStore;
-
+import Player.Player; // Import de la classe Player
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

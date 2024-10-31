@@ -1,4 +1,8 @@
 package Obstacle;
+import ProtectiveOriginal.ProtectionItem;
+import Player.Player;
+
+
 
 public class WoodenShield extends ProtectionItem {
     public WoodenShield() {

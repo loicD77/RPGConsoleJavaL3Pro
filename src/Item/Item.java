@@ -1,5 +1,6 @@
 package Item;
 
+import Player.Player; // Importez la classe Player du package Player
 
 public abstract class Item {
     public String name;

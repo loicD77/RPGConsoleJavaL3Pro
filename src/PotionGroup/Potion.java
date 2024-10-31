@@ -31,8 +31,9 @@ public class Potion extends Item {
 
     @Override
     public void use(Player player) {
-        // Logique pour l'utilisation de la potion, par exemple soigner le joueur
-        player.heal(healingAmount);
+        // Utilise la méthode restoreHealth
+        player.restoreHealth(healingAmount);
         System.out.println("Vous utilisez une potion et regagnez " + healingAmount + " points de vie.");
     }
+
 }

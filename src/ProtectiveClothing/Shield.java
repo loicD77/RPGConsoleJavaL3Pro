@@ -1,4 +1,4 @@
-package PotionGroup; // Ajoutez le bon package selon votre structure de projet
+package ProtectiveClothing; // Déplacez Shield dans le même package que ProtectionItem
 
 import Player.Player;
 

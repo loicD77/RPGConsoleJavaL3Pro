@@ -1,3 +1,7 @@
+package ProtectiveOriginal; // Déclaration correcte du package pour la classe ProtectionItem
+
+import Player.Player; // Import correct de la classe Player
+import Item.Item; // Import correct de la classe Item
 public abstract class ProtectionItem extends Item {
     protected int defense; // Attributs protégés
     protected int price;

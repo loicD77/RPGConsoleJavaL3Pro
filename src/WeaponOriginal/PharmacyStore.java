@@ -1,5 +1,11 @@
 package WeaponOriginal;
 
+
+import Dungeon.DungeonPiece;
+import Player.Player;
+import PotionGroup.Potion;
+import PotionGroup.AntidotePotion;
+import PotionGroup.ParalysisCurePotion;
 import PotionGroup.HealthPotion;
 import PotionGroup.HypnosisCurePotion;
 

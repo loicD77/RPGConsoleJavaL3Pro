@@ -1,3 +1,6 @@
+package MonsterGroup;
+import MonsterOriginal.Monster;
+
 public class Troll extends Monster {
     // Variable pour stocker si le Troll a régénéré sa santé
     private boolean hasRegenerated;

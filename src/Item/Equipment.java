@@ -1,4 +1,5 @@
 package Item;
+import Player.Player;
 
 public class Equipment extends Item {
     private int defensePoints;

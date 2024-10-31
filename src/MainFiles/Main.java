@@ -1,6 +1,15 @@
+package MainFiles;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import Player.Player; // Import de Player depuis le package Player
+import MainFiles.GameMap; // Import de GameMap
+import Dungeon.DungeonPiece;
+import Item.Inventory; // Import de Inventory depuis le package Item
+import MonsterOriginal.MonsterRoom;
+import Dungeon.TreasureRoom;
 
 public class Main {
     public static void main(String[] args) {

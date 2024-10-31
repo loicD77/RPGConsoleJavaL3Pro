@@ -1,5 +1,6 @@
 package Item;
-
+import Dungeon.DungeonPiece; // Importez la classe DungeonPiece depuis le package Dungeon
+import Player.Player; // Importez la classe Player depuis le package Player
 public class Entrance extends DungeonPiece {
     public Entrance() {
         // Appel du constructeur parent avec les bons paramètres

@@ -1,6 +1,8 @@
 package WeaponOriginal;
 
 import MonsterOriginal.Monster;
+import MonsterGroup.BankBoss;
+import Player.Player; // Assurez-vous que cet import est présent
 
 import java.util.Scanner;
 

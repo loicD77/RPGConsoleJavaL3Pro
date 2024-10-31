@@ -1,5 +1,11 @@
-package protection; // Assurez-vous que c'est bien le package où vous souhaitez classer ProtectionItem
+package ProtectiveClothing;
+import ProtectiveClothing.ProtectionItem;
+import ProtectiveClothing.Armor;
+import ProtectiveClothing.Shield;
 
+
+import Item.Item; // Import de la classe Item
+import Player.Player; // Import de la classe Player
 
 public abstract class ProtectionItem extends Item {
     protected int defense; // Attributs protégés
@@ -28,6 +34,4 @@ public abstract class ProtectionItem extends Item {
     public int getPrice() {
         return price; // Getter pour le prix
     }
-
-
 }

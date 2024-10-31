@@ -1,4 +1,9 @@
-import MonsterOriginal.StrongMonster;
+package MonsterGroup;
+
+import MonsterGroup.StrongMonster; // Import corrigé
+import MonsterGroup.FinalBoss; // Import du boss final, si nécessaire
+import Dungeon.DungeonPiece;
+import Player.Player;
 
 public class FinalBossDungeon extends DungeonPiece {
     public FinalBossDungeon() {

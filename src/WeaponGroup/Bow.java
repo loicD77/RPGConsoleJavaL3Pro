@@ -1,4 +1,7 @@
+package WeaponGroup;
+
 import WeaponOriginal.Weapon;
+import Player.Player;
 
 public class Bow extends Weapon {
     public Bow() {
@@ -18,6 +21,6 @@ public class Bow extends Weapon {
     @Override
     public void use(Player player) {
         System.out.println("Vous utilisez l'arc pour tirer une flèche !");
-        // Ajoute toute logique pour affecter le joueur ou autres actions, si nécessaire
+        // Ajoutez ici toute logique pour affecter le joueur ou autres actions
     }
 }

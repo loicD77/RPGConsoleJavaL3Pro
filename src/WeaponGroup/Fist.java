@@ -1,5 +1,8 @@
 package WeaponGroup;
 
+import WeaponOriginal.Weapon;
+import Player.Player;
+
 public class Fist extends Weapon {
     public Fist() {
         super("Mains Nues", "Utiliser ses petites mains !", 3, 0); // Donnez-lui un nom et des dégâts de base.

@@ -1,10 +1,16 @@
-package MonsterOriginal;
+package MonsterGroup; // Assurez-vous que le package est bien 'MonsterGroup'
 
 import MonsterOriginal.Monster;
 
 public class StrongMonster extends Monster {
+    // Constructeur par défaut avec des valeurs spécifiques
     public StrongMonster() {
-        super("Monstre Fort", "Un monstre redoutable et puissant.", 80, 15, 10, 3, 20, 12); // Ajout du paramètre "défense"
+        super("Monstre Fort", "Un monstre redoutable et puissant.", 80, 15, 10, 3, 20, 12);
+    }
+
+    // Constructeur avec paramètres
+    public StrongMonster(String name, String description, int maxHealth, int damage, int level, int specialAttackChance, int experiencePoints, int gold) {
+        super(name, description, maxHealth, damage, level, specialAttackChance, experiencePoints, gold);
     }
 
     @Override

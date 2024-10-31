@@ -1,4 +1,8 @@
 package ProtectiveClothing;
+
+import ProtectiveOriginal.ProtectionItem; // Import correct de ProtectionItem
+import Player.Player; // Import de la classe Player
+
 public class Helmet extends ProtectionItem {
     public Helmet(String name, String description, int defense, int price) {
         super(name, description, defense, price);
@@ -18,4 +22,3 @@ public class Helmet extends ProtectionItem {
                 "  \\___/  ";
     }
 }
-

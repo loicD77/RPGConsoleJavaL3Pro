@@ -1,5 +1,7 @@
 package WeaponOriginal;
 
+import Item.Item; // Importez la classe Item
+
 public abstract class Weapon extends Item {
     protected int damage; // Dégâts infligés par l'arme
     private int gold; // Ajoutez cette variable pour stocker l'or
@@ -12,7 +14,6 @@ public abstract class Weapon extends Item {
     public int getDamage() {
         return damage; // Retourne les dégâts
     }
-
 
     public int getGold() {
         return gold; // Assurez-vous de renvoyer l'or

@@ -1,13 +1,11 @@
-public class Gloves extends ProtectionItem {
-    private int defense; // Défense fournie par les gants
+package ProtectiveClothing;
 
+import ProtectiveOriginal.ProtectionItem; // Assurez-vous que ce chemin correspond à la classe ProtectionItem
+import Player.Player; // Import de la classe Player
+
+public class Gloves extends ProtectionItem {
     public Gloves(String name, String description, int defense, int price) {
         super(name, description, defense, price); // Appel du constructeur de ProtectionItem
-        this.defense = defense;
-    }
-
-    public int getDefense() {
-        return defense; // Renvoie la défense des gants
     }
 
     @Override
@@ -20,7 +18,7 @@ public class Gloves extends ProtectionItem {
     @Override
     public void use(Player player) {
         // Logique pour l'utilisation des gants, par exemple augmenter la défense du joueur
-        System.out.println("Vous portez les gants et augmentez votre défense de " + defense + " points.");
-        player.increaseDefense(defense); // Assurez-vous que Player a une méthode increaseDefense(int)
+        System.out.println("Vous portez les gants et augmentez votre défense de " + getDefense() + " points.");
+        player.increaseDefense(getDefense()); // Assurez-vous que Player a une méthode increaseDefense(int)
     }
 }

@@ -1,3 +1,7 @@
+package MonsterGroup;
+import MonsterOriginal.Monster;
+
+
 public class Dragon extends Monster {
     // Une chaîne pour stocker le type de feu du dragon
     private String fireType;

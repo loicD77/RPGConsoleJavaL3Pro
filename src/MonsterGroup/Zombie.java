@@ -1,3 +1,8 @@
+package MonsterGroup;
+
+import MonsterOriginal.Monster;
+import Player.Player;
+
 public class Zombie extends Monster {
     private boolean hasResurrected;
 
@@ -41,9 +46,30 @@ public class Zombie extends Monster {
 
     @Override
     public void attack(Player player) {
-        super.attack(player);
-        if (Math.random() < 0.5) {
-            System.out.println("Le zombie a empoisonné le joueur !");
+        int attackType = (int) (Math.random() * 4) + 1;
+        switch (attackType) {
+            case 1:
+                System.out.println("Le Zombie donne un coup de griffes !");
+                player.takeDamage(getBaseDamage());
+                break;
+            case 2:
+                System.out.println("Le Zombie mord avec ses dents pourries !");
+                player.takeDamage(getBaseDamage() + 3);
+                break;
+            case 3:
+                System.out.println("Le Zombie vomit un liquide toxique !");
+                player.takeDamage(getBaseDamage() - 1);
+                if (Math.random() < 0.5) {
+                    System.out.println("Le joueur est empoisonné par le liquide toxique !");
+                }
+                break;
+            case 4:
+                System.out.println("Le Zombie se jette sur le joueur avec toute sa force !");
+                player.takeDamage(getBaseDamage() * 2);
+                break;
+            default:
+                System.out.println("Le Zombie semble confus...");
+                break;
         }
     }
 

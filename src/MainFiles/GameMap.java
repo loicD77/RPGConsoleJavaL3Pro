@@ -1,9 +1,13 @@
-// Classe GameMap mise à jour
+package MainFiles;
+
 import MonsterOriginal.MonsterRoom;
 import WeaponOriginal.PharmacyStore;
 import WeaponOriginal.ProtectionStore;
 import WeaponOriginal.WeaponStore;
-
+import Dungeon.DungeonPiece; // Import de DungeonPiece depuis le package Dungeon
+import Player.Player;
+import Dungeon.TreasureRoom; // Ajout de l'import pour TreasureRoom
+import Dungeon.BossRoom;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -26,7 +30,7 @@ public class GameMap {
                 {'▓', ' ', 'S', ' ', '|', ' ', 'M', ' ', '|', ' ', 'B', ' ', ' ', ' ', '▓'},
                 {'▓', '_', '_', '_', '|', '_', '_', '_', '|', '_', '_', '_', '_', '_', '▓'},
                 {'▓', ' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' ', ' ', '▓'},
-                {'▓', 'R', ' ', '|', 'D', ' ', '|', 'X', ' ', '|', ' ', ' ', ' ', ' ', '▓'},
+                {'▓', 'R', ' ', '|', 'D', ' ', '|', 'X', ' ', '|', ' ', ' ', ' ', ' ', ' ', '▓'},
                 {'▓', '_', '_', '|', '_', '_', '|', '_', '_', '|', '_', '_', '_', '_', '▓'},
                 {'▓', '▓', '▓', '▓', '▓', '▓', '▓', '▓', '▓', '▓', '▓', '▓', '▓', '▓', '▓'}};
 

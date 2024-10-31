@@ -1,6 +1,8 @@
 package WeaponOriginal;
 
-import WeaponGroup.Hammer;
+import Dungeon.DungeonPiece;
+import Player.Player;
+import WeaponGroup.*;
 
 import java.util.ArrayList;
 import java.util.List;

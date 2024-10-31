@@ -1,4 +1,6 @@
 package MonsterOriginal;
+import Entity.GameEntity; // Assurez-vous que l'emplacement est correct
+import Interface.Attackable; // Assurez-vous que l'interface Attackable est bien importée
 
 public class Obstacle extends GameEntity implements Attackable {
     private int health;

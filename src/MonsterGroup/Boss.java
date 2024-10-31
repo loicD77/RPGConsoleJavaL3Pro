@@ -1,4 +1,6 @@
-import MonsterOriginal.Monster;
+package MonsterGroup;
+
+import MonsterOriginal.Monster; // Assurez-vous que ce fichier existe
 
 public class Boss extends Monster {
     private int experiencePoints; // Points d'expérience à gagner en tuant ce boss

@@ -1,4 +1,6 @@
-abstract class GameEntity {
+package Entity;
+
+public abstract class GameEntity {
     protected String name;
 
     public GameEntity(String name) {
@@ -11,4 +13,3 @@ abstract class GameEntity {
 
     public abstract boolean isAlive();
 }
-
