@@ -3,19 +3,19 @@ package PotionGroup;
 public class StatusEffect {
     private String name;
     private int duration; // Durée de l'effet en tours
-    private int power; // Ajout du troisième paramètre
+    private int power; // Puissance de l'effet
     private String description;
 
     public StatusEffect(String name, int duration, int power) {
         this.name = name;
         this.duration = duration;
         this.power = power;
+        this.description = name + " de puissance " + power + " pendant " + duration + " tours.";
     }
 
     public String getName() {
         return name;
     }
-
 
     public String getDescription() {
         return description;

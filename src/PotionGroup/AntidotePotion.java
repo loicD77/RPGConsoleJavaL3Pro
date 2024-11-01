@@ -1,10 +1,17 @@
-package PotionGroup; // Déclarez que cette classe appartient au package PotionGroup
+package PotionGroup;
 
-import PotionGroup.Potion; // Remplacez "autrepackage" par le package réel où la classe Potion est située
+import Player.Player; // Importez la classe Player pour pouvoir l'utiliser dans cette classe
+import PotionGroup.Potion;
 
 public class AntidotePotion extends Potion {
     public AntidotePotion(String name, String description, int healingAmount, int price) {
-        super(name, description, healingAmount, price); // Appelle le constructeur de la classe parent avec tous les paramètres
-        // D'autres initialisations si nécessaires
+        super(name, description, healingAmount, price); // Appelle le constructeur de la classe parente avec tous les paramètres
+    }
+
+    @Override
+    public void use(Player player) {
+        System.out.println("Vous utilisez l'antidote : " + getName());
+        player.restoreHealth(getHealingAmount());
+        player.cureStatusEffect("poison"); // Guérit l'effet de poison
     }
 }

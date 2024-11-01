@@ -1,4 +1,5 @@
 package PotionGroup;
+
 import Player.Player;
 
 public class HealthPotion extends Potion {

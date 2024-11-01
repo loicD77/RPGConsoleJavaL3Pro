@@ -1,4 +1,4 @@
-package MonsterGroup; // Assurez-vous que le package est bien 'MonsterGroup'
+package MonsterGroup;
 
 import MonsterOriginal.Monster;
 
@@ -28,6 +28,7 @@ public class StrongMonster extends Monster {
 
     @Override
     public void takeDamage(int damage) {
+        // Utilisez la méthode `takeDamage` de la classe parente `Monster`
         super.takeDamage(damage);
         if (!isAlive()) {
             System.out.println("Le Monstre Fort s'effondre, vaincu !");
@@ -43,3 +44,4 @@ public class StrongMonster extends Monster {
         System.out.println("Points d'expérience à gagner : " + getExperiencePoints());
     }
 }
+

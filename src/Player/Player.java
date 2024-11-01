@@ -435,4 +435,21 @@ public class Player {
             System.out.println("Montant invalide. L'or ne peut pas être négatif.");
         }
     }
+
+    public void cureStatusEffect(String effect) {
+        StatusEffect effectToRemove = null;
+        for (StatusEffect status : activeEffects) {
+            if (status.getName().equalsIgnoreCase(effect)) {
+                effectToRemove = status;
+                break;
+            }
+        }
+        if (effectToRemove != null) {
+            activeEffects.remove(effectToRemove);
+            System.out.println("L'effet de " + effect + " a été soigné !");
+        } else {
+            System.out.println("Aucun effet de " + effect + " à soigner.");
+        }
+    }
 }
+
