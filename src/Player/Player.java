@@ -115,11 +115,15 @@ public class Player {
             if (item instanceof Weapon && item.getName().equals(weaponName)) {
                 equippedWeapon = (Weapon) item;
                 System.out.println("Vous avez équipé " + equippedWeapon.getName() + ".");
+                if (equippedWeapon.getName().equalsIgnoreCase("Marteau")) {
+                    System.out.println("Vous avez maintenant accès aux attaques spécifiques du Marteau.");
+                }
                 return; // Quitte la méthode après avoir équipé l'arme
             }
         }
         System.out.println("L'arme " + weaponName + " n'est pas dans votre inventaire.");
     }
+
 
     public void equipArmor(Armor armor) {
         if (armor != null && inventory.contains(armor)) {
@@ -191,14 +195,23 @@ public class Player {
         level++;
         experience = 0; // Remet l'expérience à zéro après le niveau supérieur
         experienceToNextLevel += 50; // Augmente les points nécessaires pour le prochain niveau (par exemple)
+        int previousMaxHealth = maxHealth; // Sauvegarde la valeur des PV max précédents
         maxHealth += 20; // Augmente la santé maximale
-        health = maxHealth; // Restaure la santé maximale
+
+        // Si la vie actuelle est supérieure à la nouvelle santé maximale, on la restreint
+        if (health > maxHealth) {
+            health = maxHealth;
+        }
+
         strength += 5; // Améliore les statistiques
         agility += 5;
         intelligence += 5;
         defense += 5;
+
         System.out.println("Vous avez atteint le niveau " + level + "! Toutes vos statistiques ont été améliorées.");
+        System.out.println("Vos PV maximums sont maintenant de " + maxHealth + ". Vous avez toujours " + health + " points de vie actuels.");
     }
+
     public String getAsciiFace() {
         return asciiFace;
     }
@@ -261,12 +274,18 @@ public class Player {
     }
 
     public void takeDamage(int damage) {
-        int totalDamage = damage - defense; // Soustraire la défense
-        if (totalDamage < 0) totalDamage = 0; // Pas de dégâts négatifs
-        health -= totalDamage;
-        if (health < 0) health = 0; // Prévenir que la santé ne devienne négative
-        System.out.println(name + " a subi " + totalDamage + " points de dégâts. Santé actuelle : " + health);
+        // Appliquer les dégâts au joueur sans ajustement
+        health -= damage;
+
+        // Empêcher la santé de descendre en dessous de zéro
+        if (health < 0) {
+            health = 0;
+        }
+
+        // Afficher les informations sur les dégâts reçus
+        System.out.println(name + " a subi " + damage + " points de dégâts. Santé actuelle : " + health);
     }
+
 
     public String getName() {
         return name;
@@ -293,14 +312,49 @@ public class Player {
     }
 
     public void attack(Attackable target, int attackType) {
-        int damage = calculateDamage(attackType); // Calcul des dégâts en fonction du type d'attaque
+        int damage;
+
+        // Si une arme est équipée, vérifier son type et calculer les dégâts en conséquence
+        if (equippedWeapon != null) {
+            if (equippedWeapon.getName().equalsIgnoreCase("Marteau")) {
+                damage = calculateHammerAttackDamage(attackType);
+            } else if (equippedWeapon.getName().equalsIgnoreCase("Arc")) {
+                damage = calculateBowAttackDamage(attackType);
+            } else if (equippedWeapon.getName().equalsIgnoreCase("Hache")) {
+                damage = calculateAxeAttackDamage(attackType);
+            } else {
+                damage = calculateStandardAttackDamage(attackType); // Peut être personnalisé pour chaque arme
+            }
+        } else {
+            // Si aucune arme n'est équipée, utiliser les attaques standard du joueur
+            damage = calculateStandardAttackDamage(attackType);
+        }
+
         target.takeDamage(damage);
         System.out.println(name + " a attaqué " + target.getName() + " et a infligé " + damage + " points de dégâts.");
     }
 
 
+    private int calculateBowAttackDamage(int attackType) {
+        switch (attackType) {
+            case 1: // Tir précis
+                return 15;
+            case 2: // Tir en cloche
+                return 25;
+            case 3: // Tir rapide
+                return 20;
+            case 4: // Tir multiple
+                return 35;
+            default:
+                System.out.println("Type d'attaque non reconnu. Aucun dégât infligé.");
+                return 0;
+        }
+    }
+
+
+
     // Exemple de méthode pour calculer les dégâts en fonction du type d'attaque
-    private int calculateDamage(int attackType) {
+    private int calculateStandardAttackDamage(int attackType) {
         switch (attackType) {
             case 1: // Coup de poing
                 return 10;
@@ -315,6 +369,56 @@ public class Player {
                 return 0;
         }
     }
+
+    private int calculateHammerAttackDamage(int attackType) {
+        switch (attackType) {
+            case 1: // Coup de Marteau
+                return 20;
+            case 2: // Attaque puissante du Marteau
+                return 40;
+            case 3: // Attaque rapide du Marteau
+                return 30;
+            case 4: // Attaque spéciale du Marteau
+                return 50;
+            default:
+                System.out.println("Type d'attaque non reconnu. Aucun dégât infligé.");
+                return 0;
+        }
+    }
+
+    public void displayAttackOptions() {
+        if (equippedWeapon != null) {
+            if (equippedWeapon.getName().equalsIgnoreCase("Marteau")) {
+                System.out.println("Choisissez votre type d'attaque : (1: Coup de Marteau, 2: Attaque puissante du Marteau, 3: Attaque rapide du Marteau, 4: Attaque spéciale du Marteau) : ");
+            } else if (equippedWeapon.getName().equalsIgnoreCase("Arc")) {
+                System.out.println("Choisissez votre type d'attaque : (1: Tir précis, 2: Tir en cloche, 3: Tir rapide, 4: Tir multiple) : ");
+            } else if (equippedWeapon.getName().equalsIgnoreCase("Hache")) {
+                System.out.println("Choisissez votre type d'attaque : (1: Coup de Hache, 2: Attaque puissante de la Hache, 3: Attaque rapide de la Hache, 4: Attaque tourbillon de la Hache) : ");
+            } else {
+                System.out.println("Choisissez votre type d'attaque : (1: Coup de poing, 2: Attaque puissante, 3: Attaque rapide, 4: Attaque spéciale) : ");
+            }
+        } else {
+            System.out.println("Choisissez votre type d'attaque : (1: Coup de poing, 2: Attaque puissante, 3: Attaque rapide, 4: Attaque spéciale) : ");
+        }
+    }
+
+    private int calculateAxeAttackDamage(int attackType) {
+        switch (attackType) {
+            case 1: // Coup de Hache
+                return 25;
+            case 2: // Attaque puissante de la Hache
+                return 45;
+            case 3: // Attaque rapide de la Hache
+                return 30;
+            case 4: // Attaque tourbillon de la Hache
+                return 50;
+            default:
+                System.out.println("Type d'attaque non reconnu. Aucun dégât infligé.");
+                return 0;
+        }
+    }
+
+
 
     public void heal(int healingAmount) {
         health += healingAmount;

@@ -1,5 +1,6 @@
 package MonsterOriginal;
 
+import Item.Item;
 import Obstacle.StoneObstacle; // Import de StoneObstacle depuis le package Obstacle
 import Obstacle.WoodenBarrier; // Import de WoodenBarrier depuis le package Obstacle
 import MonsterGroup.Zombie; // Import de Zombie depuis le package MonsterGroup
@@ -8,6 +9,9 @@ import Entity.GameEntity; // Import de GameEntity
 import Player.Player; // Import de Player
 import MonsterOriginal.Monster;
 import Dungeon.DungeonPiece;
+import PotionGroup.Potion;
+import ProtectiveClothing.ProtectionItem;
+import WeaponOriginal.Weapon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,47 +92,89 @@ public class MonsterRoom extends DungeonPiece {
     private void handleMonster(Player player, Monster monster) {
         System.out.println("Un " + monster.getName() + " apparaît !");
 
-        Scanner scanner = new Scanner(System.in);
-        // Combat contre le monstre
-        while (player.isAlive() && monster.isAlive()) {
-            // Tour du joueur
-            System.out.println("Que voulez-vous faire ? (1: Attaquer, 2: Fuire)");
-            int choice = scanner.nextInt();
+        boolean resting = false;
+        int restTurns = 0;
 
-            if (choice == 1) {
-                System.out.println("Choisissez votre type d'attaque : (1: Coup de poing, 2: Attaque puissante, 3: Attaque rapide, 4: Attaque spéciale) : ");
-                int attackType = scanner.nextInt();
-                player.attack(monster, attackType); // Appel de la méthode pour attaquer le monstre
-                System.out.println("Vous avez attaqué " + monster.getName() + ". PV restants : " + monster.getHealth());
-                if (!monster.isAlive()) {
-                    System.out.println("Vous avez vaincu " + monster.getName() + " !");
-                    player.gainExperience(monster.getExperiencePoints());
-                    int reward = random.nextInt(20) + 5; // Gain aléatoire en or
-                    player.addGold(reward);
-                    System.out.println("Vous avez gagné " + reward + " pièces d'or.");
-                    break;
+        while (player.isAlive() && monster.isAlive()) {
+            if (resting) {
+                restTurns--;
+                player.restoreHealth(50);
+                System.out.println(player.getName() + " se repose et regagne 50 points de vie. Points de vie actuels : " + player.getHealth() + "/" + player.getMaxHealth());
+                if (restTurns == 0) {
+                    resting = false;
                 }
-            } else if (choice == 2) {
-                System.out.println("Vous avez fui le combat contre le " + monster.getName() + " !");
-                return;
             } else {
-                System.out.println("Choix invalide, veuillez réessayer.");
-                continue;
+                System.out.println("Que voulez-vous faire ? (1: Attaquer, 2: Fuire, 3: Se reposer, 4: Utiliser un objet de l'inventaire)");
+                Scanner scanner = new Scanner(System.in);
+                int choice = scanner.nextInt();
+
+                if (choice == 1) {
+                    // Appeler l'option d'attaque ici
+                    player.displayAttackOptions();
+                    int attackType = scanner.nextInt();
+                    player.attack(monster, attackType); // Attaque le monstre
+
+                } else if (choice == 2) {
+                    System.out.println("Vous avez fui !");
+                    return;
+
+                } else if (choice == 3) {
+                    resting = true;
+                    restTurns = 2;
+                    System.out.println(player.getName() + " commence à se reposer pour 2 tours et regagnera des PV.");
+
+                } else if (choice == 4) {
+                    System.out.println("Vous fouillez dans votre inventaire.");
+                    player.showInventory();
+                    System.out.println("Que voulez-vous utiliser ? (Entrez le nom de l'objet, ou tapez 'annuler' pour revenir en arrière)");
+                    scanner.nextLine();  // Consommer la ligne
+                    String itemChoice = scanner.nextLine();
+                    if (!itemChoice.equalsIgnoreCase("annuler")) {
+                        Item itemToUse = player.getInventory().findItemByName(itemChoice);
+                        if (itemToUse != null) {
+                            if (itemToUse instanceof Weapon) {
+                                player.equipWeapon(itemChoice);
+                            } else if (itemToUse instanceof ProtectionItem) {
+                                player.equipProtectionItem((ProtectionItem) itemToUse);
+                            } else if (itemToUse instanceof Potion) {
+                                ((Potion) itemToUse).use(player);
+
+                                // Récupérer l'index de l'objet dans l'inventaire
+                                int itemIndex = player.getInventory().getItems().indexOf(itemToUse);
+
+                                // Si l'objet est trouvé, supprimer par index
+                                if (itemIndex != -1) {
+                                    player.getInventory().dropItem(itemIndex);
+                                } else {
+                                    System.out.println("Erreur : Impossible de trouver l'objet dans l'inventaire.");
+                                }
+                            }
+                        } else {
+                            System.out.println("L'objet n'est pas dans votre inventaire.");
+                        }
+                    }
+
+                } else {
+                    System.out.println("Choix invalide.");
+                }
             }
 
-            // Tour du monstre (si encore en vie)
-            if (monster.isAlive()) {
-                // Puisque `attack()` ne renvoie rien (void), pas besoin de l'assigner à une variable
-                monster.attack(player);
-                System.out.println(monster.getName() + " vous attaque. Vos PV restants : " + player.getHealth());
+            if (!monster.isAlive()) {
+                System.out.println("Vous avez vaincu " + monster.getName() + " !");
+                player.gainExperience(monster.getExperiencePoints());
+                player.addGold(monster.getGold());
+                break;
+            }
 
-                if (!player.isAlive()) {
-                    System.out.println("Vous avez été vaincu par " + monster.getName() + "...");
-                    break;
-                }
+            // Le monstre attaque
+            monster.attack(player);
+            if (!player.isAlive()) {
+                System.out.println("Vous avez été vaincu par " + monster.getName() + "...");
+                break;
             }
         }
     }
+
 
     private void shuffleEntities() {
         // Mélanger les entités pour un ordre aléatoire

@@ -5,10 +5,18 @@ import Player.Player;
 
 public class Zombie extends Monster {
     private boolean hasResurrected;
+    private boolean isResting;
+    private boolean isPlayerPoisoned;
+    private int poisonTurns;
+    private int attackBlockTurns;
 
     public Zombie(int playerLevel) {
         super("Zombie", "Mort-vivant", 30, 5, playerLevel, 10, 15, 12);
         this.hasResurrected = false;
+        this.isResting = false;
+        this.isPlayerPoisoned = false;
+        this.poisonTurns = 0;
+        this.attackBlockTurns = 0;
     }
 
     @Override
@@ -46,26 +54,38 @@ public class Zombie extends Monster {
 
     @Override
     public void attack(Player player) {
+        if (isResting) {
+            System.out.println("Le Zombie est en train de se reposer et ne peut pas attaquer ce tour-ci.");
+            isResting = false;
+            return;
+        }
+
+        if (attackBlockTurns > 0) {
+            System.out.println("Le joueur ne peut pas attaquer pendant encore " + attackBlockTurns + " tour(s).");
+            attackBlockTurns--;
+        }
+
         int attackType = (int) (Math.random() * 4) + 1;
         switch (attackType) {
             case 1:
-                System.out.println("Le Zombie donne un coup de griffes !");
-                player.takeDamage(getBaseDamage());
+                System.out.println("Le Zombie inflige une morsure toxique !");
+                player.takeDamage(5);
+                isPlayerPoisoned = true;
+                poisonTurns = -1; // Le poison dure jusqu'à la fin du combat
                 break;
             case 2:
-                System.out.println("Le Zombie mord avec ses dents pourries !");
-                player.takeDamage(getBaseDamage() + 3);
+                System.out.println("Le Zombie inflige une attaque féroce qui empêche le joueur d'attaquer pendant 3 tours !");
+                player.takeDamage(10);
+                attackBlockTurns = 3;
                 break;
             case 3:
-                System.out.println("Le Zombie vomit un liquide toxique !");
-                player.takeDamage(getBaseDamage() - 1);
-                if (Math.random() < 0.5) {
-                    System.out.println("Le joueur est empoisonné par le liquide toxique !");
-                }
+                System.out.println("Le Zombie donne un coup puissant !");
+                player.takeDamage(15);
                 break;
             case 4:
-                System.out.println("Le Zombie se jette sur le joueur avec toute sa force !");
-                player.takeDamage(getBaseDamage() * 2);
+                System.out.println("Le Zombie se jette sur le joueur avec toute sa force et inflige 40 dégâts, mais se repose ensuite.");
+                player.takeDamage(40);
+                isResting = true;
                 break;
             default:
                 System.out.println("Le Zombie semble confus...");

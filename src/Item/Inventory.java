@@ -95,6 +95,8 @@ public class Inventory {
         }
     }
 
+
+
     public Item findItemByName(String itemName) {
         for (Item item : items) {
             if (item.getName().equalsIgnoreCase(itemName)) {
