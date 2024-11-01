@@ -1,6 +1,6 @@
 package ProtectiveClothing;
 
-import ProtectiveOriginal.ProtectionItem; // Assurez-vous d'utiliser le bon package ici
+import ProtectiveClothing.ProtectionItem; // Corrigez l'import vers le bon package
 import Player.Player;
 
 public class Pants extends ProtectionItem {
@@ -18,5 +18,10 @@ public class Pants extends ProtectionItem {
     public String asciiArt() {
         return "  |PANTS|  \n" +
                 "  /    \\  \n";
+    }
+
+    @Override
+    public String getDescription() {
+        return String.format("%s (Défense: %d, Prix: %d)", getName(), getDefense(), getPrice());
     }
 }

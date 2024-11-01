@@ -1,6 +1,6 @@
 package ProtectiveClothing;
 
-import ProtectiveOriginal.ProtectionItem; // Assurez-vous que ce chemin correspond à la classe ProtectionItem
+import ProtectiveClothing.ProtectionItem; // Corrigez l'import vers le bon package
 import Player.Player; // Import de la classe Player
 
 public class Gloves extends ProtectionItem {
@@ -20,5 +20,10 @@ public class Gloves extends ProtectionItem {
         // Logique pour l'utilisation des gants, par exemple augmenter la défense du joueur
         System.out.println("Vous portez les gants et augmentez votre défense de " + getDefense() + " points.");
         player.increaseDefense(getDefense()); // Assurez-vous que Player a une méthode increaseDefense(int)
+    }
+
+    @Override
+    public String getDescription() {
+        return String.format("%s (Défense: %d, Prix: %d)", getName(), getDefense(), getPrice());
     }
 }

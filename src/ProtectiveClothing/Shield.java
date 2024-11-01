@@ -21,4 +21,8 @@ public class Shield extends ProtectionItem {
                 "| SHIELD |\n" +
                 " \\______/ ";
     }
+    @Override
+    public String getDescription() {
+        return String.format("%s (Défense: %d, Prix: %d)", getName(), getDefense(), getPrice());
+    }
 }

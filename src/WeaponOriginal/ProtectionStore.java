@@ -5,6 +5,11 @@ import Player.Player;
 import ProtectiveClothing.ProtectionItem;
 import ProtectiveClothing.Armor;
 import ProtectiveClothing.Shield;
+import ProtectiveClothing.Helmet;
+import ProtectiveClothing.Gloves;
+import ProtectiveClothing.Boots;
+import ProtectiveClothing.Pants;
+
 
 
 import java.util.ArrayList;
@@ -21,6 +26,15 @@ public class ProtectionStore extends DungeonPiece {
         protectionItems = new ArrayList<>();
         protectionItems.add(new Armor("Armure légère", "Une armure offrant une protection de base.", 5, 100));
         protectionItems.add(new Shield("Bouclier en bois", "Un bouclier simple mais robuste.", 3, 75));
+        protectionItems.add(new Armor("Armure de fer", "Une armure résistante offrant une meilleure protection.", 10, 200));
+        protectionItems.add(new Shield("Bouclier de fer", "Un bouclier solide qui réduit grandement les dégâts.", 8, 150));
+        protectionItems.add(new Helmet("Casque de chevalier", "Un casque robuste protégeant la tête des attaques.", 6, 120));
+        protectionItems.add(new Gloves("Gants en cuir renforcé", "Des gants qui améliorent la défense et l'agilité.", 4, 50));
+        protectionItems.add(new Boots("Bottes de combat", "Des bottes résistantes offrant une protection et une meilleure mobilité.", 5, 100));
+        protectionItems.add(new Pants("Jambières en métal", "Des jambières offrant une bonne protection pour les jambes.", 7, 130));
+        protectionItems.add(new Shield("Bouclier magique", "Un bouclier enchanté réduisant les dégâts magiques.", 10, 300));
+        protectionItems.add(new Armor("Armure en mythril", "Une armure légère et extrêmement résistante, connue pour ses propriétés protectrices.", 15, 500));
+
     }
 
     @Override
@@ -124,6 +138,10 @@ public class ProtectionStore extends DungeonPiece {
                 "     |      [========]       |     \n" +
                 "     |     |  Armure  |      |     \n" +
                 "     |     | Bouclier |      |     \n" +
+                "     |     |  Casque  |      |     \n" +
+                "     |     |  Gants   |      |     \n" +
+                "     |     |  Bottes  |      |     \n" +
+                "     |     | Pantalon |      |     \n" +
                 "     |      [========]       |     \n" +
                 "     |                       |     \n" +
                 "     |    Personnage :       |     \n" +
@@ -132,4 +150,5 @@ public class ProtectionStore extends DungeonPiece {
                 "     |         / \\           |     \n" +
                 "     |_______________________|     \n";
     }
+
 }

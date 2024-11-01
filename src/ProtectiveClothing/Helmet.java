@@ -1,6 +1,6 @@
 package ProtectiveClothing;
 
-import ProtectiveOriginal.ProtectionItem; // Import correct de ProtectionItem
+import ProtectiveClothing.ProtectionItem; // Corrigez l'import vers le bon package
 import Player.Player; // Import de la classe Player
 
 public class Helmet extends ProtectionItem {
@@ -20,5 +20,9 @@ public class Helmet extends ProtectionItem {
                 "  /   \\  \n" +
                 " | HELM |\n" +
                 "  \\___/  ";
+    }
+    @Override
+    public String getDescription() {
+        return String.format("%s (Défense: %d, Prix: %d)", getName(), getDefense(), getPrice());
     }
 }

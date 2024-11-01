@@ -274,17 +274,18 @@ public class Player {
     }
 
     public void takeDamage(int damage) {
-        // Appliquer les dégâts au joueur sans ajustement
-        health -= damage;
+        int defenseReduction = defense / 2; // Réduction des dégâts grâce à la défense
+        int reducedDamage = damage - defenseReduction;
+        reducedDamage = Math.max(reducedDamage, 1); // Assure un minimum de 1 dégât
+        health -= reducedDamage;
+        health = Math.max(health, 0); // Empêche la santé de descendre en dessous de 0
 
-        // Empêcher la santé de descendre en dessous de zéro
-        if (health < 0) {
-            health = 0;
-        }
-
-        // Afficher les informations sur les dégâts reçus
-        System.out.println(name + " a subi " + damage + " points de dégâts. Santé actuelle : " + health);
+        System.out.println(name + " a subi " + reducedDamage + " points de dégâts. " +
+                "Réduction de " + defenseReduction + " grâce à la défense. " +
+                "Santé actuelle : " + health);
     }
+
+
 
 
     public String getName() {
@@ -352,6 +353,16 @@ public class Player {
     }
 
 
+    public void useProtectionItem(String itemName) {
+        Item itemToUse = inventory.findItemByName(itemName);
+        if (itemToUse != null && itemToUse instanceof ProtectionItem) {
+            ProtectionItem protectionItem = (ProtectionItem) itemToUse;
+            protectionItem.use(this);
+            System.out.println("Vous avez utilisé " + itemName + " pour augmenter votre défense.");
+        } else {
+            System.out.println("Cet objet de protection n'est pas dans votre inventaire.");
+        }
+    }
 
     // Exemple de méthode pour calculer les dégâts en fonction du type d'attaque
     private int calculateStandardAttackDamage(int attackType) {
