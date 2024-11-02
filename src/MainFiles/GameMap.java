@@ -4,6 +4,7 @@ import MonsterOriginal.MonsterRoom;
 import WeaponOriginal.PharmacyStore;
 import WeaponOriginal.ProtectionStore;
 import WeaponOriginal.WeaponStore;
+import WeaponOriginal.SecretStore; // Import de SecretStore
 import Dungeon.DungeonPiece; // Import de DungeonPiece depuis le package Dungeon
 import Player.Player;
 import Dungeon.TreasureRoom; // Ajout de l'import pour TreasureRoom
@@ -37,10 +38,11 @@ public class GameMap {
         pieces = new HashMap<>();
         pieces.put('W', new WeaponStore("Magasin d'Armes", "Un endroit pour acheter des armes.", 1));
         pieces.put('P', new PharmacyStore("Pharmacie", "Un endroit pour acheter des potions.", 1));
-        pieces.put('B', new BossRoom("Salle du Boss", "Une pièce sombre où se cache le boss final.", 1));
+        pieces.put('B', new BossRoom("Salle du Boss", "Une pièce sombre où se cache le boss final.", 5));
         pieces.put('T', new TreasureRoom("Salle du Trésor", "Un endroit pour gagner des récompenses.", 1));
-        pieces.put('M', new MonsterRoom("Salle des Monstres", "Des créatures dangereuses rôdent ici.", 2));
+        pieces.put('M', new MonsterRoom("Salle des Monstres", "Des créatures dangereuses rôdent ici.", 1));
         pieces.put('R', new ProtectionStore("Magasin de Protection", "Achète des armures pour te protéger.", 1));
+        pieces.put('S', new SecretStore("Magasin Secret", "Un endroit secret pour acheter des objets originals", 1)); // Ajout du magasin secret 'S'
 
         playerX = 1;  // Position de départ du joueur
         playerY = 1;  // Position de départ du joueur

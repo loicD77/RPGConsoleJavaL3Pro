@@ -30,4 +30,6 @@ public abstract class Weapon extends Item {
         // Logique par défaut pour utiliser une arme
         System.out.println("Vous utilisez l'arme !");
     }
+
+    public abstract int calculateAttackDamage(int attackType);
 }

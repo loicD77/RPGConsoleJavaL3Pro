@@ -1,28 +1,35 @@
-package ProtectiveClothing; // Déplacez Shield dans le même package que ProtectionItem
+package ProtectiveClothing;
 
 import Player.Player;
 
 public class Shield extends ProtectionItem {
+    // Constructeur de la classe Shield
     public Shield(String name, String description, int defense, int price) {
         super(name, description, defense, price);
     }
 
     @Override
-    public void use(Player player) {
-        System.out.println("Vous utilisez " + getName() + ", augmentant votre défense de " + getDefense() + " points.");
-        player.increaseDefense(getDefense());
+    public String asciiArt() {
+        return
+                "   ____  \n" +
+                        "  / __ \\ \n" +
+                        " / /  \\ \\\n" +
+                        "/_/    \\_\\\n";
     }
 
     @Override
-    public String asciiArt() {
-        return "  ______ \n" +
-                " /      \\\n" +
-                "|        |\n" +
-                "| SHIELD |\n" +
-                " \\______/ ";
+    public void use(Player player) {
+        System.out.println("Vous équipez le bouclier et augmentez votre défense de " + defense + " points.");
+        player.increaseDefense(defense);
     }
+
     @Override
     public String getDescription() {
-        return String.format("%s (Défense: %d, Prix: %d)", getName(), getDefense(), getPrice());
+        return String.format("%s (Défense: %d, Prix: %d)", getName(), getDefensePoints(), getPrice());
+    }
+
+    // Méthode pour obtenir les points de défense
+    public int getDefensePoints() {
+        return this.defense;
     }
 }

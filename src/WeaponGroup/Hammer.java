@@ -3,24 +3,22 @@ package WeaponGroup;
 import WeaponOriginal.Weapon;
 import Player.Player;
 
-public class Hammer extends Weapon {
-    public Hammer() {
-        super("Marteau", "Un marteau lourd", 20, 12); // Ajout de la description
+public abstract class Hammer extends Weapon {
+    public Hammer(String name, String description, int damage, int price) {
+        super(name, description, damage, price);
     }
 
     @Override
     public String asciiArt() {
-        return
-                "   _  \n" +
-                        " _|_|_\n" +
-                        "|     |\n" +
-                        "|_____|\n" +
-                        "  | |  \n";
+        return "   ____  \n" +
+                "  |    | \n" +
+                "  |____| \n" +
+                "    ||   \n" +
+                "    ||   \n";
     }
 
     @Override
     public void use(Player player) {
-        System.out.println("Vous utilisez le marteau pour frapper !");
-        // Ajoute toute logique pour affecter le joueur ou d'autres actions, si nécessaire
+        System.out.println("Vous utilisez le " + getName() + " pour attaquer !");
     }
 }

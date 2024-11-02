@@ -16,9 +16,20 @@ public class WeaponStore extends DungeonPiece {
         super(name, description, requiredLevel);
         // Initialiser la liste des armes disponibles dans le magasin
         weapons = new ArrayList<>();
-        weapons.add(new Axe());
-        weapons.add(new Bow());
-        weapons.add(new Hammer());
+        initializeWeapons();
+    }
+
+    private void initializeWeapons() {
+        // Utiliser des classes concrètes au lieu de classes abstraites
+        weapons.add(new EpeeHero());  // Classe concrète héritant de Sword
+        weapons.add(new LameSombre());  // Classe concrète héritant de Sword
+        weapons.add(new SabreLumiere());  // Classe concrète héritant de Sword
+        weapons.add(new EpeeDragon());  // Classe concrète héritant de Sword
+
+        weapons.add(new HacheDeGuerre());  // Classe concrète héritant de Axe
+        weapons.add(new HacheFeu());  // Classe concrète héritant de Axe
+        weapons.add(new HacheGelee());  // Classe concrète héritant de Axe
+        weapons.add(new HacheBerserker());  // Classe concrète héritant de Axe
     }
 
     @Override
@@ -79,6 +90,7 @@ public class WeaponStore extends DungeonPiece {
         // Retour à la carte après avoir quitté le magasin
         System.out.println("Vous êtes de retour sur la carte.");
     }
+
 
     public void showWeapons() {
         System.out.println("Bienvenue au magasin d'armes !");

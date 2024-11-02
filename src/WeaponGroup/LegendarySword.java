@@ -1,7 +1,7 @@
 package WeaponGroup;
 
-import WeaponOriginal.Weapon; // Import de la classe Weapon du package WeaponOriginal
-import Player.Player; // Import de la classe Player
+import WeaponOriginal.Weapon;
+import Player.Player;
 
 public class LegendarySword extends Weapon {
     public LegendarySword() {
@@ -23,10 +23,28 @@ public class LegendarySword extends Weapon {
 
     @Override
     public void use(Player player) {
-        // Logique pour utiliser l'épée, par exemple, infliger des dégâts à un ennemi
         System.out.println("Vous utilisez l'" + getName() + " pour attaquer !");
-        // Vous pouvez également appeler des méthodes sur le joueur ici si nécessaire
-        // Par exemple : augmenter la force ou changer l'arme équipée du joueur
         player.equipWeapon(getName());
+    }
+
+    @Override
+    public int calculateAttackDamage(int attackType) {
+        switch (attackType) {
+            case 1: // Frappe légendaire
+                System.out.println("Vous effectuez une frappe légendaire.");
+                return getDamage() + 20;
+            case 2: // Attaque mythique
+                System.out.println("Vous lancez une attaque mythique.");
+                return getDamage() + 40;
+            case 3: // Estoc de légende
+                System.out.println("Vous réalisez un estoc de légende.");
+                return getDamage() + 30;
+            case 4: // Attaque divine
+                System.out.println("Vous lancez une attaque divine.");
+                return getDamage() + 60;
+            default:
+                System.out.println("Type d'attaque non reconnu. Aucun dégât infligé.");
+                return 0;
+        }
     }
 }

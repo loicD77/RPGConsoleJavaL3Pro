@@ -3,24 +3,26 @@ package WeaponGroup;
 import WeaponOriginal.Weapon;
 import Player.Player;
 
-public class Sword extends Weapon {
-    public Sword() {
-        super("Épée", "Une épée tranchante", 15, 10); // Ajoutez la description, les dégâts, et le prix
+public abstract class Sword extends Weapon {
+    public Sword(String name, String description, int damage, int price) {
+        super(name, description, damage, price);
     }
 
     @Override
     public String asciiArt() {
-        return
-                "  /\\  \n" +
-                        " /  \\ \n" +
-                        "|    |\n" +
-                        " \\  / \n" +
-                        "  \\/  \n";
+        return "    />\n" +
+                "   /< \\\n" +
+                "  |   ||\n" +
+                "  |   ||\n" +
+                "  |   ||\n" +
+                " /|___|\\\n" +
+                "|_______|\n" +
+                "  | | |\n" +
+                "  |_|_|\n";
     }
 
     @Override
     public void use(Player player) {
-        System.out.println("Vous utilisez l'épée pour attaquer !");
-        // Ajouter toute logique d'utilisation qui affecte le joueur ou autres actions
+        System.out.println("Vous utilisez la " + getName() + " pour attaquer !");
     }
 }

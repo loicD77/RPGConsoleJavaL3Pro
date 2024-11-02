@@ -74,7 +74,7 @@ public class Player {
         this.defense = 10;
         this.inventory = new Inventory();
         this.unlockedDungeonPieces = new ArrayList<>();
-        this.gold = 0;
+        this.gold = 1000;
         this.activeEffects = new ArrayList<>();
         this.potions = new ArrayList<>();
         this.equippedItems = new Inventory();
@@ -160,13 +160,16 @@ public class Player {
     }
 
     public void addItemToInventory(Item item) {
-        if (inventory.isFull()) {
-            System.out.println("L'inventaire est plein. Vous ne pouvez pas ajouter " + item.getName() + ".");
-            return;
+        boolean isAdded = inventory.addItem(item);
+        if (isAdded) {
+            System.out.println("Vous avez ajouté " + item.getName() + " à votre inventaire.");
+        } else {
+            System.out.println("L'inventaire est plein, impossible d'ajouter cet objet.");
         }
-        inventory.addItem(item);
-        System.out.println("Vous avez ajouté " + item.getName() + " à votre inventaire.");
     }
+
+
+
 
     public int getMaxHealth() {
         return this.maxHealth;
@@ -315,17 +318,9 @@ public class Player {
     public void attack(Attackable target, int attackType) {
         int damage;
 
-        // Si une arme est équipée, vérifier son type et calculer les dégâts en conséquence
+        // Si une arme est équipée, utiliser la méthode polymorphique pour calculer les dégâts
         if (equippedWeapon != null) {
-            if (equippedWeapon.getName().equalsIgnoreCase("Marteau")) {
-                damage = calculateHammerAttackDamage(attackType);
-            } else if (equippedWeapon.getName().equalsIgnoreCase("Arc")) {
-                damage = calculateBowAttackDamage(attackType);
-            } else if (equippedWeapon.getName().equalsIgnoreCase("Hache")) {
-                damage = calculateAxeAttackDamage(attackType);
-            } else {
-                damage = calculateStandardAttackDamage(attackType); // Peut être personnalisé pour chaque arme
-            }
+            damage = equippedWeapon.calculateAttackDamage(attackType);
         } else {
             // Si aucune arme n'est équipée, utiliser les attaques standard du joueur
             damage = calculateStandardAttackDamage(attackType);
@@ -335,10 +330,34 @@ public class Player {
         System.out.println(name + " a attaqué " + target.getName() + " et a infligé " + damage + " points de dégâts.");
     }
 
+    public void useItem(String itemName) {
+        Item itemToUse = inventory.findItemByName(itemName);
+        if (itemToUse != null) {
+            if (itemToUse instanceof Weapon) {
+                equipWeapon(itemToUse.getName());
+                System.out.println("Vous avez équipé l'arme : " + itemToUse.getName());
+            } else if (itemToUse instanceof Potion) {
+                Potion potion = (Potion) itemToUse;
+                potion.use(this);
+                System.out.println("Vous avez utilisé la potion : " + itemName);
+            } else if (itemToUse instanceof ProtectionItem) {
+                ProtectionItem protectionItem = (ProtectionItem) itemToUse;
+                protectionItem.use(this);
+                System.out.println("Vous avez équipé l'objet de protection : " + itemName);
+            } else {
+                System.out.println("Cet objet ne peut pas être utilisé.");
+            }
+        } else {
+            System.out.println("L'objet " + itemName + " n'est pas dans votre inventaire.");
+        }
+    }
+
+
+
 
     private int calculateBowAttackDamage(int attackType) {
         switch (attackType) {
-            case 1: // Tir précis
+            case 1: // Tir précisadd
                 return 15;
             case 2: // Tir en cloche
                 return 25;
@@ -399,19 +418,30 @@ public class Player {
 
     public void displayAttackOptions() {
         if (equippedWeapon != null) {
-            if (equippedWeapon.getName().equalsIgnoreCase("Marteau")) {
-                System.out.println("Choisissez votre type d'attaque : (1: Coup de Marteau, 2: Attaque puissante du Marteau, 3: Attaque rapide du Marteau, 4: Attaque spéciale du Marteau) : ");
+            if (equippedWeapon.getName().equalsIgnoreCase("Épée du Héros")) {
+                System.out.println("Choisissez votre type d'attaque : (1: Coup de héros, 2: Attaque puissante du héros, 3: Frappe rapide du héros, 4: Attaque ultime du héros) : ");
+            } else if (equippedWeapon.getName().equalsIgnoreCase("Lame Sombre")) {
+                System.out.println("Choisissez votre type d'attaque : (1: Coup sombre, 2: Lame foudroyante, 3: Frappe obscure, 4: Attaque fatale de l'ombre) : ");
+            } else if (equippedWeapon.getName().equalsIgnoreCase("Sabre de Lumière")) {
+                System.out.println("Choisissez votre type d'attaque : (1: Coup lumineux, 2: Attaque éclatante, 3: Frappe rapide lumineuse, 4: Éclair de lumière) : ");
+            } else if (equippedWeapon.getName().equalsIgnoreCase("Hache de Guerre")) {
+                System.out.println("Choisissez votre type d'attaque : (1: Coup de hache, 2: Attaque fracassante, 3: Attaque tourbillon, 4: Frappe ultime) : ");
+            } else if (equippedWeapon.getName().equalsIgnoreCase("Hache de Feu")) {
+                System.out.println("Choisissez votre type d'attaque : (1: Coup de feu, 2: Brûlure intense, 3: Lancer de flammes, 4: Tempête de feu) : ");
+            } else if (equippedWeapon.getName().equalsIgnoreCase("Hache Gelée")) {
+                System.out.println("Choisissez votre type d'attaque : (1: Coup gelé, 2: Tempête de glace, 3: Attaque rapide, 4: Avalanche) : ");
+            } else if (equippedWeapon.getName().equalsIgnoreCase("Hache Berserker")) {
+                System.out.println("Choisissez votre type d'attaque : (1: Coup de berserker, 2: Rage dévastatrice, 3: Attaque furieuse, 4: Carnage total) : ");
             } else if (equippedWeapon.getName().equalsIgnoreCase("Arc")) {
                 System.out.println("Choisissez votre type d'attaque : (1: Tir précis, 2: Tir en cloche, 3: Tir rapide, 4: Tir multiple) : ");
-            } else if (equippedWeapon.getName().equalsIgnoreCase("Hache")) {
-                System.out.println("Choisissez votre type d'attaque : (1: Coup de Hache, 2: Attaque puissante de la Hache, 3: Attaque rapide de la Hache, 4: Attaque tourbillon de la Hache) : ");
             } else {
-                System.out.println("Choisissez votre type d'attaque : (1: Coup de poing, 2: Attaque puissante, 3: Attaque rapide, 4: Attaque spéciale) : ");
+                System.out.println("Choisissez votre type d'attaque : (1: Coup basique, 2: Attaque puissante, 3: Frappe rapide, 4: Attaque spéciale) : ");
             }
         } else {
             System.out.println("Choisissez votre type d'attaque : (1: Coup de poing, 2: Attaque puissante, 3: Attaque rapide, 4: Attaque spéciale) : ");
         }
     }
+
 
     private int calculateAxeAttackDamage(int attackType) {
         switch (attackType) {
@@ -463,4 +493,3 @@ public class Player {
         }
     }
 }
-
