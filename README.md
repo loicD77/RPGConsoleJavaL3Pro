@@ -1,5 +1,5 @@
-[source, java]
-----
+
+---
 C:\Users\darras\.jdks\openjdk-20\bin\java.exe "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2022.3.3\lib\idea_rt.jar=65000:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2022.3.3\bin" -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath "C:\Users\darras\OneDrive\Documents\RPG-L3PRO - CopieAP\out\production\RPG-L3PRO" MainFiles.Main
 Entrez le nom de votre personnage : LOIC
 Choisissez un visage ASCII pour votre personnage :
@@ -5693,4 +5693,4 @@ Déplacez-vous (w/a/s/d pour haut/gauche/bas/droite, q pour quitter) :
 
 
 
-----
+---
