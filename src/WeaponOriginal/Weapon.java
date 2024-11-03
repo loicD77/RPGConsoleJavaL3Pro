@@ -32,4 +32,5 @@ public abstract class Weapon extends Item {
     }
 
     public abstract int calculateAttackDamage(int attackType);
+    public abstract String[] getAttackOptions(); // Ajoutez cette méthode abstraite
 }

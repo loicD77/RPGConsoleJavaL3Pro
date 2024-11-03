@@ -67,27 +67,56 @@ public class MonsterRoom extends DungeonPiece {
         System.out.println("Vous rencontrez un obstacle : " + obstacle.getName() + " (PV: " + obstacle.getHealth() + ")");
 
         Scanner scanner = new Scanner(System.in);
-        while (!obstacle.isDestroyed()) {
-            System.out.println("Que voulez-vous faire ? (1: Attaquer, 2: Fuire)");
-            int choice = scanner.nextInt();
+        boolean resting = false;
+        int restTurns = 0;
 
-            if (choice == 1) {
-                System.out.println("Choisissez votre type d'attaque : (1: Coup de poing, 2: Attaque puissante, 3: Attaque rapide, 4: Attaque spéciale) : ");
-                int attackType = scanner.nextInt();
-                player.attack(obstacle, attackType); // Attaque l'obstacle sans affecter de valeur à une variable
-                System.out.println("Vous avez attaqué " + obstacle.getName() + ". PV restants : " + obstacle.getHealth());
-                if (obstacle.isDestroyed()) {
-                    System.out.println("Vous avez détruit l'obstacle : " + obstacle.getName());
-                    int reward = random.nextInt(10) + 1; // Gain aléatoire en or
-                    player.addGold(reward);
-                    System.out.println("Vous avez gagné " + reward + " pièces d'or.");
+        while (!obstacle.isDestroyed()) {
+            if (resting) {
+                restTurns--;
+                player.restoreHealth(50);
+                System.out.println(player.getName() + " se repose et regagne 50 points de vie. Points de vie actuels : " + player.getHealth() + "/" + player.getMaxHealth());
+                if (restTurns == 0) {
+                    resting = false;
                 }
-            } else if (choice == 2) {
-                System.out.println("Vous avez fui !");
-                return;
+            } else {
+                System.out.println("Que voulez-vous faire ? (1: Attaquer, 2: Fuire, 3: Se reposer, 4: Utiliser un objet de l'inventaire)");
+                int choice = scanner.nextInt();
+
+                if (choice == 1) {
+                    // Affiche les options d'attaque disponibles selon l'arme équipée
+                    player.displayAttackOptions();
+
+                    System.out.print("Choisissez votre type d'attaque : ");
+                    int attackType = scanner.nextInt();
+                    player.attack(obstacle, attackType); // Attaque l'obstacle avec la valeur choisie
+                    System.out.println("Vous avez attaqué " + obstacle.getName() + ". PV restants : " + obstacle.getHealth());
+
+                    if (obstacle.isDestroyed()) {
+                        System.out.println("Vous avez détruit l'obstacle : " + obstacle.getName());
+                        int reward = random.nextInt(10) + 1; // Gain aléatoire en or
+                        player.addGold(reward);
+                        System.out.println("Vous avez gagné " + reward + " pièces d'or.");
+                    }
+                } else if (choice == 2) {
+                    System.out.println("Vous avez fui !");
+                    return;
+
+                } else if (choice == 3) {
+                    resting = true;
+                    restTurns = 2;
+                    System.out.println(player.getName() + " commence à se reposer pour 2 tours et regagnera des PV.");
+
+                }  else if (choice == 4) {
+                System.out.println("Vous fouillez dans votre inventaire.");
+                player.displayInventory();
+                // Suppression de la partie où l'utilisateur doit entrer un objet.
+            } else {
+                    System.out.println("Choix invalide. Veuillez réessayer.");
+                }
             }
         }
     }
+
 
     private void handleMonster(Player player, Monster monster) {
         System.out.println("Un " + monster.getName() + " apparaît !");
@@ -109,8 +138,10 @@ public class MonsterRoom extends DungeonPiece {
                 int choice = scanner.nextInt();
 
                 if (choice == 1) {
-                    // Appeler l'option d'attaque ici
+                    // Affiche les options d'attaque disponibles selon l'arme équipée
                     player.displayAttackOptions();
+
+                    System.out.print("Choisissez votre type d'attaque : ");
                     int attackType = scanner.nextInt();
                     player.attack(monster, attackType); // Attaque le monstre
 
@@ -123,38 +154,12 @@ public class MonsterRoom extends DungeonPiece {
                     restTurns = 2;
                     System.out.println(player.getName() + " commence à se reposer pour 2 tours et regagnera des PV.");
 
-                } else if (choice == 4) {
-                    System.out.println("Vous fouillez dans votre inventaire.");
-                    player.displayInventory();
-                    System.out.println("Que voulez-vous utiliser ? (Entrez le nom de l'objet, ou tapez 'annuler' pour revenir en arrière)");
-                    scanner.nextLine();  // Consommer la ligne
-                    String itemChoice = scanner.nextLine();
-                    if (!itemChoice.equalsIgnoreCase("annuler")) {
-                        Item itemToUse = player.getInventory().findItemByName(itemChoice);
-                        if (itemToUse != null) {
-                            if (itemToUse instanceof Weapon) {
-                                player.equipWeapon(itemChoice);
-                            } else if (itemToUse instanceof ProtectionItem) {
-                                player.equipProtectionItem((ProtectionItem) itemToUse);
-                            } else if (itemToUse instanceof Potion) {
-                                ((Potion) itemToUse).use(player);
-
-                                // Récupérer l'index de l'objet dans l'inventaire
-                                int itemIndex = player.getInventory().getItems().indexOf(itemToUse);
-
-                                // Si l'objet est trouvé, supprimer par index
-                                if (itemIndex != -1) {
-                                    player.getInventory().dropItem(itemIndex);
-                                } else {
-                                    System.out.println("Erreur : Impossible de trouver l'objet dans l'inventaire.");
-                                }
-                            }
-                        } else {
-                            System.out.println("L'objet n'est pas dans votre inventaire.");
-                        }
-                    }
-
-                } else {
+                 } else if (choice == 4) {
+                System.out.println("Vous fouillez dans votre inventaire.");
+                player.displayInventory();
+                // Suppression de la partie où l'utilisateur doit entrer un objet.
+            }
+            else {
                     System.out.println("Choix invalide.");
                 }
             }

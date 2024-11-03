@@ -20,25 +20,37 @@ public class LameSombre extends Weapon {
     @Override
     public void use(Player player) {
         System.out.println("Vous utilisez la Lame Sombre pour attaquer !");
+        player.equipWeapon(getName());
     }
 
+    @Override
     public int calculateAttackDamage(int attackType) {
         switch (attackType) {
-            case 1: // Coup d'ombre
+            case 1:
                 System.out.println("Vous effectuez un coup d'ombre avec la Lame Sombre.");
-                return 12;
-            case 2: // Attaque ombragée
+                return getDamage() + 12;
+            case 2:
                 System.out.println("Vous effectuez une attaque ombragée avec la Lame Sombre.");
-                return 25;
-            case 3: // Estoc du néant
+                return getDamage() + 25;
+            case 3:
                 System.out.println("Vous réalisez un estoc du néant avec la Lame Sombre.");
-                return 18;
-            case 4: // Attaque finale des ténèbres
+                return getDamage() + 18;
+            case 4:
                 System.out.println("Vous lancez une attaque finale des ténèbres avec la Lame Sombre.");
-                return 35;
+                return getDamage() + 35;
             default:
                 System.out.println("Type d'attaque non reconnu. Aucun dégât infligé.");
                 return 0;
         }
+    }
+
+    @Override
+    public String[] getAttackOptions() {
+        return new String[]{
+                "Coup d'ombre",
+                "Attaque ombragée",
+                "Estoc du néant",
+                "Attaque finale des ténèbres"
+        };
     }
 }

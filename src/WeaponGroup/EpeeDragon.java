@@ -27,4 +27,13 @@ public class EpeeDragon extends Sword {
                 return 0;
         }
     }
+
+    public String[] getAttackOptions() {
+        return new String[] {
+                "Frappe du Dragon",
+                "Flamme de Dragon",
+                "Coup d'Aile",
+                "Rage du Dragon"
+        };
+    }
 }

@@ -27,5 +27,14 @@ public class EpeeHero extends Sword {
                 return 0;
         }
     }
+
+    public String[] getAttackOptions() {
+        return new String[] {
+                "Coup de Héros",
+                "Attaque Puissante du Héros",
+                "Frappe Rapide du Héros",
+                "Attaque Ultime du Héros"
+        };
+    }
 }
 

@@ -30,21 +30,31 @@ public class LegendarySword extends Weapon {
     @Override
     public int calculateAttackDamage(int attackType) {
         switch (attackType) {
-            case 1: // Frappe légendaire
+            case 1:
                 System.out.println("Vous effectuez une frappe légendaire.");
                 return getDamage() + 20;
-            case 2: // Attaque mythique
+            case 2:
                 System.out.println("Vous lancez une attaque mythique.");
                 return getDamage() + 40;
-            case 3: // Estoc de légende
+            case 3:
                 System.out.println("Vous réalisez un estoc de légende.");
                 return getDamage() + 30;
-            case 4: // Attaque divine
+            case 4:
                 System.out.println("Vous lancez une attaque divine.");
                 return getDamage() + 60;
             default:
                 System.out.println("Type d'attaque non reconnu. Aucun dégât infligé.");
                 return 0;
         }
+    }
+
+    @Override
+    public String[] getAttackOptions() {
+        return new String[]{
+                "Frappe légendaire",
+                "Attaque mythique",
+                "Estoc de légende",
+                "Attaque divine"
+        };
     }
 }

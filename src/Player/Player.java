@@ -3,6 +3,8 @@ package Player;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 
 // Imports des autres packages du projet
 import WeaponOriginal.Weapon;
@@ -32,6 +34,8 @@ public class Player {
 
     private Weapon equippedWeapon; // Arme équipée
     private ProtectionItem equippedProtection; // Équipement de protection générique
+    private Random random = new Random();
+
 
     private int experience;
     private int level;
@@ -124,7 +128,6 @@ public class Player {
         return maxHealth;
     }
 
-    // Mise à jour de la méthode pour équiper un objet de protection
     public void equipProtectionItem(ProtectionItem item) {
         if (item != null && inventory.contains(item)) {
             if (equippedProtection != null) {
@@ -139,6 +142,7 @@ public class Player {
             System.out.println("Cet objet de protection n'est pas dans votre inventaire.");
         }
     }
+
 
 
     public void decreaseDefense(int amount) {
@@ -210,45 +214,66 @@ public class Player {
         return inventory;
     }
 
+
     private int calculateStandardAttackDamage(int attackType) {
+        int baseDamage;
         switch (attackType) {
             case 1: // Coup de poing
-                return 10;
+                baseDamage = 10;
+                break;
             case 2: // Attaque puissante
-                return 20;
+                baseDamage = 20;
+                break;
             case 3: // Attaque rapide
-                return 15;
+                baseDamage = 15;
+                break;
             case 4: // Attaque spéciale
-                return 25;
+                baseDamage = 25;
+                break;
             default:
                 System.out.println("Type d'attaque non reconnu. Aucun dégât infligé.");
                 return 0;
         }
+        // Ajouter la force du joueur comme bonus de dégâts
+        int totalDamage = baseDamage + (strength / 2); // Exemple : bonus de la moitié de la force du joueur
+        return totalDamage;
     }
 
+
     public void takeDamage(int damage) {
+        // Calcul d'esquive basé sur l'agilité
+        int dodgeChance = agility * 2; // Exemple : 20% d'esquive si l'agilité est de 10
+        int randomValue = random.nextInt(100);
+        if (randomValue < dodgeChance) {
+            System.out.println(name + " a esquivé l'attaque grâce à une agilité de " + agility + " !");
+            return; // Le joueur esquive l'attaque, aucun dégât subi
+        }
+
+        // Calcul des dégâts subis avec réduction par la défense
         int defenseReduction = defense / 2; // Réduction des dégâts grâce à la défense
         int reducedDamage = damage - defenseReduction;
         reducedDamage = Math.max(reducedDamage, 1); // Assure un minimum de 1 dégât
         health -= reducedDamage;
         health = Math.max(health, 0); // Empêche la santé de descendre en dessous de 0
 
-        System.out.println(name + " a subi " + reducedDamage + " points de dégâts. " +
-                "Réduction de " + defenseReduction + " grâce à la défense. " +
-                "Santé actuelle : " + health);
+        System.out.println(name + " a subi " + reducedDamage + " points de dégâts. Réduction de " + defenseReduction + " grâce à la défense. Santé actuelle : " + health + ". Grâce à " + strength + " de force du joueur.");
     }
 
     public void heal(int healingAmount) {
         if (healingAmount > 0) {
-            health += healingAmount;
+            int intelligenceBonus = intelligence / 2; // Exemple : Bonus de soin de la moitié de l'intelligence
+            int totalHealing = healingAmount + intelligenceBonus;
+
+            health += totalHealing;
             if (health > maxHealth) {
                 health = maxHealth;
             }
-            System.out.println("Vous avez regagné " + healingAmount + " points de vie. Santé actuelle : " + health + "/" + maxHealth);
+            System.out.println("Vous avez regagné " + totalHealing + " points de vie (bonus de " + intelligenceBonus + " grâce à l'intelligence). Santé actuelle : " + health + "/" + maxHealth);
         } else {
             System.out.println("Montant de soin invalide. La restauration de santé ne peut pas être négative.");
         }
     }
+
 
     public boolean isAlive() {
         return health > 0;
@@ -260,18 +285,19 @@ public class Player {
 
     public void attack(Attackable target, int attackType) {
         int damage = (equippedWeapon != null) ? equippedWeapon.calculateAttackDamage(attackType) : calculateStandardAttackDamage(attackType);
+        damage += strength / 2; // Bonus de force ajouté aux dégâts d'attaque
+
         target.takeDamage(damage);
-        System.out.println(name + " a attaqué " + target.getName() + " et a infligé " + damage + " points de dégâts.");
+        System.out.println(name + " a attaqué " + target.getName() + " et a infligé " + damage + " points de dégâts. Grâce à " + strength + " de force du joueur.");
     }
 
     public void displayAttackOptions() {
         if (equippedWeapon != null) {
+            String[] attackOptions = equippedWeapon.getAttackOptions();
             System.out.println("Choisissez votre type d'attaque :");
-            // Add different attack options based on weapon type
-            System.out.println("1: Attaque standard");
-            System.out.println("2: Attaque puissante");
-            System.out.println("3: Attaque rapide");
-            System.out.println("4: Attaque spéciale");
+            for (int i = 0; i < attackOptions.length; i++) {
+                System.out.println((i + 1) + ": " + attackOptions[i]);
+            }
         } else {
             System.out.println("Choisissez votre type d'attaque :");
             System.out.println("1: Coup de poing");
@@ -280,6 +306,8 @@ public class Player {
             System.out.println("4: Attaque spéciale");
         }
     }
+
+
 
     public void useItem(String itemName) {
         Item itemToUse = inventory.findItemByName(itemName);
@@ -385,6 +413,12 @@ public class Player {
 
         // Utiliser itemNumber pour accéder directement à l'objet à jeter
         Item itemToDiscard = inventory.getItems().get(itemNumber - 1);
+
+        // Si l'objet à jeter est l'arme actuellement équipée
+        if (itemToDiscard instanceof Weapon && itemToDiscard == equippedWeapon) {
+            equippedWeapon = null; // Réinitialiser l'arme actuellement équipée
+            System.out.println("Vous avez déséquipé l'arme : " + itemToDiscard.getName());
+        }
 
         // Si l'objet à jeter est l'élément de protection actuellement équipé
         if (itemToDiscard instanceof ProtectionItem && itemToDiscard == equippedProtection) {

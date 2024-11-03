@@ -25,21 +25,30 @@ public class HacheGelee extends Axe {
     @Override
     public int calculateAttackDamage(int attackType) {
         switch (attackType) {
-            case 1: // Coup gelé
+            case 1:
                 System.out.println("Vous effectuez un coup gelé avec la Hache Gelée.");
                 return getDamage() + 10;
-            case 2: // Tempête de glace
+            case 2:
                 System.out.println("Vous réalisez une tempête de glace avec la Hache Gelée.");
                 return getDamage() + 35;
-            case 3: // Attaque rapide
+            case 3:
                 System.out.println("Vous lancez une attaque rapide avec la Hache Gelée.");
                 return getDamage() + 18;
-            case 4: // Avalanche
+            case 4:
                 System.out.println("Vous déclenchez une avalanche avec la Hache Gelée.");
                 return getDamage() + 45;
             default:
                 System.out.println("Type d'attaque non reconnu. Aucun dégât infligé.");
                 return 0;
         }
+    }
+
+    public String[] getAttackOptions() {
+        return new String[] {
+                "Coup Gelé",
+                "Tempête de Glace",
+                "Attaque Rapide",
+                "Avalanche"
+        };
     }
 }
