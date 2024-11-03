@@ -1,17 +1,16 @@
 package Player;
 
+import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
 // Imports des autres packages du projet
 import WeaponOriginal.Weapon;
+import MainFiles.GameMap; // Assurez-vous d'importer la classe GameMap
+import MainFiles.Main; // Import pour la classe Main
+
+
 import ProtectiveClothing.ProtectionItem;
-import ProtectiveClothing.Armor;
-import ProtectiveClothing.Helmet;
-import ProtectiveClothing.Shield;
-import ProtectiveClothing.Boots;
-import ProtectiveClothing.Pants;
-import ProtectiveClothing.Gloves;
 import Item.Inventory;
 import Item.Item;
 import MonsterOriginal.Monster;
@@ -22,6 +21,8 @@ import MonsterOriginal.Obstacle;
 import MonsterGroup.Boss;
 import Interface.Attackable; // Importez l'interface Attackable pour pouvoir l'utiliser
 
+
+
 public class Player {
     private String name;
     private int health;
@@ -29,8 +30,9 @@ public class Player {
     private int baseDamage = 10;
     private int gold; // Or du joueur
 
-    private Weapon equippedWeapon;
-    private Armor equippedArmor;
+    private Weapon equippedWeapon; // Arme équipée
+    private ProtectionItem equippedProtection; // Équipement de protection générique
+
     private int experience;
     private int level;
     private int defense;
@@ -46,17 +48,13 @@ public class Player {
 
     private List<StatusEffect> activeEffects;
     private List<Potion> potions;
-    private Helmet equippedHelmet;
-    private Shield equippedShield;
-    private Boots equippedBoots;
-    private Pants equippedPants;
-    private Gloves equippedGloves;
 
     private int experiencePoints; // Points d'expérience accumulés
     private int experienceToNextLevel; // Points nécessaires pour passer au niveau suivant
 
     private int playerX; // Position du joueur en X
     private int playerY; // Position du joueur en Y
+    private Scanner scanner = new Scanner(System.in);
 
     public Player(String name, String asciiFace) {
         this.name = name;
@@ -64,7 +62,7 @@ public class Player {
         this.maxHealth = 100;
         this.health = maxHealth;
         this.equippedWeapon = null;
-        this.equippedArmor = null;
+        this.equippedProtection = null;
         this.experience = 0;
         this.level = 1;
         this.actionHistory = new ArrayList<>();
@@ -92,21 +90,14 @@ public class Player {
         System.out.println("Agilité : " + agility);
         System.out.println("Intelligence : " + intelligence);
         System.out.println("Défense : " + defense);
-
         System.out.println("Arme équipée : " + (equippedWeapon != null ? equippedWeapon.getName() : "Aucune arme équipée."));
-        System.out.println("Armure équipée : " + (equippedArmor != null ? equippedArmor.getName() : "Aucune armure équipée."));
-        System.out.println("Casque équipé : " + (equippedHelmet != null ? equippedHelmet.getName() : "Aucun casque équipé."));
-        System.out.println("Bouclier équipé : " + (equippedShield != null ? equippedShield.getName() : "Aucun bouclier équipé."));
-        System.out.println("Bottes équipées : " + (equippedBoots != null ? equippedBoots.getName() : "Aucune botte équipée."));
-        System.out.println("Pantalon équipé : " + (equippedPants != null ? equippedPants.getName() : "Aucun pantalon équipé."));
-        System.out.println("Gants équipés : " + (equippedGloves != null ? equippedGloves.getName() : "Aucun gant équipé."));
-        showInventory();
+        System.out.println("Objet de protection équipé : " + (equippedProtection != null ? equippedProtection.getName() : "Aucun objet de protection équipé."));
         System.out.println("========================");
         System.out.println("Apparence du Personnage :");
         System.out.println("    " + asciiFace);
         System.out.println("    /|\\ ");
         System.out.println("     |  ");
-        System.out.println("    / \\ ");
+        System.out.println("    / \\");
         System.out.println("========================");
     }
 
@@ -115,41 +106,38 @@ public class Player {
             if (item instanceof Weapon && item.getName().equals(weaponName)) {
                 equippedWeapon = (Weapon) item;
                 System.out.println("Vous avez équipé " + equippedWeapon.getName() + ".");
-                if (equippedWeapon.getName().equalsIgnoreCase("Marteau")) {
-                    System.out.println("Vous avez maintenant accès aux attaques spécifiques du Marteau.");
-                }
                 return; // Quitte la méthode après avoir équipé l'arme
             }
         }
         System.out.println("L'arme " + weaponName + " n'est pas dans votre inventaire.");
     }
 
+    public String getName() {
+        return name;
+    }
 
-    public void equipArmor(Armor armor) {
-        if (armor != null && inventory.contains(armor)) {
-            equippedArmor = armor;
-            equippedItems.addItem(armor); // Ajoute l'armure à l'inventaire équipé
-            System.out.println("Vous avez équipé " + armor.getName() + ".");
+    public int getHealth() {
+        return health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    // Mise à jour de la méthode pour équiper un objet de protection
+    public void equipProtectionItem(ProtectionItem item) {
+        if (item != null && inventory.contains(item)) {
+            equippedProtection = item;
+            System.out.println("Vous avez équipé : " + item.getName() + ".");
+            increaseDefense(item.getDefense()); // Si ProtectionItem a une méthode getDefense(), on augmente la défense ici
         } else {
-            System.out.println("L'armure n'est pas dans votre inventaire.");
+            System.out.println("Cet objet de protection n'est pas dans votre inventaire.");
         }
     }
 
-    // Méthode pour équiper un objet de protection
-    public void equipProtectionItem(ProtectionItem item) {
-        if (item instanceof Armor) {
-            // Equipe une armure
-            Armor armor = (Armor) item;
-            System.out.println("Vous équipez l'armure : " + armor.getName());
-            increaseDefense(armor.getDefense());
-        } else if (item instanceof Shield) {
-            // Equipe un bouclier
-            Shield shield = (Shield) item;
-            System.out.println("Vous équipez le bouclier : " + shield.getName());
-            increaseDefense(shield.getDefense());
-        } else {
-            System.out.println("Cet objet ne peut pas être équipé.");
-        }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
     public void increaseDefense(int amount) {
@@ -168,222 +156,45 @@ public class Player {
         }
     }
 
-
-
-
-    public int getMaxHealth() {
-        return this.maxHealth;
-    }
-
     public int getLevel() {
-        return this.level;
+        return level;
     }
 
     public int getGold() {
         return gold;
     }
 
+    public void addGold(int amount) {
+        if (amount > 0) {
+            gold += amount;
+            System.out.println("Vous avez gagné " + amount + " pièces d'or. Total d'or : " + gold);
+        }
+    }
+
+    public void gainExperience(int amount) {
+        if (amount > 0) {
+            experience += amount;
+            System.out.println("Vous avez gagné " + amount + " points d'expérience. Total d'expérience : " + experience);
+            // Logique pour passer au niveau suivant, si nécessaire
+        }
+    }
+
+
+
     public boolean spendGold(int amount) {
-        if (amount > 0 && amount <= gold) {
+        if (amount > 0 && gold >= amount) {
             gold -= amount;
-            System.out.println(amount + " pièces d'or dépensées.");
             return true;
         } else {
-            System.out.println("Vous n'avez pas assez d'or pour cette action.");
+            System.out.println("Vous n'avez pas assez d'or.");
             return false;
         }
-    }
-
-    private void levelUp() {
-        level++;
-        experience = 0; // Remet l'expérience à zéro après le niveau supérieur
-        experienceToNextLevel += 50; // Augmente les points nécessaires pour le prochain niveau (par exemple)
-        int previousMaxHealth = maxHealth; // Sauvegarde la valeur des PV max précédents
-        maxHealth += 20; // Augmente la santé maximale
-
-        // Si la vie actuelle est supérieure à la nouvelle santé maximale, on la restreint
-        if (health > maxHealth) {
-            health = maxHealth;
-        }
-
-        strength += 5; // Améliore les statistiques
-        agility += 5;
-        intelligence += 5;
-        defense += 5;
-
-        System.out.println("Vous avez atteint le niveau " + level + "! Toutes vos statistiques ont été améliorées.");
-        System.out.println("Vos PV maximums sont maintenant de " + maxHealth + ". Vous avez toujours " + health + " points de vie actuels.");
-    }
-
-    public String getAsciiFace() {
-        return asciiFace;
-    }
-
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
-    }
-
-    public void gainExperience(int points) {
-        if (points > 0) {
-            experience += points;
-            System.out.println("Vous avez gagné " + points + " points d'expérience.");
-
-            // Vérifie si le joueur a assez de points pour monter de niveau
-            if (experience >= experienceToNextLevel) {
-                levelUp();
-            }
-        } else {
-            System.out.println("Points d'expérience invalides.");
-        }
-    }
-
-    public void showInventory() {
-        if (inventory.isEmpty()) {
-            System.out.println("Votre inventaire est vide.");
-            return;
-        }
-
-        System.out.println("Votre inventaire :");
-        for (Item item : inventory.getItems()) {
-            System.out.println("- " + item.getName() + ": " + item.getDescription());
-        }
-        System.out.println("Nombre d'éléments dans l'inventaire : " + inventory.getItemCount());
-        System.out.println("Total d'objets: " + inventory.size() + "/" + inventory.maxInventorySize());
-    }
-
-    public void showEquippedItems() {
-        System.out.println("=== Objets Équipés ===");
-        System.out.println("Arme : " + (equippedWeapon != null ? equippedWeapon.getName() : "Aucune arme équipée"));
-        System.out.println("Armure : " + (equippedArmor != null ? equippedArmor.getName() : "Aucune armure équipée"));
-        System.out.println("Casque : " + (equippedHelmet != null ? equippedHelmet.getName() : "Aucun casque équipé"));
-        System.out.println("Bouclier : " + (equippedShield != null ? equippedShield.getName() : "Aucun bouclier équipé"));
-        System.out.println("Bottes : " + (equippedBoots != null ? equippedBoots.getName() : "Aucune botte équipée"));
-        System.out.println("Pantalon : " + (equippedPants != null ? equippedPants.getName() : "Aucun pantalon équipé"));
-        System.out.println("Gants : " + (equippedGloves != null ? equippedGloves.getName() : "Aucun gant équipé"));
-        System.out.println("========================");
     }
 
     public Inventory getInventory() {
         return inventory;
     }
 
-    public void move(int deltaX, int deltaY) {
-        playerX += deltaX;
-        playerY += deltaY;
-    }
-
-    public int getStrength() {
-        return strength;
-    }
-
-    public void takeDamage(int damage) {
-        int defenseReduction = defense / 2; // Réduction des dégâts grâce à la défense
-        int reducedDamage = damage - defenseReduction;
-        reducedDamage = Math.max(reducedDamage, 1); // Assure un minimum de 1 dégât
-        health -= reducedDamage;
-        health = Math.max(health, 0); // Empêche la santé de descendre en dessous de 0
-
-        System.out.println(name + " a subi " + reducedDamage + " points de dégâts. " +
-                "Réduction de " + defenseReduction + " grâce à la défense. " +
-                "Santé actuelle : " + health);
-    }
-
-
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void restoreHealth(int amount) {
-        if (amount > 0) {
-            health += amount;
-            if (health > maxHealth) {
-                health = maxHealth; // Empêche la santé d'excéder le maximum
-            }
-            System.out.println("Vous avez regagné " + amount + " points de vie. Santé actuelle : " + health + "/" + maxHealth);
-        } else {
-            System.out.println("Montant de soin invalide. La restauration de santé ne peut pas être négative.");
-        }
-    }
-
-    public boolean isAlive() {
-        return health > 0; // Vérifie si le joueur a encore des points de vie
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public void attack(Attackable target, int attackType) {
-        int damage;
-
-        // Si une arme est équipée, utiliser la méthode polymorphique pour calculer les dégâts
-        if (equippedWeapon != null) {
-            damage = equippedWeapon.calculateAttackDamage(attackType);
-        } else {
-            // Si aucune arme n'est équipée, utiliser les attaques standard du joueur
-            damage = calculateStandardAttackDamage(attackType);
-        }
-
-        target.takeDamage(damage);
-        System.out.println(name + " a attaqué " + target.getName() + " et a infligé " + damage + " points de dégâts.");
-    }
-
-    public void useItem(String itemName) {
-        Item itemToUse = inventory.findItemByName(itemName);
-        if (itemToUse != null) {
-            if (itemToUse instanceof Weapon) {
-                equipWeapon(itemToUse.getName());
-                System.out.println("Vous avez équipé l'arme : " + itemToUse.getName());
-            } else if (itemToUse instanceof Potion) {
-                Potion potion = (Potion) itemToUse;
-                potion.use(this);
-                System.out.println("Vous avez utilisé la potion : " + itemName);
-            } else if (itemToUse instanceof ProtectionItem) {
-                ProtectionItem protectionItem = (ProtectionItem) itemToUse;
-                protectionItem.use(this);
-                System.out.println("Vous avez équipé l'objet de protection : " + itemName);
-            } else {
-                System.out.println("Cet objet ne peut pas être utilisé.");
-            }
-        } else {
-            System.out.println("L'objet " + itemName + " n'est pas dans votre inventaire.");
-        }
-    }
-
-
-
-
-    private int calculateBowAttackDamage(int attackType) {
-        switch (attackType) {
-            case 1: // Tir précisadd
-                return 15;
-            case 2: // Tir en cloche
-                return 25;
-            case 3: // Tir rapide
-                return 20;
-            case 4: // Tir multiple
-                return 35;
-            default:
-                System.out.println("Type d'attaque non reconnu. Aucun dégât infligé.");
-                return 0;
-        }
-    }
-
-
-    public void useProtectionItem(String itemName) {
-        Item itemToUse = inventory.findItemByName(itemName);
-        if (itemToUse != null && itemToUse instanceof ProtectionItem) {
-            ProtectionItem protectionItem = (ProtectionItem) itemToUse;
-            protectionItem.use(this);
-            System.out.println("Vous avez utilisé " + itemName + " pour augmenter votre défense.");
-        } else {
-            System.out.println("Cet objet de protection n'est pas dans votre inventaire.");
-        }
-    }
-
-    // Exemple de méthode pour calculer les dégâts en fonction du type d'attaque
     private int calculateStandardAttackDamage(int attackType) {
         switch (attackType) {
             case 1: // Coup de poing
@@ -400,80 +211,91 @@ public class Player {
         }
     }
 
-    private int calculateHammerAttackDamage(int attackType) {
-        switch (attackType) {
-            case 1: // Coup de Marteau
-                return 20;
-            case 2: // Attaque puissante du Marteau
-                return 40;
-            case 3: // Attaque rapide du Marteau
-                return 30;
-            case 4: // Attaque spéciale du Marteau
-                return 50;
-            default:
-                System.out.println("Type d'attaque non reconnu. Aucun dégât infligé.");
-                return 0;
+    public void takeDamage(int damage) {
+        int defenseReduction = defense / 2; // Réduction des dégâts grâce à la défense
+        int reducedDamage = damage - defenseReduction;
+        reducedDamage = Math.max(reducedDamage, 1); // Assure un minimum de 1 dégât
+        health -= reducedDamage;
+        health = Math.max(health, 0); // Empêche la santé de descendre en dessous de 0
+
+        System.out.println(name + " a subi " + reducedDamage + " points de dégâts. " +
+                "Réduction de " + defenseReduction + " grâce à la défense. " +
+                "Santé actuelle : " + health);
+    }
+
+    public void heal(int healingAmount) {
+        if (healingAmount > 0) {
+            health += healingAmount;
+            if (health > maxHealth) {
+                health = maxHealth;
+            }
+            System.out.println("Vous avez regagné " + healingAmount + " points de vie. Santé actuelle : " + health + "/" + maxHealth);
+        } else {
+            System.out.println("Montant de soin invalide. La restauration de santé ne peut pas être négative.");
         }
+    }
+
+    public boolean isAlive() {
+        return health > 0;
+    }
+
+    public String getAsciiFace() {
+        return asciiFace;
+    }
+
+    public void attack(Attackable target, int attackType) {
+        int damage = (equippedWeapon != null) ? equippedWeapon.calculateAttackDamage(attackType) : calculateStandardAttackDamage(attackType);
+        target.takeDamage(damage);
+        System.out.println(name + " a attaqué " + target.getName() + " et a infligé " + damage + " points de dégâts.");
     }
 
     public void displayAttackOptions() {
         if (equippedWeapon != null) {
-            if (equippedWeapon.getName().equalsIgnoreCase("Épée du Héros")) {
-                System.out.println("Choisissez votre type d'attaque : (1: Coup de héros, 2: Attaque puissante du héros, 3: Frappe rapide du héros, 4: Attaque ultime du héros) : ");
-            } else if (equippedWeapon.getName().equalsIgnoreCase("Lame Sombre")) {
-                System.out.println("Choisissez votre type d'attaque : (1: Coup sombre, 2: Lame foudroyante, 3: Frappe obscure, 4: Attaque fatale de l'ombre) : ");
-            } else if (equippedWeapon.getName().equalsIgnoreCase("Sabre de Lumière")) {
-                System.out.println("Choisissez votre type d'attaque : (1: Coup lumineux, 2: Attaque éclatante, 3: Frappe rapide lumineuse, 4: Éclair de lumière) : ");
-            } else if (equippedWeapon.getName().equalsIgnoreCase("Hache de Guerre")) {
-                System.out.println("Choisissez votre type d'attaque : (1: Coup de hache, 2: Attaque fracassante, 3: Attaque tourbillon, 4: Frappe ultime) : ");
-            } else if (equippedWeapon.getName().equalsIgnoreCase("Hache de Feu")) {
-                System.out.println("Choisissez votre type d'attaque : (1: Coup de feu, 2: Brûlure intense, 3: Lancer de flammes, 4: Tempête de feu) : ");
-            } else if (equippedWeapon.getName().equalsIgnoreCase("Hache Gelée")) {
-                System.out.println("Choisissez votre type d'attaque : (1: Coup gelé, 2: Tempête de glace, 3: Attaque rapide, 4: Avalanche) : ");
-            } else if (equippedWeapon.getName().equalsIgnoreCase("Hache Berserker")) {
-                System.out.println("Choisissez votre type d'attaque : (1: Coup de berserker, 2: Rage dévastatrice, 3: Attaque furieuse, 4: Carnage total) : ");
-            } else if (equippedWeapon.getName().equalsIgnoreCase("Arc")) {
-                System.out.println("Choisissez votre type d'attaque : (1: Tir précis, 2: Tir en cloche, 3: Tir rapide, 4: Tir multiple) : ");
+            System.out.println("Choisissez votre type d'attaque :");
+            // Add different attack options based on weapon type
+            System.out.println("1: Attaque standard");
+            System.out.println("2: Attaque puissante");
+            System.out.println("3: Attaque rapide");
+            System.out.println("4: Attaque spéciale");
+        } else {
+            System.out.println("Choisissez votre type d'attaque :");
+            System.out.println("1: Coup de poing");
+            System.out.println("2: Attaque puissante");
+            System.out.println("3: Attaque rapide");
+            System.out.println("4: Attaque spéciale");
+        }
+    }
+
+    public void useItem(String itemName) {
+        Item itemToUse = inventory.findItemByName(itemName);
+        if (itemToUse != null) {
+            if (itemToUse instanceof Weapon) {
+                equipWeapon(itemToUse.getName());
+                System.out.println("Vous avez équipé l'arme : " + itemToUse.getName());
+            } else if (itemToUse instanceof Potion) {
+                Potion potion = (Potion) itemToUse;
+                potion.use(this);
+                System.out.println("Vous avez utilisé la potion : " + itemName);
+            } else if (itemToUse instanceof ProtectionItem) {
+                equipProtectionItem((ProtectionItem) itemToUse);
+                System.out.println("Vous avez équipé l'objet de protection : " + itemName);
             } else {
-                System.out.println("Choisissez votre type d'attaque : (1: Coup basique, 2: Attaque puissante, 3: Frappe rapide, 4: Attaque spéciale) : ");
+                System.out.println("Cet objet ne peut pas être utilisé.");
             }
         } else {
-            System.out.println("Choisissez votre type d'attaque : (1: Coup de poing, 2: Attaque puissante, 3: Attaque rapide, 4: Attaque spéciale) : ");
+            System.out.println("L'objet " + itemName + " n'est pas dans votre inventaire.");
         }
     }
 
-
-    private int calculateAxeAttackDamage(int attackType) {
-        switch (attackType) {
-            case 1: // Coup de Hache
-                return 25;
-            case 2: // Attaque puissante de la Hache
-                return 45;
-            case 3: // Attaque rapide de la Hache
-                return 30;
-            case 4: // Attaque tourbillon de la Hache
-                return 50;
-            default:
-                System.out.println("Type d'attaque non reconnu. Aucun dégât infligé.");
-                return 0;
-        }
-    }
-
-
-
-    public void heal(int healingAmount) {
-        health += healingAmount;
-        if (health > maxHealth) {
-            health = maxHealth; // Assurez-vous de ne pas dépasser les PV max
-        }
-        System.out.println("Vous avez regagné " + healingAmount + " points de vie.");
-    }
-
-    public void addGold(int amount) {
+    public void restoreHealth(int amount) {
         if (amount > 0) {
-            this.gold += amount;
+            health += amount;
+            if (health > maxHealth) {
+                health = maxHealth;
+            }
+            System.out.println("Vous avez regagné " + amount + " points de vie. Santé actuelle : " + health + "/" + maxHealth);
         } else {
-            System.out.println("Montant invalide. L'or ne peut pas être négatif.");
+            System.out.println("Montant de soin invalide. La restauration de santé ne peut pas être négative.");
         }
     }
 
@@ -492,4 +314,137 @@ public class Player {
             System.out.println("Aucun effet de " + effect + " à soigner.");
         }
     }
+
+
+    public void displayInventory() {
+        Scanner scanner = new Scanner(System.in);
+
+        if (inventory.isEmpty()) {
+            System.out.println("Votre inventaire est vide.");
+            return;
+        }
+
+        while (true) {
+            System.out.println("\nVotre inventaire :");
+            int i = 1;
+            for (Item item : inventory.getItems()) {
+                System.out.println(i + ". " + item.getName() + ": " + item.getDescription());
+                i++;
+            }
+            System.out.println("Nombre d'éléments dans l'inventaire : " + inventory.getItemCount());
+            System.out.println("Total d'objets: " + inventory.size() + "/" + inventory.maxInventorySize());
+
+            System.out.println("\nOptions :");
+            System.out.println("1. Équiper un objet");
+            System.out.println("2. Jeter un objet");
+            System.out.println("3. Quitter la gestion de l'inventaire");
+
+            System.out.print("Que voulez-vous faire ? (1, 2, 3) : ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();  // Pour éviter les erreurs de lecture
+
+            switch (choice) {
+                case 1:
+                    equipItem(scanner);
+                    break;
+                case 2:
+                    discardItem(scanner);
+                    break;
+                case 3:
+                    return;  // Quitter la gestion de l'inventaire
+                default:
+                    System.out.println("Choix invalide. Veuillez réessayer.");
+            }
+        }
+    }
+
+    private void discardItem(Scanner scanner) {
+        if (inventory.isEmpty()) {
+            System.out.println("Votre inventaire est vide. Vous ne pouvez rien jeter.");
+            return;
+        }
+
+        System.out.print("Entrez le numéro de l'objet à jeter : ");
+
+        // Utilisation d'une vérification pour s'assurer d'une entrée valide
+        while (!scanner.hasNextInt()) {
+            System.out.println("Veuillez entrer un numéro valide.");
+            scanner.next(); // Consommer l'entrée invalide
+        }
+
+        int itemNumber = scanner.nextInt();
+        scanner.nextLine();  // Pour éviter les erreurs de lecture
+
+        if (itemNumber < 1 || itemNumber > inventory.getItemCount()) {
+            System.out.println("Numéro d'objet invalide.");
+            return;
+        }
+
+        // Utiliser itemNumber pour accéder directement à l'objet à jeter
+        Item itemToDiscard = inventory.getItems().get(itemNumber - 1);
+        inventory.dropItem(itemNumber - 1);  // Retirer l'objet de l'inventaire en utilisant son index
+        System.out.println("Vous avez jeté " + itemToDiscard.getName() + " de votre inventaire.");
+    }
+
+    private void equipItem(Scanner scanner) {
+        System.out.print("Entrez le numéro de l'objet à équiper : ");
+        int itemNumber = scanner.nextInt();
+        scanner.nextLine();  // Pour éviter les erreurs de lecture
+
+        if (itemNumber < 1 || itemNumber > inventory.getItemCount()) {
+            System.out.println("Numéro d'objet invalide.");
+            return;
+        }
+
+        Item itemToEquip = inventory.getItems().get(itemNumber - 1);
+
+        if (itemToEquip instanceof Weapon) {
+            equipWeapon(itemToEquip.getName());
+        } else if (itemToEquip instanceof ProtectionItem) {
+            equipProtectionItem((ProtectionItem) itemToEquip);
+        } else {
+            System.out.println("Cet objet ne peut pas être équipé.");
+        }
+    }
+
+    public void gameLoop(GameMap map, Scanner scanner) {
+        boolean isPlaying = true;
+
+        while (isPlaying) {
+            System.out.println("=== Menu Principal ===");
+            System.out.println("1: Explorer");
+            System.out.println("2: Afficher l'inventaire");
+            System.out.println("3: Afficher le statut");
+            System.out.println("4: Quitter");
+            System.out.print("Choisissez une option : ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Pour vider le buffer
+
+            switch (choice) {
+                case 1:
+                    // Appel à l'exploration via GameMap
+                    Main.exploreGameMap(this, map, scanner);
+                    break;
+                case 2:
+                    // Appeler la méthode pour afficher l'inventaire
+                    displayInventory();
+                    break;
+                case 3:
+                    // Appeler la méthode pour afficher le statut
+                    displayStatus();
+                    break;
+                case 4:
+                    System.out.println("Vous quittez le jeu. À bientôt !");
+                    isPlaying = false;
+                    break;
+                default:
+                    System.out.println("Choix invalide. Veuillez réessayer.");
+                    break;
+            }
+        }
+    }
+
+
+
 }

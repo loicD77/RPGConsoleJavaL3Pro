@@ -25,4 +25,7 @@ public class Armor extends ProtectionItem {
     public String getDescription() {
         return String.format("%s (Défense: %d, Prix: %d)", getName(), getDefensePoints(), getPrice());
     }
+    public int getDefensePoints() {
+        return defense;
+    }
 }

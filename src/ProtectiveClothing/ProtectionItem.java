@@ -1,8 +1,4 @@
 package ProtectiveClothing;
-import ProtectiveClothing.ProtectionItem;
-import ProtectiveClothing.Armor;
-import ProtectiveClothing.Shield;
-
 
 import Item.Item; // Import de la classe Item
 import Player.Player; // Import de la classe Player
@@ -17,21 +13,20 @@ public abstract class ProtectionItem extends Item {
         this.price = price;
     }
 
-    public int getDefensePoints() {
-        return defense; // Getter pour les points de défense
-    }
-
-    @Override
-    public abstract String asciiArt(); // Méthode abstraite
-
-    @Override
-    public abstract void use(Player player); // Méthode abstraite
-
     public int getDefense() {
         return defense; // Getter pour la défense
     }
 
     public int getPrice() {
         return price; // Getter pour le prix
+    }
+
+    @Override
+    public abstract String asciiArt(); // Méthode abstraite
+
+    @Override
+    public void use(Player player) {
+        System.out.println("Vous portez " + getName() + ", augmentant votre défense de " + getDefense() + " points.");
+        player.increaseDefense(getDefense());
     }
 }

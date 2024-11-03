@@ -61,8 +61,8 @@ public class BossRoom extends DungeonPiece {
                 case 2:
                     // Utiliser un objet de l'inventaire
                     System.out.println("Votre inventaire :");
-                    player.showInventory();
-                    System.out.print("Que voulez-vous utiliser ? (Entrez le nom de l'objet, ou tapez 'annuler' pour revenir en arrière) ");
+                    player.displayInventory();
+                    System.out.println("Que voulez-vous utiliser ? (Entrez le nom de l'objet, ou tapez 'annuler' pour revenir en arrière) ");
                     String itemName = scanner.nextLine();
                     if (!itemName.equalsIgnoreCase("annuler")) {
                         player.useItem(itemName);

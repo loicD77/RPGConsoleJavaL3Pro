@@ -125,7 +125,7 @@ public class MonsterRoom extends DungeonPiece {
 
                 } else if (choice == 4) {
                     System.out.println("Vous fouillez dans votre inventaire.");
-                    player.showInventory();
+                    player.displayInventory();
                     System.out.println("Que voulez-vous utiliser ? (Entrez le nom de l'objet, ou tapez 'annuler' pour revenir en arrière)");
                     scanner.nextLine();  // Consommer la ligne
                     String itemChoice = scanner.nextLine();

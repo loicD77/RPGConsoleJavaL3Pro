@@ -35,6 +35,7 @@ public class TreasureRoom extends DungeonPiece {
         this("Salle au Trésor", "Une pièce remplie de trésors étincelants.", 1);
     }
 
+
     @Override
     public void enter(Player player) {
         System.out.println("Vous êtes entré dans la salle au trésor !");
@@ -49,7 +50,7 @@ public class TreasureRoom extends DungeonPiece {
             } else {
                 System.out.println("La récompense n'est pas valide.");
             }
-            player.showInventory();
+            player.displayInventory();
         } else {
             System.out.println("Dommage, la réponse est incorrecte. Vous ne pouvez pas récupérer de trésor.");
         }

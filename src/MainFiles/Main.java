@@ -41,11 +41,10 @@ public class Main {
         // Initialisation de la carte de jeu
         GameMap map = new GameMap(player);
 
-        // Afficher la carte dès le début
-        exploreGameMap(player, map, scanner);
+        player.gameLoop(map, scanner);
     }
 
-    private static void exploreGameMap(Player player, GameMap map, Scanner scanner) {
+    public static void exploreGameMap(Player player, GameMap map, Scanner scanner) {
         boolean exploring = true; // Contrôle de l'exploration
 
         while (exploring) {

@@ -3,7 +3,6 @@ package Item;
 import Player.Player; // Importez la classe Player du package approprié
 import WeaponOriginal.Weapon;
 import ProtectiveClothing.ProtectionItem; // Utilisez uniquement ProtectionItem du package ProtectiveClothing
-import ProtectiveClothing.Armor; // Importez la classe Armor du package ProtectiveClothing
 import PotionGroup.Potion;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +66,9 @@ public class Inventory {
             } else if (item instanceof Potion) {
                 System.out.println("Vous utilisez la potion : " + item.getName());
                 ((Potion) item).use(player); // Envoie l'objet Player à la méthode use
+            } else if (item instanceof ProtectionItem) {
+                System.out.println("Vous utilisez l'objet de protection : " + item.getName());
+                player.equipProtectionItem((ProtectionItem) item);
             }
             items.remove(index); // Enlève l'objet utilisé de l'inventaire
         } else {
@@ -95,8 +97,6 @@ public class Inventory {
         }
     }
 
-
-
     public Item findItemByName(String itemName) {
         for (Item item : items) {
             if (item.getName().equalsIgnoreCase(itemName)) {
@@ -115,13 +115,9 @@ public class Inventory {
         }
     }
 
-    public boolean contains(Armor armor) {
-        for (Item item : items) {
-            if (item instanceof Armor && item.equals(armor)) {
-                return true;
-            }
-        }
-        return false;
+    // Méthode pour vérifier si l'inventaire contient un objet spécifique
+    public boolean contains(Item item) {
+        return items.contains(item);
     }
 
     // Méthode pour vérifier si l'inventaire est plein
@@ -143,6 +139,10 @@ public class Inventory {
     }
 
     public void add(Item item) {
-        items.add(item);
+        if (items.size() < MAX_ITEMS) {
+            items.add(item);
+        } else {
+            System.out.println("L'inventaire est plein, impossible d'ajouter cet objet.");
+        }
     }
 }
