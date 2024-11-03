@@ -9,6 +9,9 @@ import Dungeon.DungeonPiece; // Import de DungeonPiece depuis le package Dungeon
 import Player.Player;
 import Dungeon.TreasureRoom; // Ajout de l'import pour TreasureRoom
 import Dungeon.BossRoom;
+import Dungeon.DiceRoom; // Import de DiceRoom
+import Dungeon.JavaQuizRoom; // Import de JavaQuizRoom
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -43,6 +46,9 @@ public class GameMap {
         pieces.put('M', new MonsterRoom("Salle des Monstres", "Des créatures dangereuses rôdent ici.", 1));
         pieces.put('R', new ProtectionStore("Magasin de Protection", "Achète des armures pour te protéger.", 1));
         pieces.put('S', new SecretStore("Magasin Secret", "Un endroit secret pour acheter des objets originals", 1)); // Ajout du magasin secret 'S'
+        pieces.put('D', new DiceRoom("Salle du Dé", "Une salle où le joueur lance un dé à 6 faces.", 1));
+        pieces.put('X', new JavaQuizRoom("Salle de Quiz Java", "Répondez à des questions Java pour gagner des pièces.", 1));
+
 
         playerX = 1;  // Position de départ du joueur
         playerY = 1;  // Position de départ du joueur
