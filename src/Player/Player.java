@@ -127,14 +127,29 @@ public class Player {
     // Mise à jour de la méthode pour équiper un objet de protection
     public void equipProtectionItem(ProtectionItem item) {
         if (item != null && inventory.contains(item)) {
+            if (equippedProtection != null) {
+                // Retirer la défense de l'élément de protection actuel
+                decreaseDefense(equippedProtection.getDefense());
+                System.out.println("Vous avez retiré : " + equippedProtection.getName() + ". Défense diminuée de " + equippedProtection.getDefense());
+            }
             equippedProtection = item;
-            System.out.println("Vous avez équipé : " + item.getName() + ".");
-            increaseDefense(item.getDefense()); // Si ProtectionItem a une méthode getDefense(), on augmente la défense ici
+            increaseDefense(item.getDefense());
+            System.out.println("Vous avez équipé : " + item.getName() + ". Défense augmentée de " + item.getDefense());
         } else {
             System.out.println("Cet objet de protection n'est pas dans votre inventaire.");
         }
     }
 
+
+    public void decreaseDefense(int amount) {
+        if (amount > 0) {
+            defense -= amount;
+            if (defense < 0) {
+                defense = 0; // Assure que la défense ne soit jamais négative
+            }
+            System.out.println("Défense diminuée de " + amount + ". Défense actuelle : " + defense);
+        }
+    }
 
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
@@ -359,19 +374,7 @@ public class Player {
     }
 
     private void discardItem(Scanner scanner) {
-        if (inventory.isEmpty()) {
-            System.out.println("Votre inventaire est vide. Vous ne pouvez rien jeter.");
-            return;
-        }
-
         System.out.print("Entrez le numéro de l'objet à jeter : ");
-
-        // Utilisation d'une vérification pour s'assurer d'une entrée valide
-        while (!scanner.hasNextInt()) {
-            System.out.println("Veuillez entrer un numéro valide.");
-            scanner.next(); // Consommer l'entrée invalide
-        }
-
         int itemNumber = scanner.nextInt();
         scanner.nextLine();  // Pour éviter les erreurs de lecture
 
@@ -382,9 +385,18 @@ public class Player {
 
         // Utiliser itemNumber pour accéder directement à l'objet à jeter
         Item itemToDiscard = inventory.getItems().get(itemNumber - 1);
+
+        // Si l'objet à jeter est l'élément de protection actuellement équipé
+        if (itemToDiscard instanceof ProtectionItem && itemToDiscard == equippedProtection) {
+            decreaseDefense(((ProtectionItem) itemToDiscard).getDefense());
+            System.out.println("Vous avez retiré : " + itemToDiscard.getName() + ". Défense diminuée de " + ((ProtectionItem) itemToDiscard).getDefense());
+            equippedProtection = null; // Retirer l'équipement actuellement équipé
+        }
+
         inventory.dropItem(itemNumber - 1);  // Retirer l'objet de l'inventaire en utilisant son index
-        System.out.println("Vous avez jeté " + itemToDiscard.getName() + " de votre inventaire.");
+        System.out.println("Vous avez jeté l'objet : " + itemToDiscard.getName());
     }
+
 
     private void equipItem(Scanner scanner) {
         System.out.print("Entrez le numéro de l'objet à équiper : ");

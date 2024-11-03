@@ -73,7 +73,8 @@ public class JavaQuizRoom extends DungeonPiece {
                     if (answerIndex == correctAnswers[questionIndex]) {
                         player.addGold(5);
                         System.out.println("Bonne réponse ! Vous gagnez 5 pièces d'or.");
-                        answering = false; // Fin si bonne réponse
+                        // Bonne réponse, continuer
+                        System.out.println("Vous pouvez continuer à répondre ou quitter la salle.");
                     } else {
                         System.out.println("Mauvaise réponse. Essayez une autre question.");
                     }
