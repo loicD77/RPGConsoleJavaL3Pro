@@ -68,6 +68,19 @@ public class GameMap {
             System.out.println();
         }
     }
+    public void displayLegend() {
+        System.out.println("\nLégende des pièces :");
+        System.out.println(" W : Magasin d'Armes");
+        System.out.println(" P : Pharmacie");
+        System.out.println(" T : Salle du Trésor");
+        System.out.println(" M : Salle des Monstres");
+        System.out.println(" B : Salle du Boss");
+        System.out.println(" R : Magasin de Protection");
+        System.out.println(" S : Magasin Secret");
+        System.out.println(" D : Salle du Dé");
+        System.out.println(" X : Salle de Quiz Java");
+    }
+
 
     public void movePlayer(Player player, int dx, int dy) {
         int newX = playerX + dx;

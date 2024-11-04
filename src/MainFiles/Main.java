@@ -49,6 +49,7 @@ public class Main {
 
         while (exploring) {
             map.displayMap(); // Affiche la carte mise à jour
+            map.displayLegend();
 
             System.out.println("Déplacez-vous (w/a/s/d pour haut/gauche/bas/droite, q pour quitter) : ");
             String input = scanner.nextLine().toLowerCase(); // Conversion en minuscule pour simplifier la gestion des commandes
@@ -73,6 +74,8 @@ public class Main {
                 default:
                     System.out.println("Commande non reconnue. Veuillez entrer 'w', 'a', 's', 'd', ou 'q'.");
                     break;
+
+
             }
         }
     }
