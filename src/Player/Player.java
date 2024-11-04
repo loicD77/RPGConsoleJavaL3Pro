@@ -433,7 +433,7 @@ public class Player {
 
 
     private void equipItem(Scanner scanner) {
-        System.out.print("Entrez le numéro de l'objet à équiper : ");
+        System.out.print("Entrez le numéro de l'objet à équiper/utiliser : ");
         int itemNumber = scanner.nextInt();
         scanner.nextLine();  // Pour éviter les erreurs de lecture
 
@@ -448,10 +448,16 @@ public class Player {
             equipWeapon(itemToEquip.getName());
         } else if (itemToEquip instanceof ProtectionItem) {
             equipProtectionItem((ProtectionItem) itemToEquip);
+        } else if (itemToEquip instanceof Potion) {
+            ((Potion) itemToEquip).use(this);
+            // Supprimer la potion de l'inventaire après utilisation
+            inventory.dropItem(itemNumber - 1);
+            System.out.println("Vous avez utilisé : " + itemToEquip.getName());
         } else {
-            System.out.println("Cet objet ne peut pas être équipé.");
+            System.out.println("Cet objet ne peut pas être équipé ou utilisé.");
         }
     }
+
 
     public void gameLoop(GameMap map, Scanner scanner) {
         boolean isPlaying = true;
