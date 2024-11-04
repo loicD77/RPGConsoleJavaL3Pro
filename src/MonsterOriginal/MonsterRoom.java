@@ -1,10 +1,9 @@
 package MonsterOriginal;
 
 import Item.Item;
+import MonsterGroup.*;
 import Obstacle.StoneObstacle; // Import de StoneObstacle depuis le package Obstacle
 import Obstacle.WoodenBarrier; // Import de WoodenBarrier depuis le package Obstacle
-import MonsterGroup.Zombie; // Import de Zombie depuis le package MonsterGroup
-import MonsterGroup.Cyclops; // Import de Cyclops
 import Entity.GameEntity; // Import de GameEntity
 import Player.Player; // Import de Player
 import MonsterOriginal.Monster;
@@ -46,6 +45,11 @@ public class MonsterRoom extends DungeonPiece {
         int playerLevel = player.getLevel(); // Récupérer le niveau du joueur
         entities.add(new Zombie(playerLevel)); // Créez le zombie avec le niveau du joueur
         entities.add(new Cyclops(playerLevel)); // Cyclope avec un constructeur approprié
+        entities.add(new Ogre(playerLevel)); // Cyclope avec un constructeur approprié
+        entities.add(new Skeleton(playerLevel)); // Cyclope avec un constructeur approprié
+        entities.add(new Dragon(playerLevel)); // Cyclope avec un constructeur approprié
+        entities.add(new Troll(playerLevel));
+        entities.add(new Goblin(playerLevel));
 
         // Mélanger les entités pour un ordre aléatoire
         shuffleEntities();
