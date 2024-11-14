@@ -239,7 +239,6 @@ public class Player {
         return totalDamage;
     }
 
-
     public void takeDamage(int damage) {
         // Calcul d'esquive basé sur l'agilité
         int dodgeChance = agility * 2; // Exemple : 20% d'esquive si l'agilité est de 10
@@ -252,12 +251,16 @@ public class Player {
         // Calcul des dégâts subis avec réduction par la défense
         int defenseReduction = defense / 2; // Réduction des dégâts grâce à la défense
         int reducedDamage = damage - defenseReduction;
-        reducedDamage = Math.max(reducedDamage, 1); // Assure un minimum de 1 dégât
+        if (reducedDamage <= 0) {
+            reducedDamage = 1; // Assure un minimum de 1 dégât
+            System.out.println("Un point de dégât est donné au joueur pour signe de solidarité au monstre...");
+        }
         health -= reducedDamage;
         health = Math.max(health, 0); // Empêche la santé de descendre en dessous de 0
 
         System.out.println(name + " a subi " + reducedDamage + " points de dégâts. Réduction de " + defenseReduction + " grâce à la défense. Santé actuelle : " + health + ". Grâce à " + strength + " de force du joueur.");
     }
+
 
     public void heal(int healingAmount) {
         if (healingAmount > 0) {
@@ -382,9 +385,24 @@ public class Player {
             System.out.println("2. Jeter un objet");
             System.out.println("3. Quitter la gestion de l'inventaire");
 
-            System.out.print("Que voulez-vous faire ? (1, 2, 3) : ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();  // Pour éviter les erreurs de lecture
+            int choice = -1;
+            boolean validInput = false;
+
+            // Boucle de validation de saisie
+            while (!validInput) {
+                System.out.print("Que voulez-vous faire ? (1, 2, 3) : ");
+                String input = scanner.nextLine();
+                try {
+                    choice = Integer.parseInt(input);
+                    if (choice >= 1 && choice <= 3) {
+                        validInput = true;
+                    } else {
+                        System.out.println("Saisie incorrecte, veuillez entrer un nombre entre 1 et 3.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Saisie incorrecte, veuillez entrer un nombre entre 1 et 3.");
+                }
+            }
 
             switch (choice) {
                 case 1:
@@ -401,14 +419,26 @@ public class Player {
         }
     }
 
-    private void discardItem(Scanner scanner) {
-        System.out.print("Entrez le numéro de l'objet à jeter : ");
-        int itemNumber = scanner.nextInt();
-        scanner.nextLine();  // Pour éviter les erreurs de lecture
 
-        if (itemNumber < 1 || itemNumber > inventory.getItemCount()) {
-            System.out.println("Numéro d'objet invalide.");
-            return;
+    private void discardItem(Scanner scanner) {
+        int itemNumber = -1;
+        boolean validInput = false;
+
+        // Boucle pour s'assurer d'obtenir un numéro valide
+        while (!validInput) {
+            System.out.print("Entrez le numéro de l'objet à jeter : ");
+            String input = scanner.nextLine();
+
+            try {
+                itemNumber = Integer.parseInt(input);
+                if (itemNumber >= 1 && itemNumber <= inventory.getItemCount()) {
+                    validInput = true; // Saisie correcte
+                } else {
+                    System.out.println("Numéro d'objet invalide. Veuillez entrer un nombre entre 1 et " + inventory.getItemCount() + ".");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Saisie incorrecte, veuillez entrer un nombre valide.");
+            }
         }
 
         // Utiliser itemNumber pour accéder directement à l'objet à jeter
@@ -433,15 +463,27 @@ public class Player {
 
 
     private void equipItem(Scanner scanner) {
-        System.out.print("Entrez le numéro de l'objet à équiper/utiliser : ");
-        int itemNumber = scanner.nextInt();
-        scanner.nextLine();  // Pour éviter les erreurs de lecture
+        int itemNumber = -1;
+        boolean validInput = false;
 
-        if (itemNumber < 1 || itemNumber > inventory.getItemCount()) {
-            System.out.println("Numéro d'objet invalide.");
-            return;
+        // Boucle pour s'assurer d'obtenir un numéro valide
+        while (!validInput) {
+            System.out.print("Entrez le numéro de l'objet à équiper/utiliser : ");
+            String input = scanner.nextLine();
+
+            try {
+                itemNumber = Integer.parseInt(input);
+                if (itemNumber >= 1 && itemNumber <= inventory.getItemCount()) {
+                    validInput = true; // Saisie correcte
+                } else {
+                    System.out.println("Numéro d'objet invalide. Veuillez entrer un nombre entre 1 et " + inventory.getItemCount() + ".");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Saisie incorrecte, veuillez entrer un nombre valide.");
+            }
         }
 
+        // Accéder à l'objet à équiper/utiliser
         Item itemToEquip = inventory.getItems().get(itemNumber - 1);
 
         if (itemToEquip instanceof Weapon) {
@@ -459,6 +501,7 @@ public class Player {
     }
 
 
+
     public void gameLoop(GameMap map, Scanner scanner) {
         boolean isPlaying = true;
 
@@ -470,8 +513,25 @@ public class Player {
             System.out.println("4: Quitter");
             System.out.print("Choisissez une option : ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Pour vider le buffer
+            int choice = -1;
+            boolean validInput = false;
+
+// Boucle pour vérifier la validité de la saisie
+            while (!validInput) {
+                System.out.print("Choisissez une option : ");
+                String input = scanner.nextLine();
+                try {
+                    choice = Integer.parseInt(input);
+                    if (choice >= 1 && choice <= 4) {
+                        validInput = true; // Saisie correcte
+                    } else {
+                        System.out.println("Saisie incorrecte, veuillez entrer un nombre entre 1 et 4.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Saisie incorrecte, veuillez entrer un nombre entre 1 et 4.");
+                }
+            }
+
 
             switch (choice) {
                 case 1:

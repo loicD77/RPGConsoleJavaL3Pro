@@ -50,13 +50,24 @@ public class ProtectionStore extends DungeonPiece {
             System.out.println(asciiArt(player));
             showProtectionItems();
 
-            System.out.print("Choisissez une option (numéro) : ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice = -1;
+            boolean validInput = false;
 
-            if (choice < 1 || choice > protectionItems.size() + 1) {
-                System.out.println("Choix invalide.");
-                continue;
+            // Boucle pour s'assurer d'obtenir un choix valide
+            while (!validInput) {
+                System.out.print("Choisissez une option (numéro) : ");
+                String input = scanner.nextLine();
+
+                try {
+                    choice = Integer.parseInt(input);
+                    if (choice >= 1 && choice <= protectionItems.size() + 1) {
+                        validInput = true; // Saisie correcte
+                    } else {
+                        System.out.println("Choix invalide, veuillez entrer un numéro entre 1 et " + (protectionItems.size() + 1) + ".");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Saisie incorrecte, veuillez entrer un nombre valide.");
+                }
             }
 
             if (choice == protectionItems.size() + 1) {
@@ -95,13 +106,30 @@ public class ProtectionStore extends DungeonPiece {
     }
 
     private void manageFullInventory(Player player, Scanner scanner) {
-        System.out.println("Votre inventaire est plein. Que voulez-vous faire ?");
-        System.out.println("1. Vendre un objet");
-        System.out.println("2. Abandonner un objet");
-        System.out.println("3. Quitter le magasin");
+        boolean validInput = false;
+        int action = -1;
 
-        int action = scanner.nextInt();
-        scanner.nextLine();
+        while (!validInput) {
+            System.out.println("Votre inventaire est plein. Que voulez-vous faire ?");
+            System.out.println("1. Vendre un objet");
+            System.out.println("2. Abandonner un objet");
+            System.out.println("3. Quitter le magasin");
+            System.out.print("Choisissez une option : ");
+
+            String input = scanner.nextLine();
+
+            try {
+                action = Integer.parseInt(input);
+                if (action >= 1 && action <= 3) {
+                    validInput = true; // Saisie correcte
+                } else {
+                    System.out.println("Action invalide, veuillez entrer un nombre entre 1 et 3.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Saisie incorrecte, veuillez entrer un nombre valide.");
+            }
+        }
+
         switch (action) {
             case 1:
                 sellItem(player, scanner);

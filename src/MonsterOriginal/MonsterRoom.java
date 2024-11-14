@@ -111,10 +111,10 @@ public class MonsterRoom extends DungeonPiece {
                     System.out.println(player.getName() + " commence à se reposer pour 2 tours et regagnera des PV.");
 
                 }  else if (choice == 4) {
-                System.out.println("Vous fouillez dans votre inventaire.");
-                player.displayInventory();
-                // Suppression de la partie où l'utilisateur doit entrer un objet.
-            } else {
+                    System.out.println("Vous fouillez dans votre inventaire.");
+                    player.displayInventory();
+                    // Suppression de la partie où l'utilisateur doit entrer un objet.
+                } else {
                     System.out.println("Choix invalide. Veuillez réessayer.");
                 }
             }
@@ -158,12 +158,12 @@ public class MonsterRoom extends DungeonPiece {
                     restTurns = 2;
                     System.out.println(player.getName() + " commence à se reposer pour 2 tours et regagnera des PV.");
 
-                 } else if (choice == 4) {
-                System.out.println("Vous fouillez dans votre inventaire.");
-                player.displayInventory();
-                // Suppression de la partie où l'utilisateur doit entrer un objet.
-            }
-            else {
+                } else if (choice == 4) {
+                    System.out.println("Vous fouillez dans votre inventaire.");
+                    player.displayInventory();
+                    // Suppression de la partie où l'utilisateur doit entrer un objet.
+                }
+                else {
                     System.out.println("Choix invalide.");
                 }
             }

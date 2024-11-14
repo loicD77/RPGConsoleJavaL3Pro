@@ -23,9 +23,24 @@ public class Main {
         // Afficher les visages ASCII disponibles
         displayAsciiFaces();
 
-        // Demander au joueur de choisir un visage ASCII
-        System.out.print("Entrez le numéro de votre choix : ");
-        int faceChoice = Integer.parseInt(scanner.nextLine());
+        int faceChoice = -1;
+        boolean validInput = false;
+
+// Demander au joueur de choisir un visage ASCII
+        while (!validInput) {
+            System.out.print("Entrez le numéro de votre choix : ");
+            try {
+                faceChoice = Integer.parseInt(scanner.nextLine());
+                if (faceChoice >= 1 && faceChoice <= 5) { // Ajuster les bornes en fonction des choix possibles
+                    validInput = true;
+                } else {
+                    System.out.println("Saisie incorrecte, veuillez entrer un nombre entre 1 et 5.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Saisie incorrecte, veuillez entrer un nombre valide.");
+            }
+        }
+
 
         // Assigner le visage ASCII en fonction du choix
         String playerAsciiFace = selectAsciiFace(faceChoice);
