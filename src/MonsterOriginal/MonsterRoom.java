@@ -40,22 +40,31 @@ public class MonsterRoom extends DungeonPiece {
     @Override
     public void enter(Player player) {
         System.out.println("Vous êtes entré dans la salle des monstres !");
+        player.setEscaped(false); // Réinitialiser l'état de fuite du joueur
 
         // Créez des monstres en fonction du niveau du joueur
         int playerLevel = player.getLevel(); // Récupérer le niveau du joueur
+        entities.clear(); // Effacer les entités existantes pour éviter de les accumuler à chaque entrée
         entities.add(new Zombie(playerLevel)); // Créez le zombie avec le niveau du joueur
         entities.add(new Cyclops(playerLevel)); // Cyclope avec un constructeur approprié
-        entities.add(new Ogre(playerLevel)); // Cyclope avec un constructeur approprié
-        entities.add(new Skeleton(playerLevel)); // Cyclope avec un constructeur approprié
-        entities.add(new Dragon(playerLevel)); // Cyclope avec un constructeur approprié
+        entities.add(new Ogre(playerLevel)); // Ogre avec un constructeur approprié
+        entities.add(new Skeleton(playerLevel)); // Squelette avec un constructeur approprié
+        entities.add(new Dragon(playerLevel)); // Dragon avec un constructeur approprié
         entities.add(new Troll(playerLevel));
         entities.add(new Goblin(playerLevel));
+
+        // Ajouter quelques obstacles
+        entities.add(new StoneObstacle("Pierre massive", 20));
+        entities.add(new WoodenBarrier("Barrière en bois", 15));
 
         // Mélanger les entités pour un ordre aléatoire
         shuffleEntities();
 
         // Combattre les entités aléatoires
         for (GameEntity entity : entities) {
+            if (player.hasEscaped()) {
+                break; // Quitte la salle si le joueur a réussi à fuir
+            }
             if (entity instanceof Obstacle) {
                 handleObstacle(player, (Obstacle) entity);
             } else if (entity instanceof Monster) {
@@ -64,8 +73,10 @@ public class MonsterRoom extends DungeonPiece {
         }
 
         // Afficher l'état du joueur après la rencontre
-        player.displayStatus();
+
     }
+
+
 
     private void handleObstacle(Player player, Obstacle obstacle) {
         System.out.println("Vous rencontrez un obstacle : " + obstacle.getName() + " (PV: " + obstacle.getHealth() + ")");
@@ -74,7 +85,7 @@ public class MonsterRoom extends DungeonPiece {
         boolean resting = false;
         int restTurns = 0;
 
-        while (!obstacle.isDestroyed()) {
+        while (!obstacle.isDestroyed() && !player.hasEscaped()) {
             if (resting) {
                 restTurns--;
                 player.restoreHealth(50);
@@ -102,15 +113,20 @@ public class MonsterRoom extends DungeonPiece {
                         System.out.println("Vous avez gagné " + reward + " pièces d'or.");
                     }
                 } else if (choice == 2) {
-                    System.out.println("Vous avez fui !");
-                    return;
-
+                    if (attemptEscape()) {
+                        System.out.println("Ouf ! Vous avez enfin quitté cette terrible salle des monstres !");
+                        player.setEscaped(true);
+                        return;
+                    } else {
+                        System.out.println("La fuite a échoué, vous tombez sur un autre obstacle ou monstre !");
+                        continue;
+                    }
                 } else if (choice == 3) {
                     resting = true;
                     restTurns = 2;
                     System.out.println(player.getName() + " commence à se reposer pour 2 tours et regagnera des PV.");
 
-                }  else if (choice == 4) {
+                } else if (choice == 4) {
                     System.out.println("Vous fouillez dans votre inventaire.");
                     player.displayInventory();
                     // Suppression de la partie où l'utilisateur doit entrer un objet.
@@ -121,14 +137,15 @@ public class MonsterRoom extends DungeonPiece {
         }
     }
 
-
     private void handleMonster(Player player, Monster monster) {
         System.out.println("Un " + monster.getName() + " apparaît !");
 
         boolean resting = false;
         int restTurns = 0;
 
-        while (player.isAlive() && monster.isAlive()) {
+        Scanner scanner = new Scanner(System.in);
+
+        while (player.isAlive() && monster.isAlive() && !player.hasEscaped()) {
             if (resting) {
                 restTurns--;
                 player.restoreHealth(50);
@@ -138,7 +155,6 @@ public class MonsterRoom extends DungeonPiece {
                 }
             } else {
                 System.out.println("Que voulez-vous faire ? (1: Attaquer, 2: Fuire, 3: Se reposer, 4: Utiliser un objet de l'inventaire)");
-                Scanner scanner = new Scanner(System.in);
                 int choice = scanner.nextInt();
 
                 if (choice == 1) {
@@ -148,11 +164,17 @@ public class MonsterRoom extends DungeonPiece {
                     System.out.print("Choisissez votre type d'attaque : ");
                     int attackType = scanner.nextInt();
                     player.attack(monster, attackType); // Attaque le monstre
+                    System.out.println("Vous avez attaqué " + monster.getName() + ". PV restants : " + monster.getHealth());
 
                 } else if (choice == 2) {
-                    System.out.println("Vous avez fui !");
-                    return;
-
+                    if (attemptEscape()) {
+                        System.out.println("Ouf ! Vous avez enfin quitté cette terrible salle des monstres !");
+                        player.setEscaped(true);
+                        return;
+                    } else {
+                        System.out.println("La fuite a échoué, le monstre vous attaque !");
+                        monster.attack(player); // Le monstre attaque lors d'une tentative de fuite échouée
+                    }
                 } else if (choice == 3) {
                     resting = true;
                     restTurns = 2;
@@ -162,8 +184,7 @@ public class MonsterRoom extends DungeonPiece {
                     System.out.println("Vous fouillez dans votre inventaire.");
                     player.displayInventory();
                     // Suppression de la partie où l'utilisateur doit entrer un objet.
-                }
-                else {
+                } else {
                     System.out.println("Choix invalide.");
                 }
             }
@@ -175,15 +196,30 @@ public class MonsterRoom extends DungeonPiece {
                 break;
             }
 
-            // Le monstre attaque
-            monster.attack(player);
-            if (!player.isAlive()) {
-                System.out.println("Vous avez été vaincu par " + monster.getName() + "...");
-                break;
+            // Le monstre attaque si le joueur n'a pas réussi à s'échapper
+            if (!player.hasEscaped()) {
+                monster.attack(player);
+                if (!player.isAlive()) {
+                    System.out.println("Vous avez été vaincu par " + monster.getName() + "...");
+                    break;
+                }
             }
         }
     }
 
+
+    private boolean attemptEscape() {
+        int chance = random.nextInt(100);
+        return chance < 50; // 50% de chance de réussir la fuite
+    }
+
+    private GameEntity getRandomEntity() {
+        if (entities.isEmpty()) {
+            return null;
+        }
+        int index = random.nextInt(entities.size());
+        return entities.remove(index);
+    }
 
     private void shuffleEntities() {
         // Mélanger les entités pour un ordre aléatoire

@@ -127,7 +127,7 @@ public class GameMap {
     public void enterPiece(char pieceSymbol, Player player) {
         DungeonPiece piece = pieces.get(pieceSymbol);
         if (piece != null) {
-            System.out.println("Vous entrez dans : " + piece.getDescription());
+            System.out.println("Vous entrez dans : " + piece.getName());
             piece.enter(player);
         } else {
             System.out.println("Il n'y a rien ici.");

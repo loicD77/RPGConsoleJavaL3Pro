@@ -52,6 +52,7 @@ public class Player {
 
     private List<StatusEffect> activeEffects;
     private List<Potion> potions;
+    private boolean escaped; // Nouveau champ pour indiquer si le joueur a fui
 
     private int experiencePoints; // Points d'expérience accumulés
     private int experienceToNextLevel; // Points nécessaires pour passer au niveau suivant
@@ -69,6 +70,7 @@ public class Player {
         this.equippedProtection = null;
         this.experience = 0;
         this.level = 1;
+        this.escaped = false;
         this.actionHistory = new ArrayList<>();
         this.strength = 10;
         this.agility = 10;
@@ -153,6 +155,15 @@ public class Player {
             }
             System.out.println("Défense diminuée de " + amount + ". Défense actuelle : " + defense);
         }
+    }
+
+    public boolean hasEscaped() {
+        return escaped;
+    }
+
+    // Setter pour définir si le joueur a échappé
+    public void setEscaped(boolean escaped) {
+        this.escaped = escaped;
     }
 
     public void setInventory(Inventory inventory) {
