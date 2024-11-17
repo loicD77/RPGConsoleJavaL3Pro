@@ -26,10 +26,6 @@ public class MonsterRoom extends DungeonPiece {
         super(name, description, level);
         entities = new ArrayList<>();
         random = new Random();
-
-        // Ajoutez quelques obstacles à la liste
-        entities.add(new StoneObstacle("Pierre massive", 20));
-        entities.add(new WoodenBarrier("Barrière en bois", 15));
     }
 
     // Constructeur par défaut
@@ -42,20 +38,32 @@ public class MonsterRoom extends DungeonPiece {
         System.out.println("Vous êtes entré dans la salle des monstres !");
         player.setEscaped(false); // Réinitialiser l'état de fuite du joueur
 
-        // Créez des monstres en fonction du niveau du joueur
-        int playerLevel = player.getLevel(); // Récupérer le niveau du joueur
+        // Créer des entités aléatoires pour la salle
         entities.clear(); // Effacer les entités existantes pour éviter de les accumuler à chaque entrée
-        entities.add(new Zombie(playerLevel)); // Créez le zombie avec le niveau du joueur
-        entities.add(new Cyclops(playerLevel)); // Cyclope avec un constructeur approprié
-        entities.add(new Ogre(playerLevel)); // Ogre avec un constructeur approprié
-        entities.add(new Skeleton(playerLevel)); // Squelette avec un constructeur approprié
-        entities.add(new Dragon(playerLevel)); // Dragon avec un constructeur approprié
-        entities.add(new Troll(playerLevel));
-        entities.add(new Goblin(playerLevel));
 
-        // Ajouter quelques obstacles
-        entities.add(new StoneObstacle("Pierre massive", 20));
-        entities.add(new WoodenBarrier("Barrière en bois", 15));
+        // Ajouter un ou deux obstacles aléatoires
+        if (random.nextBoolean()) {
+            entities.add(new StoneObstacle("Pierre massive", 20));
+        }
+        if (random.nextBoolean()) {
+            entities.add(new WoodenBarrier("Barrière en bois", 15));
+        }
+
+        // Ajouter un ou deux monstres aléatoires en fonction du niveau du joueur
+        List<Monster> possibleMonsters = List.of(
+                new Zombie(player.getLevel()),
+                new Cyclops(player.getLevel()),
+                new Ogre(player.getLevel()),
+                new Skeleton(player.getLevel()),
+                new Dragon(player.getLevel()),
+                new Troll(player.getLevel()),
+                new Goblin(player.getLevel())
+        );
+
+        int numberOfMonsters = random.nextInt(2) + 1;
+        for (int i = 0; i < numberOfMonsters; i++) {
+            entities.add(possibleMonsters.get(random.nextInt(possibleMonsters.size())));
+        }
 
         // Mélanger les entités pour un ordre aléatoire
         shuffleEntities();
@@ -73,10 +81,8 @@ public class MonsterRoom extends DungeonPiece {
         }
 
         // Afficher l'état du joueur après la rencontre
-
+        player.displayStatus();
     }
-
-
 
     private void handleObstacle(Player player, Obstacle obstacle) {
         System.out.println("Vous rencontrez un obstacle : " + obstacle.getName() + " (PV: " + obstacle.getHealth() + ")");
@@ -86,6 +92,10 @@ public class MonsterRoom extends DungeonPiece {
         int restTurns = 0;
 
         while (!obstacle.isDestroyed() && !player.hasEscaped()) {
+            if (player.getHealth() <= 0) {
+                System.out.println("Le joueur est mort. Le jeu est terminé.");
+                System.exit(0); // Arrête le programme si le joueur est mort
+            }
             if (resting) {
                 restTurns--;
                 player.restoreHealth(20);
@@ -135,22 +145,21 @@ public class MonsterRoom extends DungeonPiece {
         }
     }
 
+
     private void handleMonster(Player player, Monster monster) {
         System.out.println("Un " + monster.getName() + " apparaît !");
 
         Scanner scanner = new Scanner(System.in);
-        boolean resting = false;
-        int restTurns = 0;
+        boolean playerTurn = true;
 
         while (player.isAlive() && monster.isAlive() && !player.hasEscaped()) {
-            if (resting) {
-                restTurns--;
-                player.restoreHealth(50);
-                System.out.println(player.getName() + " se repose et regagne 50 points de vie. Points de vie actuels : " + player.getHealth() + "/" + player.getMaxHealth());
-                if (restTurns == 0) {
-                    resting = false;
-                }
-            } else {
+            if (player.getHealth() <= 0) {
+                System.out.println("Le joueur est mort. Le jeu est terminé.");
+                System.exit(0); // Arrête le programme si le joueur est mort
+            }
+
+            if (playerTurn) {
+                // Le joueur effectue une action
                 System.out.println("Que voulez-vous faire ? (1: Attaquer, 2: Fuire, 3: Se reposer, 4: Utiliser un objet de l'inventaire)");
                 int choice = scanner.nextInt();
 
@@ -160,74 +169,60 @@ public class MonsterRoom extends DungeonPiece {
                         System.out.print("Choisissez votre type d'attaque : ");
                         int attackType = scanner.nextInt();
                         player.attack(monster, attackType);
-                        System.out.println("Vous avez attaqué " + monster.getName() + ". PV restants : " + monster.getHealth());
                         break;
 
                     case 2: // Fuir
                         if (attemptEscape()) {
-                            System.out.println("Ouf ! Vous avez enfin quitté cette terrible salle des monstres !");
+                            System.out.println("Vous avez réussi à fuir !");
                             player.setEscaped(true);
                             return;
                         } else {
-                            System.out.println("La fuite a échoué, le monstre vous attaque !");
+                            System.out.println("La fuite a échoué !");
                         }
                         break;
 
                     case 3: // Se reposer
-                        resting = true;
-                        restTurns = 2;
-                        System.out.println(player.getName() + " commence à se reposer pour 2 tours et regagnera des PV.");
+                        player.rest();
                         break;
 
-                    case 4: // Utiliser un objet de l'inventaire
+                    case 4: // Utiliser un objet
                         System.out.println("Vous fouillez dans votre inventaire.");
                         player.displayInventory();
                         break;
 
                     default:
                         System.out.println("Choix invalide.");
-                        break;
+                        continue;
                 }
-            }
-
-            // Le monstre attaque une seule fois après l'action du joueur, si le joueur n'a pas fui
-            if (!player.hasEscaped() && monster.isAlive()) {
+                playerTurn = false; // Fin du tour du joueur, passe au monstre
+            } else {
+                // Le monstre attaque
                 monster.attack(player);
-
-                // Vérifier si le joueur est encore en vie après l'attaque
-                if (!player.isAlive()) {
-                    System.out.println("Vous avez été vaincu par " + monster.getName() + "...");
-                    return;
-                }
+                playerTurn = true; // Fin du tour du monstre, passe au joueur
             }
-        }
 
-        if (!monster.isAlive()) {
-            System.out.println("Vous avez vaincu " + monster.getName() + " !");
-            player.gainExperience(monster.getExperiencePoints());
-            player.addGold(monster.getGold());
+            // Vérifier si l'un des deux est mort après chaque attaque
+            if (!monster.isAlive()) {
+                System.out.println("Vous avez vaincu " + monster.getName() + " !");
+                player.gainExperience(monster.getExperiencePoints());
+                player.addGold(monster.getGold());
+                break;
+            } else if (!player.isAlive()) {
+                System.out.println("Vous avez été vaincu...");
+                System.exit(0); // Arrêter le programme si le joueur est mort
+            }
         }
     }
-
 
     private boolean attemptEscape() {
         int chance = random.nextInt(100);
         return chance < 50; // 50% de chance de réussir la fuite
     }
 
-    private GameEntity getRandomEntity() {
-        if (entities.isEmpty()) {
-            return null;
-        }
-        int index = random.nextInt(entities.size());
-        return entities.remove(index);
-    }
-
     private void shuffleEntities() {
         // Mélanger les entités pour un ordre aléatoire
         for (int i = entities.size() - 1; i > 0; i--) {
             int j = random.nextInt(i + 1);
-            // Échange d'entités
             GameEntity temp = entities.get(i);
             entities.set(i, entities.get(j));
             entities.set(j, temp);

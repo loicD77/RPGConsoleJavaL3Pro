@@ -109,7 +109,7 @@ public class BossRoom extends DungeonPiece {
                 break;
             } else if (!player.isAlive()) {
                 System.out.println("Vous avez été vaincu par le Boss Final... Le jeu est terminé.");
-                break;
+                System.exit(0); // Arrêter le programme si le joueur est mort
             }
         }
     }
