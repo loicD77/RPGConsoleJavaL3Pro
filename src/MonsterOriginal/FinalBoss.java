@@ -49,6 +49,27 @@ public class FinalBoss extends Monster {
         System.out.println("Le Boss Final vous a empoisonné ! Vous perdrez des points de vie pendant 5 tours !");
     }
 
+    public void flameBreath(Player player) {
+        System.out.println("Le Boss Final crache un souffle de flammes infernales !");
+        int damage = getBaseDamage() + 30;
+        player.takeDamage(damage);
+        System.out.println("Le Boss Final inflige " + damage + " points de dégâts avec son souffle de flammes !");
+    }
+
+    public void shadowStrike(Player player) {
+        System.out.println("Le Boss Final exécute une frappe de l'ombre !");
+        int damage = getBaseDamage() + 40;
+        player.takeDamage(damage);
+        System.out.println("Le Boss Final inflige " + damage + " points de dégâts avec sa frappe de l'ombre !");
+    }
+
+    public void earthquake(Player player) {
+        System.out.println("Le Boss Final frappe le sol avec une force titanesque, provoquant un tremblement de terre !");
+        int damage = getBaseDamage() + 35;
+        player.takeDamage(damage);
+        System.out.println("Le Boss Final inflige " + damage + " points de dégâts avec le tremblement de terre !");
+    }
+
     @Override
     public void attack(Player player) {
         if (isResting) {
@@ -70,7 +91,7 @@ public class FinalBoss extends Monster {
             return;
         }
 
-        int attackChoice = random.nextInt(4);
+        int attackChoice = random.nextInt(6);
         switch (attackChoice) {
             case 0:
                 System.out.println("Le Boss Final lance un coup puissant !");
@@ -87,6 +108,15 @@ public class FinalBoss extends Monster {
             case 3:
                 System.out.println("Le Boss Final décide de se reposer pendant 1 tour.");
                 isResting = true;
+                break;
+            case 4:
+                flameBreath(player);
+                break;
+            case 5:
+                shadowStrike(player);
+                break;
+            case 6:
+                earthquake(player);
                 break;
         }
 

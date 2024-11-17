@@ -1,6 +1,5 @@
 package WeaponOriginal;
 
-
 import Dungeon.DungeonPiece;
 import Player.Player;
 import PotionGroup.Potion;
@@ -64,19 +63,19 @@ public class PharmacyStore extends DungeonPiece {
 
             switch (choice) {
                 case 1:
-                    potion = new HealthPotion("Potion de Soin", 50, 10);
+                    potion = new HealthPotion("Potion de Soin", 50, 10); // Restaurer 50 points de vie
                     cost = 10;
                     break;
                 case 2:
-                    potion = new AntidotePotion("Antidote", "Ça soigne", 50, 15);
+                    potion = new AntidotePotion("Antidote", "Ça soigne", 50, 15); // Restaurer 50 points de vie
                     cost = 15;
                     break;
                 case 3:
-                    potion = new ParalysisCurePotion("Potion de Paralysie", 20, 20);
+                    potion = new ParalysisCurePotion("Potion de Paralysie", 20, 20); // Restaurer 20 points de vie
                     cost = 20;
                     break;
                 case 4:
-                    potion = new HypnosisCurePotion("Potion d'Hypnose", 25, 25);
+                    potion = new HypnosisCurePotion("Potion d'Hypnose", 25, 25); // Restaurer 25 points de vie
                     cost = 25;
                     break;
                 case 5: // Option pour quitter
@@ -111,10 +110,10 @@ public class PharmacyStore extends DungeonPiece {
     // Méthode pour afficher les potions disponibles
     public void showPotions() {
         System.out.println("Bienvenue à la pharmacie !");
-        System.out.println("1. Potion de soin - Coût : 10 pièces d'or");
-        System.out.println("2. Antidote (contre le poison) - Coût : 15 pièces d'or");
-        System.out.println("3. Potion contre la paralysie - Coût : 20 pièces d'or");
-        System.out.println("4. Potion contre l'hypnose - Coût : 25 pièces d'or");
+        System.out.println("1. Potion de soin (Restaure 50 PV) - Coût : 10 pièces d'or");
+        System.out.println("2. Antidote (contre le poison, restaure 50 PV) - Coût : 15 pièces d'or");
+        System.out.println("3. Potion contre la paralysie (Restaure 20 PV) - Coût : 20 pièces d'or");
+        System.out.println("4. Potion contre l'hypnose (Restaure 25 PV) - Coût : 25 pièces d'or");
         System.out.println("5. Quitter le magasin");
     }
 }

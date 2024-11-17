@@ -19,6 +19,9 @@ public abstract class Monster extends GameEntity implements Attackable {
     private boolean isResurrected; // Indicateur de résurrection
     protected int specialAttackChance; // Chance d'attaque spéciale
     protected int experiencePoints; // Points d'expérience
+
+    protected int evasionChance; // Pourcentage de chance d'esquiver
+
     private int gold; // Champ pour l'or
     private boolean isResting = false; // Indique si le monstre est en repos
     private int restTurns = 0; // Nombre de tours restant pour le repos
@@ -36,6 +39,7 @@ public abstract class Monster extends GameEntity implements Attackable {
         this.experiencePoints = experiencePoints;
         this.gold = gold; // Initialiser l'or du monstre
         this.isResurrected = false;
+        this.evasionChance = evasionChance;
     }
 
     public int getGold() {
@@ -124,6 +128,24 @@ public abstract class Monster extends GameEntity implements Attackable {
         }
     }
 
+
+    // Méthode pour ajouter de l'or au monstre
+    public void addGold(int amount) {
+        if (amount > 0) {
+            this.gold += amount;
+            System.out.println(getName() + " a gagné " + amount + " pièces d'or. Total d'or : " + this.gold);
+        }
+    }
+
+    // Getter pour la chance d'esquiver
+    public int getEvasionChance() {
+        return evasionChance;
+    }
+
+    // Setter pour la chance d'esquiver
+    public void setEvasionChance(int evasionChance) {
+        this.evasionChance = evasionChance;
+    }
     public boolean isAlive() {
         return health > 0;
     }

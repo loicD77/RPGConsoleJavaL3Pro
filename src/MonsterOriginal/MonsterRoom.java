@@ -88,10 +88,10 @@ public class MonsterRoom extends DungeonPiece {
         while (!obstacle.isDestroyed() && !player.hasEscaped()) {
             if (resting) {
                 restTurns--;
-                player.restoreHealth(50);
-                System.out.println(player.getName() + " se repose et regagne 50 points de vie. Points de vie actuels : " + player.getHealth() + "/" + player.getMaxHealth());
+                player.restoreHealth(20);
+                System.out.println(player.getName() + " se repose et regagne 20 points de vie. Points de vie actuels : " + player.getHealth() + "/" + player.getMaxHealth());
                 if (restTurns == 0) {
-                    resting = false;
+                    resting = false; // Fin du repos
                 }
             } else {
                 System.out.println("Que voulez-vous faire ? (1: Attaquer, 2: Fuire, 3: Se reposer, 4: Utiliser un objet de l'inventaire)");
@@ -119,17 +119,15 @@ public class MonsterRoom extends DungeonPiece {
                         return;
                     } else {
                         System.out.println("La fuite a échoué, vous tombez sur un autre obstacle ou monstre !");
-                        continue;
+                        // L'obstacle ne peut pas attaquer le joueur, donc il n'y a aucune attaque à ce moment-là
                     }
                 } else if (choice == 3) {
                     resting = true;
                     restTurns = 2;
                     System.out.println(player.getName() + " commence à se reposer pour 2 tours et regagnera des PV.");
-
                 } else if (choice == 4) {
                     System.out.println("Vous fouillez dans votre inventaire.");
                     player.displayInventory();
-                    // Suppression de la partie où l'utilisateur doit entrer un objet.
                 } else {
                     System.out.println("Choix invalide. Veuillez réessayer.");
                 }
@@ -140,10 +138,9 @@ public class MonsterRoom extends DungeonPiece {
     private void handleMonster(Player player, Monster monster) {
         System.out.println("Un " + monster.getName() + " apparaît !");
 
+        Scanner scanner = new Scanner(System.in);
         boolean resting = false;
         int restTurns = 0;
-
-        Scanner scanner = new Scanner(System.in);
 
         while (player.isAlive() && monster.isAlive() && !player.hasEscaped()) {
             if (resting) {
@@ -157,53 +154,58 @@ public class MonsterRoom extends DungeonPiece {
                 System.out.println("Que voulez-vous faire ? (1: Attaquer, 2: Fuire, 3: Se reposer, 4: Utiliser un objet de l'inventaire)");
                 int choice = scanner.nextInt();
 
-                if (choice == 1) {
-                    // Affiche les options d'attaque disponibles selon l'arme équipée
-                    player.displayAttackOptions();
+                switch (choice) {
+                    case 1: // Attaquer
+                        player.displayAttackOptions();
+                        System.out.print("Choisissez votre type d'attaque : ");
+                        int attackType = scanner.nextInt();
+                        player.attack(monster, attackType);
+                        System.out.println("Vous avez attaqué " + monster.getName() + ". PV restants : " + monster.getHealth());
+                        break;
 
-                    System.out.print("Choisissez votre type d'attaque : ");
-                    int attackType = scanner.nextInt();
-                    player.attack(monster, attackType); // Attaque le monstre
-                    System.out.println("Vous avez attaqué " + monster.getName() + ". PV restants : " + monster.getHealth());
+                    case 2: // Fuir
+                        if (attemptEscape()) {
+                            System.out.println("Ouf ! Vous avez enfin quitté cette terrible salle des monstres !");
+                            player.setEscaped(true);
+                            return;
+                        } else {
+                            System.out.println("La fuite a échoué, le monstre vous attaque !");
+                        }
+                        break;
 
-                } else if (choice == 2) {
-                    if (attemptEscape()) {
-                        System.out.println("Ouf ! Vous avez enfin quitté cette terrible salle des monstres !");
-                        player.setEscaped(true);
-                        return;
-                    } else {
-                        System.out.println("La fuite a échoué, le monstre vous attaque !");
-                        monster.attack(player); // Le monstre attaque lors d'une tentative de fuite échouée
-                    }
-                } else if (choice == 3) {
-                    resting = true;
-                    restTurns = 2;
-                    System.out.println(player.getName() + " commence à se reposer pour 2 tours et regagnera des PV.");
+                    case 3: // Se reposer
+                        resting = true;
+                        restTurns = 2;
+                        System.out.println(player.getName() + " commence à se reposer pour 2 tours et regagnera des PV.");
+                        break;
 
-                } else if (choice == 4) {
-                    System.out.println("Vous fouillez dans votre inventaire.");
-                    player.displayInventory();
-                    // Suppression de la partie où l'utilisateur doit entrer un objet.
-                } else {
-                    System.out.println("Choix invalide.");
+                    case 4: // Utiliser un objet de l'inventaire
+                        System.out.println("Vous fouillez dans votre inventaire.");
+                        player.displayInventory();
+                        break;
+
+                    default:
+                        System.out.println("Choix invalide.");
+                        break;
                 }
             }
 
-            if (!monster.isAlive()) {
-                System.out.println("Vous avez vaincu " + monster.getName() + " !");
-                player.gainExperience(monster.getExperiencePoints());
-                player.addGold(monster.getGold());
-                break;
-            }
-
-            // Le monstre attaque si le joueur n'a pas réussi à s'échapper
-            if (!player.hasEscaped()) {
+            // Le monstre attaque une seule fois après l'action du joueur, si le joueur n'a pas fui
+            if (!player.hasEscaped() && monster.isAlive()) {
                 monster.attack(player);
+
+                // Vérifier si le joueur est encore en vie après l'attaque
                 if (!player.isAlive()) {
                     System.out.println("Vous avez été vaincu par " + monster.getName() + "...");
-                    break;
+                    return;
                 }
             }
+        }
+
+        if (!monster.isAlive()) {
+            System.out.println("Vous avez vaincu " + monster.getName() + " !");
+            player.gainExperience(monster.getExperiencePoints());
+            player.addGold(monster.getGold());
         }
     }
 

@@ -69,7 +69,7 @@ public class Player {
         this.equippedWeapon = null;
         this.equippedProtection = null;
         this.experience = 0;
-        this.level = 1;
+        this.level = 6;
         this.escaped = false;
         this.actionHistory = new ArrayList<>();
         this.strength = 10;
@@ -176,6 +176,13 @@ public class Player {
             System.out.println("Défense augmentée de " + amount + ". Défense actuelle : " + defense);
         }
     }
+    public void rest() {
+        // Exemple de logique pour la méthode rest
+        int healthRecovered = 20; // Points de vie récupérés par repos
+        restoreHealth(healthRecovered);
+        System.out.println(getName() + " se repose et regagne " + healthRecovered + " points de vie. Points de vie actuels : " + getHealth() + "/" + getMaxHealth());
+    }
+
 
     public void addItemToInventory(Item item) {
         boolean isAdded = inventory.addItem(item);
