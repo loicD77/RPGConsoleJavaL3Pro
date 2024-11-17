@@ -20,7 +20,7 @@ public class BossRoom extends DungeonPiece { // Classe pour la salle du BOSS FIN
         System.out.println("Niveau actuel du joueur : " + player.getLevel());
         System.out.println("Niveau requis pour entrer : " + getRequiredLevel());
 
-        // Vérifie si le joueur a déjà essayé d'entrer
+        // Vérifie si le joueur a déjà essayé d'entrer en cas d'erreur dans le programme
         if (bossRoomEntered) {
             System.out.println("Vous avez déjà tenté d'entrer dans cette salle.");
             return;
@@ -35,7 +35,7 @@ public class BossRoom extends DungeonPiece { // Classe pour la salle du BOSS FIN
 
         // Si le joueur a le niveau requis, continuer
         System.out.println("Vous entrez dans la " + getName() + " !");
-        System.out.println("Le boss vous attend ! Soyez prêt pour un combat difficile !");
+        System.out.println("Le boss vous attend ! Soyez prêt pour un combat difficile ! LA FUITE EST IMPOSSIBLE...");
         Scanner scanner = new Scanner(System.in);
 
         boolean resting = false;
