@@ -3733,4 +3733,770 @@ Vous avez été vaincu...
 
 Process finished with exit code 0
 
+
+C:\Users\darras\.jdks\openjdk-20\bin\java.exe "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2022.3.3\lib\idea_rt.jar=35186:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2022.3.3\bin" -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath "C:\Users\darras\OneDrive\Documents\RPG-L3PRO - CopieAP\out\production\RPG-L3PRO" MainFiles.Main
+Entrez le nom de votre personnage : Loic
+Choisissez un visage ASCII pour votre personnage :
+1.  ^_^  
+2.  O_O  
+3.  T_T  
+4.  >_<  
+5.  U_U  
+Entrez le numéro de votre choix : 2
+=== Menu Principal ===
+1: Explorer
+2: Afficher l'inventaire
+3: Afficher le statut
+4: Quitter
+Choisissez une option : Choisissez une option : 1
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Carte du Donjon :
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     +-------------------------+
+▓ 🎮 W   |   P   |   T   |   R   |   ▓    |       Légende :         |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     +-------------------------+
+▓       |   S   |   M   |   B   |   ▓     | W : Magasin d'Armes     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | P : Pharmacie           |
+▓   D   |   X   |       |       |   ▓     | T : Salle du Trésor     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | M : Salle des Monstres  |
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     | B : Salle du Boss       |
+                                          | R : Magasin Protection  |
+                                          | S : Magasin Secret      |
+                                          | D : Salle du Dé         |
+                                          | X : Quiz Java           |
+                                          +-------------------------+
+Déplacez-vous (w/a/s/d pour haut/gauche/bas/droite, q pour quitter) : 
+s
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Carte du Donjon :
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     +-------------------------+
+▓   W   |   P   |   T   |   R   |   ▓     |       Légende :         |
+▓ 🎮 _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓    +-------------------------+
+▓       |   S   |   M   |   B   |   ▓     | W : Magasin d'Armes     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | P : Pharmacie           |
+▓   D   |   X   |       |       |   ▓     | T : Salle du Trésor     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | M : Salle des Monstres  |
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     | B : Salle du Boss       |
+                                          | R : Magasin Protection  |
+                                          | S : Magasin Secret      |
+                                          | D : Salle du Dé         |
+                                          | X : Quiz Java           |
+                                          +-------------------------+
+Déplacez-vous (w/a/s/d pour haut/gauche/bas/droite, q pour quitter) : 
+d
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Carte du Donjon :
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     +-------------------------+
+▓   W   |   P   |   T   |   R   |   ▓     |       Légende :         |
+▓ _ 🎮 _ | _ _ _ | _ _ _ | _ _ _ | _ ▓    +-------------------------+
+▓       |   S   |   M   |   B   |   ▓     | W : Magasin d'Armes     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | P : Pharmacie           |
+▓   D   |   X   |       |       |   ▓     | T : Salle du Trésor     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | M : Salle des Monstres  |
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     | B : Salle du Boss       |
+                                          | R : Magasin Protection  |
+                                          | S : Magasin Secret      |
+                                          | D : Salle du Dé         |
+                                          | X : Quiz Java           |
+                                          +-------------------------+
+Déplacez-vous (w/a/s/d pour haut/gauche/bas/droite, q pour quitter) : 
+d
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Carte du Donjon :
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     +-------------------------+
+▓   W   |   P   |   T   |   R   |   ▓     |       Légende :         |
+▓ _ _ 🎮 | _ _ _ | _ _ _ | _ _ _ | _ ▓    +-------------------------+
+▓       |   S   |   M   |   B   |   ▓     | W : Magasin d'Armes     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | P : Pharmacie           |
+▓   D   |   X   |       |       |   ▓     | T : Salle du Trésor     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | M : Salle des Monstres  |
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     | B : Salle du Boss       |
+                                          | R : Magasin Protection  |
+                                          | S : Magasin Secret      |
+                                          | D : Salle du Dé         |
+                                          | X : Quiz Java           |
+                                          +-------------------------+
+Déplacez-vous (w/a/s/d pour haut/gauche/bas/droite, q pour quitter) : 
+d
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Carte du Donjon :
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     +-------------------------+
+▓   W   |   P   |   T   |   R   |   ▓     |       Légende :         |
+▓ _ _ _ 🎮 _ _ _ | _ _ _ | _ _ _ | _ ▓    +-------------------------+
+▓       |   S   |   M   |   B   |   ▓     | W : Magasin d'Armes     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | P : Pharmacie           |
+▓   D   |   X   |       |       |   ▓     | T : Salle du Trésor     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | M : Salle des Monstres  |
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     | B : Salle du Boss       |
+                                          | R : Magasin Protection  |
+                                          | S : Magasin Secret      |
+                                          | D : Salle du Dé         |
+                                          | X : Quiz Java           |
+                                          +-------------------------+
+Déplacez-vous (w/a/s/d pour haut/gauche/bas/droite, q pour quitter) : 
+d
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Carte du Donjon :
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     +-------------------------+
+▓   W   |   P   |   T   |   R   |   ▓     |       Légende :         |
+▓ _ _ _ | 🎮 _ _ | _ _ _ | _ _ _ | _ ▓    +-------------------------+
+▓       |   S   |   M   |   B   |   ▓     | W : Magasin d'Armes     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | P : Pharmacie           |
+▓   D   |   X   |       |       |   ▓     | T : Salle du Trésor     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | M : Salle des Monstres  |
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     | B : Salle du Boss       |
+                                          | R : Magasin Protection  |
+                                          | S : Magasin Secret      |
+                                          | D : Salle du Dé         |
+                                          | X : Quiz Java           |
+                                          +-------------------------+
+Déplacez-vous (w/a/s/d pour haut/gauche/bas/droite, q pour quitter) : 
+d
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Carte du Donjon :
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     +-------------------------+
+▓   W   |   P   |   T   |   R   |   ▓     |       Légende :         |
+▓ _ _ _ | _ 🎮 _ | _ _ _ | _ _ _ | _ ▓    +-------------------------+
+▓       |   S   |   M   |   B   |   ▓     | W : Magasin d'Armes     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | P : Pharmacie           |
+▓   D   |   X   |       |       |   ▓     | T : Salle du Trésor     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | M : Salle des Monstres  |
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     | B : Salle du Boss       |
+                                          | R : Magasin Protection  |
+                                          | S : Magasin Secret      |
+                                          | D : Salle du Dé         |
+                                          | X : Quiz Java           |
+                                          +-------------------------+
+Déplacez-vous (w/a/s/d pour haut/gauche/bas/droite, q pour quitter) : 
+d
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Carte du Donjon :
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     +-------------------------+
+▓   W   |   P   |   T   |   R   |   ▓     |       Légende :         |
+▓ _ _ _ | _ _ 🎮 | _ _ _ | _ _ _ | _ ▓    +-------------------------+
+▓       |   S   |   M   |   B   |   ▓     | W : Magasin d'Armes     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | P : Pharmacie           |
+▓   D   |   X   |       |       |   ▓     | T : Salle du Trésor     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | M : Salle des Monstres  |
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     | B : Salle du Boss       |
+                                          | R : Magasin Protection  |
+                                          | S : Magasin Secret      |
+                                          | D : Salle du Dé         |
+                                          | X : Quiz Java           |
+                                          +-------------------------+
+Déplacez-vous (w/a/s/d pour haut/gauche/bas/droite, q pour quitter) : 
+d
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Carte du Donjon :
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     +-------------------------+
+▓   W   |   P   |   T   |   R   |   ▓     |       Légende :         |
+▓ _ _ _ | _ _ _ 🎮 _ _ _ | _ _ _ | _ ▓    +-------------------------+
+▓       |   S   |   M   |   B   |   ▓     | W : Magasin d'Armes     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | P : Pharmacie           |
+▓   D   |   X   |       |       |   ▓     | T : Salle du Trésor     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | M : Salle des Monstres  |
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     | B : Salle du Boss       |
+                                          | R : Magasin Protection  |
+                                          | S : Magasin Secret      |
+                                          | D : Salle du Dé         |
+                                          | X : Quiz Java           |
+                                          +-------------------------+
+Déplacez-vous (w/a/s/d pour haut/gauche/bas/droite, q pour quitter) : 
+d
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Carte du Donjon :
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     +-------------------------+
+▓   W   |   P   |   T   |   R   |   ▓     |       Légende :         |
+▓ _ _ _ | _ _ _ | 🎮 _ _ | _ _ _ | _ ▓    +-------------------------+
+▓       |   S   |   M   |   B   |   ▓     | W : Magasin d'Armes     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | P : Pharmacie           |
+▓   D   |   X   |       |       |   ▓     | T : Salle du Trésor     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | M : Salle des Monstres  |
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     | B : Salle du Boss       |
+                                          | R : Magasin Protection  |
+                                          | S : Magasin Secret      |
+                                          | D : Salle du Dé         |
+                                          | X : Quiz Java           |
+                                          +-------------------------+
+Déplacez-vous (w/a/s/d pour haut/gauche/bas/droite, q pour quitter) : 
+d
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Carte du Donjon :
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     +-------------------------+
+▓   W   |   P   |   T   |   R   |   ▓     |       Légende :         |
+▓ _ _ _ | _ _ _ | _ 🎮 _ | _ _ _ | _ ▓    +-------------------------+
+▓       |   S   |   M   |   B   |   ▓     | W : Magasin d'Armes     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | P : Pharmacie           |
+▓   D   |   X   |       |       |   ▓     | T : Salle du Trésor     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | M : Salle des Monstres  |
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     | B : Salle du Boss       |
+                                          | R : Magasin Protection  |
+                                          | S : Magasin Secret      |
+                                          | D : Salle du Dé         |
+                                          | X : Quiz Java           |
+                                          +-------------------------+
+Déplacez-vous (w/a/s/d pour haut/gauche/bas/droite, q pour quitter) : 
+d
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Carte du Donjon :
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     +-------------------------+
+▓   W   |   P   |   T   |   R   |   ▓     |       Légende :         |
+▓ _ _ _ | _ _ _ | _ _ 🎮 | _ _ _ | _ ▓    +-------------------------+
+▓       |   S   |   M   |   B   |   ▓     | W : Magasin d'Armes     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | P : Pharmacie           |
+▓   D   |   X   |       |       |   ▓     | T : Salle du Trésor     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | M : Salle des Monstres  |
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     | B : Salle du Boss       |
+                                          | R : Magasin Protection  |
+                                          | S : Magasin Secret      |
+                                          | D : Salle du Dé         |
+                                          | X : Quiz Java           |
+                                          +-------------------------+
+Déplacez-vous (w/a/s/d pour haut/gauche/bas/droite, q pour quitter) : 
+d
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Carte du Donjon :
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     +-------------------------+
+▓   W   |   P   |   T   |   R   |   ▓     |       Légende :         |
+▓ _ _ _ | _ _ _ | _ _ _ 🎮 _ _ _ | _ ▓    +-------------------------+
+▓       |   S   |   M   |   B   |   ▓     | W : Magasin d'Armes     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | P : Pharmacie           |
+▓   D   |   X   |       |       |   ▓     | T : Salle du Trésor     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | M : Salle des Monstres  |
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     | B : Salle du Boss       |
+                                          | R : Magasin Protection  |
+                                          | S : Magasin Secret      |
+                                          | D : Salle du Dé         |
+                                          | X : Quiz Java           |
+                                          +-------------------------+
+Déplacez-vous (w/a/s/d pour haut/gauche/bas/droite, q pour quitter) : 
+d
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Carte du Donjon :
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     +-------------------------+
+▓   W   |   P   |   T   |   R   |   ▓     |       Légende :         |
+▓ _ _ _ | _ _ _ | _ _ _ | 🎮 _ _ | _ ▓    +-------------------------+
+▓       |   S   |   M   |   B   |   ▓     | W : Magasin d'Armes     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | P : Pharmacie           |
+▓   D   |   X   |       |       |   ▓     | T : Salle du Trésor     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | M : Salle des Monstres  |
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     | B : Salle du Boss       |
+                                          | R : Magasin Protection  |
+                                          | S : Magasin Secret      |
+                                          | D : Salle du Dé         |
+                                          | X : Quiz Java           |
+                                          +-------------------------+
+Déplacez-vous (w/a/s/d pour haut/gauche/bas/droite, q pour quitter) : 
+d
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Carte du Donjon :
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     +-------------------------+
+▓   W   |   P   |   T   |   R   |   ▓     |       Légende :         |
+▓ _ _ _ | _ _ _ | _ _ _ | _ 🎮 _ | _ ▓    +-------------------------+
+▓       |   S   |   M   |   B   |   ▓     | W : Magasin d'Armes     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | P : Pharmacie           |
+▓   D   |   X   |       |       |   ▓     | T : Salle du Trésor     |
+▓ _ _ _ | _ _ _ | _ _ _ | _ _ _ | _ ▓     | M : Salle des Monstres  |
+▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓ ▓     | B : Salle du Boss       |
+                                          | R : Magasin Protection  |
+                                          | S : Magasin Secret      |
+                                          | D : Salle du Dé         |
+                                          | X : Quiz Java           |
+                                          +-------------------------+
+Déplacez-vous (w/a/s/d pour haut/gauche/bas/droite, q pour quitter) : 
+s
+Vous entrez dans : Salle du Boss
+Tentative d'entrée dans la salle du Boss...
+Niveau actuel du joueur : 6
+Niveau requis pour entrer : 5
+Vous entrez dans la Salle du Boss !
+Le boss vous attend ! Soyez prêt pour un combat difficile !
+
+=== Combat contre le Boss Final ===
+Santé du Boss : 500/500
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Que voulez-vous faire ? (1: Attaquer, 2: Fuire, 3: Se reposer, 4: Utiliser un objet de l'inventaire)
+1
+Choisissez votre type d'attaque :
+1: Coup de poing
+2: Attaque puissante
+3: Attaque rapide
+4: Attaque spéciale
+Choisissez votre type d'attaque : 1
+Boss Final a subi 20 dégâts ! Santé restante : 480
+Le Boss Final rugit de rage !
+Loic a attaqué Boss Final et a infligé 20 points de dégâts. Grâce à 10 de force du joueur.
+Le Boss Final décide de se reposer pendant 1 tour.
+
+=== Combat contre le Boss Final ===
+Santé du Boss : 480/500
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Que voulez-vous faire ? (1: Attaquer, 2: Fuire, 3: Se reposer, 4: Utiliser un objet de l'inventaire)
+1
+Choisissez votre type d'attaque :
+1: Coup de poing
+2: Attaque puissante
+3: Attaque rapide
+4: Attaque spéciale
+Choisissez votre type d'attaque : 1
+Boss Final a subi 20 dégâts ! Santé restante : 460
+Le Boss Final rugit de rage !
+Loic a attaqué Boss Final et a infligé 20 points de dégâts. Grâce à 10 de force du joueur.
+Le Boss Final est en train de se reposer et regagne beaucoup de points de vie !
+PV du Boss Final : 500
+
+=== Combat contre le Boss Final ===
+Santé du Boss : 500/500
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 100/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Que voulez-vous faire ? (1: Attaquer, 2: Fuire, 3: Se reposer, 4: Utiliser un objet de l'inventaire)
+1
+Choisissez votre type d'attaque :
+1: Coup de poing
+2: Attaque puissante
+3: Attaque rapide
+4: Attaque spéciale
+Choisissez votre type d'attaque : 1
+Boss Final a subi 20 dégâts ! Santé restante : 480
+Le Boss Final rugit de rage !
+Loic a attaqué Boss Final et a infligé 20 points de dégâts. Grâce à 10 de force du joueur.
+Le Boss Final lance un coup puissant !
+Loic a subi 65 points de dégâts. Réduction de 5 grâce à la défense. Santé actuelle : 35. Grâce à 10 de force du joueur.
+
+=== Combat contre le Boss Final ===
+Santé du Boss : 480/500
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 35/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Que voulez-vous faire ? (1: Attaquer, 2: Fuire, 3: Se reposer, 4: Utiliser un objet de l'inventaire)
+1
+Choisissez votre type d'attaque :
+1: Coup de poing
+2: Attaque puissante
+3: Attaque rapide
+4: Attaque spéciale
+Choisissez votre type d'attaque : 1
+Boss Final a subi 20 dégâts ! Santé restante : 460
+Le Boss Final rugit de rage !
+Loic a attaqué Boss Final et a infligé 20 points de dégâts. Grâce à 10 de force du joueur.
+Le Boss Final empoisonne le joueur !
+Le Boss Final vous a empoisonné ! Vous perdrez des points de vie pendant 5 tours !
+Loic a subi 5 points de dégâts. Réduction de 5 grâce à la défense. Santé actuelle : 30. Grâce à 10 de force du joueur.
+Vous perdez 10 points de vie à cause du poison. Tours restants : 5
+
+=== Combat contre le Boss Final ===
+Santé du Boss : 460/500
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 30/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Que voulez-vous faire ? (1: Attaquer, 2: Fuire, 3: Se reposer, 4: Utiliser un objet de l'inventaire)
+1
+Choisissez votre type d'attaque :
+1: Coup de poing
+2: Attaque puissante
+3: Attaque rapide
+4: Attaque spéciale
+Choisissez votre type d'attaque : 1
+Boss Final a subi 20 dégâts ! Santé restante : 440
+Le Boss Final rugit de rage !
+Loic a attaqué Boss Final et a infligé 20 points de dégâts. Grâce à 10 de force du joueur.
+Le Boss Final empoisonne le joueur !
+Le Boss Final vous a empoisonné ! Vous perdrez des points de vie pendant 5 tours !
+Loic a esquivé l'attaque grâce à une agilité de 10 !
+Vous perdez 10 points de vie à cause du poison. Tours restants : 5
+
+=== Combat contre le Boss Final ===
+Santé du Boss : 440/500
+=== Statut du Joueur ===
+Nom : Loic
+Niveau : 6
+PV : 30/100
+Or : 1000
+Force : 10
+Agilité : 10
+Intelligence : 10
+Défense : 10
+Arme équipée : Aucune arme équipée.
+Objet de protection équipé : Aucun objet de protection équipé.
+========================
+Apparence du Personnage :
+    O_O
+    /|\ 
+     |  
+    / \
+========================
+
+Que voulez-vous faire ? (1: Attaquer, 2: Fuire, 3: Se reposer, 4: Utiliser un objet de l'inventaire)
+1
+Choisissez votre type d'attaque :
+1: Coup de poing
+2: Attaque puissante
+3: Attaque rapide
+4: Attaque spéciale
+Choisissez votre type d'attaque : 1
+Boss Final a subi 20 dégâts ! Santé restante : 420
+Le Boss Final rugit de rage !
+Loic a attaqué Boss Final et a infligé 20 points de dégâts. Grâce à 10 de force du joueur.
+Le Boss Final attaque avec ses griffes !
+Loic a subi 45 points de dégâts. Réduction de 5 grâce à la défense. Santé actuelle : 0. Grâce à 10 de force du joueur.
+Loic a subi 5 points de dégâts. Réduction de 5 grâce à la défense. Santé actuelle : 0. Grâce à 10 de force du joueur.
+Vous perdez 10 points de vie à cause du poison. Tours restants : 4
+Vous avez été vaincu par le Boss Final... Le jeu est terminé.
+
+Process finished with exit code 0
+
 ```
