@@ -3,9 +3,7 @@ package Dungeon;
 import Player.Player;
 import java.util.Random;
 import java.util.Scanner;
-import Dungeon.DungeonPiece; // Import pour DungeonPiece
-import Player.Player; // Import pour Player
-import java.util.Random; // Import pour Random
+
 
 
 // Salle où le joueur lance un dé à 6 faces

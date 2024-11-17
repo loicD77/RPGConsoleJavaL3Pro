@@ -15,12 +15,9 @@ import MainFiles.Main; // Import pour la classe Main
 import ProtectiveClothing.ProtectionItem;
 import Item.Inventory;
 import Item.Item;
-import MonsterOriginal.Monster;
 import Dungeon.DungeonPiece;
 import PotionGroup.Potion;
 import PotionGroup.StatusEffect;
-import MonsterOriginal.Obstacle;
-import MonsterGroup.Boss;
 import Interface.Attackable; // Importez l'interface Attackable pour pouvoir l'utiliser
 
 
@@ -529,7 +526,7 @@ public class Player {
             System.out.println("2: Afficher l'inventaire");
             System.out.println("3: Afficher le statut");
             System.out.println("4: Quitter");
-            System.out.print("Choisissez une option : ");
+
 
             int choice = -1;
             boolean validInput = false;

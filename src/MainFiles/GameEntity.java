@@ -1,4 +1,4 @@
-package Entity;
+package MainFiles;
 
 public abstract class GameEntity {
     protected String name;

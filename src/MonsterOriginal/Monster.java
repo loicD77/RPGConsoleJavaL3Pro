@@ -1,7 +1,7 @@
 package MonsterOriginal;
 
 import java.util.Scanner;
-import Entity.GameEntity; // Assurez-vous que cette ligne est présente
+import MainFiles.GameEntity; // Assurez-vous que cette ligne est présente
 import Interface.Attackable;
 import Player.Player; // Ajoutez cet import pour utiliser la classe Player
 import Item.Item; // Assurez-vous que ce chemin est correct, en fonction de la structure de votre projet

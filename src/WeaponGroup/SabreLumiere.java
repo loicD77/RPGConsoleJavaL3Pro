@@ -1,6 +1,6 @@
 package WeaponGroup;
 
-import WeaponGroup.Sword;
+
 
 public class SabreLumiere extends Sword {
     public SabreLumiere() {

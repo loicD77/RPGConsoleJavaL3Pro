@@ -1,6 +1,5 @@
 package Dungeon;
 
-import Dungeon.DungeonPiece; // Import pour DungeonPiece
 import Player.Player; // Import pour Player
 import java.util.Random; // Import pour Random
 import java.util.Scanner; // Import pour Scanner

@@ -6,7 +6,6 @@ import Player.Player; // Import de la classe Player
 import Item.Item; // Import de la classe Item
 import PotionGroup.Potion; // Import de la classe Potion
 import WeaponGroup.LegendarySword; // Import de la classe LegendarySword
-import Obstacle.WoodenShield; // Import de la classe WoodenShield
 import ProtectiveClothing.Helmet; // Import de la classe Helmet
 
 public class TreasureRoom extends DungeonPiece {
@@ -82,8 +81,7 @@ public class TreasureRoom extends DungeonPiece {
                 return new Potion("Potion de soin", "Restaure des points de vie.", 20, 10);
             case "Épée légendaire":
                 return new LegendarySword();
-            case "Bouclier en bois":
-                return new WoodenShield();
+
             case "Casque de protection":
                 return new Helmet("Casque de protection", "Augmente la défense", 5, 30);
             default:

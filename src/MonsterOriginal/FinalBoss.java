@@ -10,7 +10,7 @@ public class FinalBoss extends Monster {
     private Random random;
 
     public FinalBoss() {
-        super("Boss Final", "Un boss redoutable qui attend le joueur.", 500, 50, 5, 10, 100, 500);
+        super("Boss Final", "Un boss redoutable qui attend le joueur.", 500, 50, 5, 10, 100, 10000);
         this.isResting = false;
         this.playerIsPoisoned = false;
         this.poisonTurnsLeft = 0;

@@ -4,7 +4,7 @@ import Item.Item;
 import MonsterGroup.*;
 import Obstacle.StoneObstacle; // Import de StoneObstacle depuis le package Obstacle
 import Obstacle.WoodenBarrier; // Import de WoodenBarrier depuis le package Obstacle
-import Entity.GameEntity; // Import de GameEntity
+import MainFiles.GameEntity; // Import de GameEntity
 import Player.Player; // Import de Player
 import MonsterOriginal.Monster;
 import Dungeon.DungeonPiece;
