@@ -49,7 +49,7 @@ public class Main {
 
         // Initialisation de l'inventaire et des pièces du donjon
         Inventory inventory = new Inventory();
-        player.setInventory(inventory); // Assurez-vous que le joueur a un inventaire
+        player.setInventory(inventory);
         List<DungeonPiece> dungeonPieces = createDungeonPieces();
 
         // Initialisation de la carte de jeu

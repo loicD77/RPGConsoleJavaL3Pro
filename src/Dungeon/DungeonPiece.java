@@ -1,7 +1,7 @@
 package Dungeon;
 
 import MonsterOriginal.Monster;
-import Player.Player; // Importez la classe Player du package Player
+import Player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

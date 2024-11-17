@@ -1,8 +1,8 @@
 package Item;
 
-import Player.Player; // Importez la classe Player du package approprié
+import Player.Player;
 import WeaponOriginal.Weapon;
-import ProtectiveClothing.ProtectionItem; // Utilisez uniquement ProtectionItem du package ProtectiveClothing
+import ProtectiveClothing.ProtectionItem;
 import PotionGroup.Potion;
 import java.util.ArrayList;
 import java.util.List;

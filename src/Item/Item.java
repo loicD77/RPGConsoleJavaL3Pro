@@ -1,16 +1,16 @@
 package Item;
 
-import Player.Player; // Importez la classe Player du package Player
+import Player.Player;
 
 public abstract class Item {
     public String name;
     private String description;
-    private int price; // Changez le type de String à int
+    private int price;
 
-    public Item(String name, String description, int price) { // Ajoutez le prix au constructeur
+    public Item(String name, String description, int price) {
         this.name = name;
         this.description = description;
-        this.price = price; // Assignez correctement le prix
+        this.price = price;
     }
 
     public String getName() {
@@ -18,7 +18,7 @@ public abstract class Item {
     }
 
     public int getPrice() { // Méthode pour obtenir le prix de l'item
-        return price; // Retournez l'int
+        return price;
     }
 
     public String getDescription() {

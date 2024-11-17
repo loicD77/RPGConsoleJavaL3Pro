@@ -5,7 +5,7 @@ import MonsterOriginal.FinalBoss; // Import de la classe FinalBoss
 import Player.Player;
 import java.util.Scanner;
 
-public class BossRoom extends DungeonPiece {
+public class BossRoom extends DungeonPiece { // Classe pour la salle du BOSS FINAL du RPG
     private FinalBoss finalBoss;
     private boolean bossRoomEntered = false;
 

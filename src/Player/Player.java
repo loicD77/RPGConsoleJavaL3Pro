@@ -8,7 +8,7 @@ import java.util.Random;
 
 // Imports des autres packages du projet
 import WeaponOriginal.Weapon;
-import MainFiles.GameMap; // Assurez-vous d'importer la classe GameMap
+import MainFiles.GameMap;
 import MainFiles.Main; // Import pour la classe Main
 
 
@@ -18,7 +18,7 @@ import Item.Item;
 import Dungeon.DungeonPiece;
 import PotionGroup.Potion;
 import PotionGroup.StatusEffect;
-import Interface.Attackable; // Importez l'interface Attackable pour pouvoir l'utiliser
+import Interface.Attackable;
 
 
 

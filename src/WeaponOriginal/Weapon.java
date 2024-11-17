@@ -1,12 +1,12 @@
 package WeaponOriginal;
 
-import Item.Item; // Importez la classe Item
+import Item.Item;
 
 public abstract class Weapon extends Item {
     protected int damage; // Dégâts infligés par l'arme
-    private int gold; // Ajoutez cette variable pour stocker l'or
+    private int gold;
 
-    public Weapon(String name, String description, int damage, int price) {
+    public Weapon(String name, String description, int damage, int price) { // Constructeur pour les armes et ses dérivées
         super(name, description, price); // Appel du constructeur de la classe parente avec le prix
         this.damage = damage; // Initialisation des dégâts
     }
@@ -16,7 +16,7 @@ public abstract class Weapon extends Item {
     }
 
     public int getGold() {
-        return gold; // Assurez-vous de renvoyer l'or
+        return gold;
     }
 
     @Override
@@ -32,5 +32,5 @@ public abstract class Weapon extends Item {
     }
 
     public abstract int calculateAttackDamage(int attackType);
-    public abstract String[] getAttackOptions(); // Ajoutez cette méthode abstraite
+    public abstract String[] getAttackOptions();
 }

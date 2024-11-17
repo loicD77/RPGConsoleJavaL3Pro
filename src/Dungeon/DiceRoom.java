@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class DiceRoom extends DungeonPiece {
     private Random random;
 
-    public DiceRoom(String name, String description, int difficulty) {
+    public DiceRoom(String name, String description, int difficulty) { // Constructeur de la salle du dé
         super(name, description, difficulty);
         random = new Random();
     }

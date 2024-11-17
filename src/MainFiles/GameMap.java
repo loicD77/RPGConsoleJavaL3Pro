@@ -83,7 +83,7 @@ public class GameMap {
             if (i < layout.length) {
                 for (int j = 0; j < layout[i].length; j++) {
                     if (i == playerX && j == playerY) {
-                        line.append("🎮 "); // Utilisez un symbole distinct pour le joueur
+                        line.append("🎮 ");
                     } else {
                         line.append(layout[i][j]).append(" ");
                     }
@@ -93,7 +93,7 @@ public class GameMap {
             }
 
             // Ajouter des espaces pour séparer la carte de la légende
-            while (line.length() < 40) { // Ajustez cette valeur pour gérer la largeur de l'affichage
+            while (line.length() < 40) {
                 line.append(" ");
             }
 
